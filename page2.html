@@ -555,37 +555,39 @@
     }
 
     function onPositionUpdate(pos) {
-      const { latitude: lat, longitude: lng, heading, accuracy } = pos.coords;
-      const logMsg = `✓ Position: ${lat.toFixed(4)}, ${lng.toFixed(4)}, accuracy: ${Math.round(accuracy)}m`;
-      debugLog(logMsg);
-      state.lastPosition = pos.coords;
-      state.heading = heading;
-      clearPositionTimeout();  // Got position, clear timeout
+      try {
+        const { latitude: lat, longitude: lng, heading, accuracy } = pos.coords;
+        debugLog(`✓ Position: ${lat.toFixed(4)}, ${lng.toFixed(4)}, accuracy: ${Math.round(accuracy)}m`);
+        state.lastPosition = pos.coords;
+        state.heading = heading;
+        clearPositionTimeout();
 
-      // Update user marker
-      updateUserMarker(lat, lng, heading);
+        debugLog('✓ Updating user marker...');
+        updateUserMarker(lat, lng, heading);
+        debugLog('✓ User marker updated');
 
-      // Check arrival
-      if (!state.arrived) {
-        const distToDest = haversine(lat, lng, DESTINATION.lat, DESTINATION.lng);
-        if (distToDest <= ARRIVAL_RADIUS_M) {
-          handleArrival();
-          return;
+        if (!state.arrived) {
+          const distToDest = haversine(lat, lng, DESTINATION.lat, DESTINATION.lng);
+          debugLog(`✓ Distance to destination: ${Math.round(distToDest)}m`);
+          if (distToDest <= ARRIVAL_RADIUS_M) {
+            handleArrival();
+            return;
+          }
         }
+
+        advanceStepIfNeeded(lat, lng);
+
+        if (state.steps.length === 0 && !state.routingControl) {
+          debugLog('✓ First position: initializing route...');
+          document.getElementById('loading-spinner').classList.add('show');
+          initRouting({ lat, lng });
+        }
+
+        updateAccuracyDisplay(accuracy);
+      } catch (err) {
+        debugLog('✗ ERROR in onPositionUpdate: ' + err.message);
+        debugLog('✗ Stack: ' + err.stack);
       }
-
-      // Check step advancement
-      advanceStepIfNeeded(lat, lng);
-
-      // First fix: initialize routing
-      if (state.steps.length === 0 && !state.routingControl) {
-        debugLog('✓ First position: initializing route');
-        document.getElementById('loading-spinner').classList.add('show');
-        initRouting({ lat, lng });
-      }
-
-      // Update accuracy indicator
-      updateAccuracyDisplay(accuracy);
     }
 
     function onPositionError(err) {
