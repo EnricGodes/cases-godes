@@ -500,15 +500,18 @@
       }).addTo(state.map);
 
       state.routingControl.on('routesfound', function (e) {
+        debugLog('✓ Route found! Computing steps...');
         const route = e.routes[0];
         state.route = route;
         state.steps = parseSteps(route.instructions, route.coordinates);
         state.currentStepIdx = 0;
+        debugLog(`✓ Route has ${state.steps.length} steps`);
         updateStepUI();
         document.getElementById('loading-spinner').classList.remove('show');
       });
 
       state.routingControl.on('routingerror', function (e) {
+        debugLog('✗ Routing error: ' + (e.message || 'unknown error'));
         showError('No se pudo calcular la ruta. Comprueba tu conexión.');
         document.getElementById('loading-spinner').classList.remove('show');
       });
@@ -516,14 +519,16 @@
 
     /* ==================== SECTION G: GPS TRACKING ==================== */
     function startTracking() {
-      console.log('✓ startTracking() called');
+      debugLog('✓ startTracking() called');
 
       if (!('geolocation' in navigator)) {
         const msg = 'Tu dispositivo no soporta GPS.';
-        console.error('✗', msg);
+        debugLog('✗ ' + msg);
         showError(msg);
         return;
       }
+
+      debugLog('✓ navigator.geolocation available');
 
       const options = {
         enableHighAccuracy: true,
@@ -531,17 +536,19 @@
         timeout: 10000,
       };
 
-      console.log('✓ Calling watchPosition with options:', options);
+      debugLog('✓ Calling watchPosition...');
       try {
         startPositionTimeout();  // Start 15-second timeout
+        debugLog('✓ Position timeout started (15s)');
+
         state.watchId = navigator.geolocation.watchPosition(
           onPositionUpdate,
           onPositionError,
           options
         );
-        console.log('✓ watchPosition started, ID:', state.watchId);
+        debugLog('✓ watchPosition started, ID: ' + state.watchId);
       } catch (err) {
-        console.error('✗ watchPosition error:', err);
+        debugLog('✗ watchPosition error: ' + err.message);
         clearPositionTimeout();
         showError('Error al iniciar GPS: ' + err.message);
       }
@@ -549,7 +556,8 @@
 
     function onPositionUpdate(pos) {
       const { latitude: lat, longitude: lng, heading, accuracy } = pos.coords;
-      console.log('✓ Position update:', lat.toFixed(4), lng.toFixed(4), 'accuracy:', accuracy.toFixed(0) + 'm');
+      const logMsg = `✓ Position: ${lat.toFixed(4)}, ${lng.toFixed(4)}, accuracy: ${Math.round(accuracy)}m`;
+      debugLog(logMsg);
       state.lastPosition = pos.coords;
       state.heading = heading;
       clearPositionTimeout();  // Got position, clear timeout
@@ -571,6 +579,7 @@
 
       // First fix: initialize routing
       if (state.steps.length === 0 && !state.routingControl) {
+        debugLog('✓ First position: initializing route');
         document.getElementById('loading-spinner').classList.add('show');
         initRouting({ lat, lng });
       }
@@ -580,14 +589,14 @@
     }
 
     function onPositionError(err) {
-      console.error('✗ Geolocation error code:', err.code, 'message:', err.message);
+      debugLog(`✗ Geolocation error code: ${err.code}, message: ${err.message}`);
       const msgs = {
-        1: 'Permiso de ubicación denegado. Actívalo en ajustes del navegador.',
+        1: 'Permiso de ubicación denegado. Actívalo en ajustes.',
         2: 'Posición no disponible. Asegúrate de tener señal GPS.',
         3: 'Tiempo de espera agotado. Muévete a un lugar con mejor señal.',
       };
       const msg = msgs[err.code] || 'Error de ubicación desconocido.';
-      console.error('✗ Showing error:', msg);
+      debugLog('✗ Error: ' + msg);
       showError(msg);
     }
 
@@ -596,14 +605,17 @@
     function startPositionTimeout() {
       positionTimeoutId = setTimeout(() => {
         if (state.lastPosition === null) {
-          console.error('✗ No position after 15 seconds');
+          debugLog('✗ TIMEOUT: No position after 15 seconds');
           showError('No se pudo obtener tu ubicación. Verifica los permisos.');
         }
       }, 15000);
     }
 
     function clearPositionTimeout() {
-      if (positionTimeoutId) clearTimeout(positionTimeoutId);
+      if (positionTimeoutId) {
+        clearTimeout(positionTimeoutId);
+        positionTimeoutId = null;
+      }
     }
 
     /* ==================== SECTION H: STEP ADVANCEMENT ==================== */
