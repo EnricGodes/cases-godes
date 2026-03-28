@@ -1,6 +1,673 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="light" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Navegación GPS</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+
+  <!-- Leaflet Routing Machine CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css"/>
+
+  <style>
+    /* CSS Variables */
+    :root {
+      --bg-page: #f5f5f5;
+      --bg-panel: #ffffff;
+      --bg-topbar: #ffffff;
+      --bg-button: #2563eb;
+      --bg-button-hover: #1d4ed8;
+      --text-primary: #111827;
+      --text-secondary: #6b7280;
+      --text-on-button: #ffffff;
+      --accent-arrival: #16a34a;
+      --accent-step: #2563eb;
+      --border: #e5e7eb;
+      --shadow: rgba(0, 0, 0, 0.1);
+      --topbar-height: 56px;
+      --panel-peek: 110px;
+    }
+
+    [data-theme="dark"] {
+      --bg-page: #0f172a;
+      --bg-panel: #1e293b;
+      --bg-topbar: #1e293b;
+      --bg-button: #3b82f6;
+      --bg-button-hover: #60a5fa;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-on-button: #ffffff;
+      --accent-arrival: #4ade80;
+      --accent-step: #60a5fa;
+      --border: #334155;
+      --shadow: rgba(0, 0, 0, 0.4);
+    }
+
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-primary);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Full-screen map */
+    #map {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    /* Dark mode map filter */
+    [data-theme="dark"] .leaflet-tile-pane {
+      filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(1.1);
+    }
+
+    [data-theme="dark"] .leaflet-marker-pane img {
+      filter: invert(1) hue-rotate(180deg);
+    }
+
+    /* Top bar */
+    #topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--topbar-height);
+      background-color: var(--bg-topbar);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+      z-index: 1000;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    #dest-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      flex: 1;
+      text-align: left;
+    }
+
+    #theme-toggle {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+
+    #theme-toggle:hover {
+      background-color: var(--border);
+    }
+
+    #theme-toggle:active {
+      transform: scale(0.95);
+    }
+
+    /* Bottom panel */
+    #bottom-panel {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--bg-panel);
+      border-radius: 20px 20px 0 0;
+      padding: 0.75rem 1.25rem 2rem;
+      z-index: 1000;
+      box-shadow: 0 -4px 16px var(--shadow);
+      min-height: var(--panel-peek);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #panel-handle {
+      width: 40px;
+      height: 4px;
+      background-color: var(--border);
+      border-radius: 2px;
+      margin: 0 auto 0.75rem;
+    }
+
+    #step-counter {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    #step-instruction {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
+    }
+
+    #step-distance {
+      font-size: 1rem;
+      color: var(--accent-step);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    #step-accuracy {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+    }
+
+    /* Locate me button */
+    #locate-btn {
+      position: fixed;
+      bottom: calc(var(--panel-peek) + 1rem);
+      right: 1rem;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      border: none;
+      background-color: var(--bg-button);
+      color: var(--text-on-button);
+      font-size: 1.4rem;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 2px 8px var(--shadow);
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #locate-btn:hover {
+      background-color: var(--bg-button-hover);
+    }
+
+    #locate-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* User directional arrow */
+    .user-arrow {
+      font-size: 1.5rem;
+      color: var(--accent-step);
+      text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease;
+    }
+
+    /* Arrival banner */
+    #arrival-banner {
+      position: fixed;
+      inset: 0;
+      background-color: var(--accent-arrival);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-align: center;
+      padding: 1rem;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    #arrival-banner.show {
+      display: flex;
+    }
+
+    #arrival-banner span {
+      font-size: 3rem;
+    }
+
+    /* Error toast */
+    #error-toast {
+      position: fixed;
+      top: calc(var(--topbar-height) + 0.5rem);
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #dc2626;
+      color: #ffffff;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      z-index: 2000;
+      max-width: 90vw;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      display: none;
+    }
+
+    #error-toast.show {
+      display: block;
+    }
+
+    /* Loading indicator */
+    #loading-spinner {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1500;
+      display: none;
+    }
+
+    #loading-spinner.show {
+      display: block;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid var(--border);
+      border-top-color: var(--accent-step);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Leaflet Routing Machine override */
+    .leaflet-routing-container {
+      display: none !important;
+    }
+  </style>
+</head>
 <body>
-  <p>hello world</p>
+  <!-- TOP BAR -->
+  <header id="topbar">
+    <span id="dest-label">Av. Mistral 10, Barcelona</span>
+    <button id="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema">☀</button>
+  </header>
+
+  <!-- MAP -->
+  <div id="map"></div>
+
+  <!-- LOCATE ME BUTTON -->
+  <button id="locate-btn" aria-label="Centrar en mi posición">⊕</button>
+
+  <!-- BOTTOM PANEL -->
+  <div id="bottom-panel">
+    <div id="panel-handle"></div>
+    <div id="step-counter">— / —</div>
+    <p id="step-instruction">Solicitando ubicación...</p>
+    <p id="step-distance"></p>
+    <p id="step-accuracy"></p>
+  </div>
+
+  <!-- ARRIVAL BANNER -->
+  <div id="arrival-banner">
+    <span>✓</span>
+    <span>Objetivo alcanzado</span>
+  </div>
+
+  <!-- LOADING SPINNER -->
+  <div id="loading-spinner">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- ERROR TOAST -->
+  <div id="error-toast"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WLs="
+          crossorigin=""></script>
+
+  <!-- Leaflet Routing Machine JS -->
+  <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+
+  <script>
+    /* ==================== SECTION A: CONSTANTS & CONFIG ==================== */
+    const DESTINATION = { lat: 41.3762, lng: 2.1641 };
+    const DESTINATION_LABEL = 'Av. Mistral 10, 08015 Barcelona';
+    const ARRIVAL_RADIUS_M = 30;
+    const STEP_ADVANCE_RADIUS = 25;
+    const REROUTE_THRESHOLD_M = 50;
+    const LOCATE_ZOOM = 17;
+    const MIN_ACCURACY_M = 50;
+
+    /* ==================== SECTION B: STATE OBJECT ==================== */
+    const state = {
+      map: null,
+      routingControl: null,
+      watchId: null,
+      userMarker: null,
+      steps: [],
+      currentStepIdx: 0,
+      arrived: false,
+      lastPosition: null,
+      heading: null,
+      route: null,
+      lastRerouteTime: 0,
+    };
+
+    /* ==================== SECTION C: THEME MANAGEMENT ==================== */
+    function applyStoredTheme() {
+      const saved = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', saved);
+      updateThemeToggleIcon(saved);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeToggleIcon(next);
+    }
+
+    function updateThemeToggleIcon(theme) {
+      const btn = document.getElementById('theme-toggle');
+      btn.textContent = theme === 'dark' ? '🌙' : '☀';
+    }
+
+    /* ==================== SECTION D: MAP INITIALIZATION ==================== */
+    function initMap() {
+      state.map = L.map('map', {
+        zoomControl: false,
+        attributionControl: true,
+      }).setView([DESTINATION.lat, DESTINATION.lng], 13);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors',
+      }).addTo(state.map);
+
+      L.control.zoom({ position: 'bottomright' }).addTo(state.map);
+
+      // Destination marker
+      L.marker([DESTINATION.lat, DESTINATION.lng], {
+        title: DESTINATION_LABEL,
+      })
+        .addTo(state.map)
+        .bindPopup(DESTINATION_LABEL);
+    }
+
+    /* ==================== SECTION E: OSRM STEP PARSING ==================== */
+    const MANEUVER_ES = {
+      'Head': 'Dirígete',
+      'Continue': 'Continúa',
+      'SlightRight': 'Gira ligeramente a la derecha',
+      'Right': 'Gira a la derecha',
+      'SharpRight': 'Gira bruscamente a la derecha',
+      'Uturn': 'Da media vuelta',
+      'SharpLeft': 'Gira bruscamente a la izquierda',
+      'Left': 'Gira a la izquierda',
+      'SlightLeft': 'Gira ligeramente a la izquierda',
+      'WaypointReached': 'Llegaste al punto intermedio',
+      'Roundabout': 'En la rotonda',
+      'DestinationReached': 'Has llegado a tu destino',
+      'EnterAgainstAllowedDirection': 'Cambia de sentido',
+      'LeaveAgainstAllowedDirection': 'Cambia de sentido',
+    };
+
+    function parseSteps(instructions, coordinates) {
+      return instructions.map((instr, i) => {
+        const verb = MANEUVER_ES[instr.type] || 'Continúa';
+        const road = instr.road ? ` por ${instr.road}` : '';
+        const exit = instr.exit ? ` (salida ${instr.exit})` : '';
+
+        let latLng = null;
+        if (instr.index != null && coordinates && coordinates[instr.index]) {
+          const coord = coordinates[instr.index];
+          latLng = { lat: coord[0], lng: coord[1] };
+        }
+
+        return {
+          instruction: `${verb}${road}${exit}`,
+          latLng: latLng,
+          distance: instr.distance || 0,
+        };
+      });
+    }
+
+    /* ==================== SECTION F: ROUTING INITIALIZATION ==================== */
+    function initRouting(userLatLng) {
+      if (state.routingControl) {
+        state.map.removeControl(state.routingControl);
+      }
+
+      state.routingControl = L.Routing.control({
+        waypoints: [
+          L.latLng(userLatLng.lat, userLatLng.lng),
+          L.latLng(DESTINATION.lat, DESTINATION.lng),
+        ],
+        router: L.Routing.osrmv1({
+          serviceUrl: 'https://router.project-osrm.org/route/v1',
+          profile: 'foot',
+        }),
+        routeWhileDragging: false,
+        addWaypoints: false,
+        show: false,
+        fitSelectedRoutes: true,
+        lineOptions: {
+          styles: [{ color: '#2563eb', weight: 5, opacity: 0.8 }],
+        },
+      }).addTo(state.map);
+
+      state.routingControl.on('routesfound', function (e) {
+        const route = e.routes[0];
+        state.route = route;
+        state.steps = parseSteps(route.instructions, route.coordinates);
+        state.currentStepIdx = 0;
+        updateStepUI();
+        document.getElementById('loading-spinner').classList.remove('show');
+      });
+
+      state.routingControl.on('routingerror', function (e) {
+        showError('No se pudo calcular la ruta. Comprueba tu conexión.');
+        document.getElementById('loading-spinner').classList.remove('show');
+      });
+    }
+
+    /* ==================== SECTION G: GPS TRACKING ==================== */
+    function startTracking() {
+      if (!('geolocation' in navigator)) {
+        showError('Tu dispositivo no soporta GPS.');
+        return;
+      }
+
+      const options = {
+        enableHighAccuracy: true,
+        maximumAge: 2000,
+        timeout: 10000,
+      };
+
+      state.watchId = navigator.geolocation.watchPosition(
+        onPositionUpdate,
+        onPositionError,
+        options
+      );
+    }
+
+    function onPositionUpdate(pos) {
+      const { latitude: lat, longitude: lng, heading, accuracy } = pos.coords;
+      state.lastPosition = pos.coords;
+      state.heading = heading;
+
+      // Update user marker
+      updateUserMarker(lat, lng, heading);
+
+      // Check arrival
+      if (!state.arrived) {
+        const distToDest = haversine(lat, lng, DESTINATION.lat, DESTINATION.lng);
+        if (distToDest <= ARRIVAL_RADIUS_M) {
+          handleArrival();
+          return;
+        }
+      }
+
+      // Check step advancement
+      advanceStepIfNeeded(lat, lng);
+
+      // First fix: initialize routing
+      if (state.steps.length === 0 && !state.routingControl) {
+        document.getElementById('loading-spinner').classList.add('show');
+        initRouting({ lat, lng });
+      }
+
+      // Update accuracy indicator
+      updateAccuracyDisplay(accuracy);
+    }
+
+    function onPositionError(err) {
+      const msgs = {
+        1: 'Permiso de ubicación denegado. Actívalo en ajustes.',
+        2: 'Posición no disponible. Asegúrate de tener señal GPS.',
+        3: 'Tiempo de espera agotado. Muévete a un lugar con mejor señal.',
+      };
+      showError(msgs[err.code] || 'Error de ubicación desconocido.');
+    }
+
+    /* ==================== SECTION H: STEP ADVANCEMENT ==================== */
+    function advanceStepIfNeeded(lat, lng) {
+      if (state.currentStepIdx >= state.steps.length - 1) return;
+
+      const nextStep = state.steps[state.currentStepIdx];
+      if (!nextStep.latLng) return;
+
+      const dist = haversine(lat, lng, nextStep.latLng.lat, nextStep.latLng.lng);
+
+      if (dist <= STEP_ADVANCE_RADIUS) {
+        state.currentStepIdx++;
+        updateStepUI();
+        if (navigator.vibrate) navigator.vibrate(100);
+      }
+    }
+
+    /* ==================== SECTION I: ARRIVAL DETECTION ==================== */
+    function handleArrival() {
+      state.arrived = true;
+      if (state.watchId !== null) {
+        navigator.geolocation.clearWatch(state.watchId);
+        state.watchId = null;
+      }
+      document.getElementById('bottom-panel').style.display = 'none';
+      document.getElementById('locate-btn').style.display = 'none';
+      document.getElementById('arrival-banner').classList.add('show');
+      if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+    }
+
+    /* ==================== SECTION J: UI UPDATE FUNCTIONS ==================== */
+    function updateStepUI() {
+      const step = state.steps[state.currentStepIdx];
+      if (!step) return;
+
+      document.getElementById('step-instruction').textContent = step.instruction;
+
+      const dist = step.distance;
+      document.getElementById('step-distance').textContent =
+        dist >= 1000
+          ? `${(dist / 1000).toFixed(1)} km`
+          : `${Math.round(dist)} m`;
+
+      document.getElementById('step-counter').textContent =
+        `${state.currentStepIdx + 1} / ${state.steps.length}`;
+    }
+
+    function updateUserMarker(lat, lng, heading) {
+      const rotation = heading != null ? heading : 0;
+      const icon = L.divIcon({
+        className: 'user-marker-icon',
+        html: `<div class="user-arrow" style="transform:rotate(${rotation}deg)">▲</div>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+      });
+
+      if (!state.userMarker) {
+        state.userMarker = L.marker([lat, lng], { icon, zIndexOffset: 1000 }).addTo(
+          state.map
+        );
+      } else {
+        state.userMarker.setLatLng([lat, lng]).setIcon(icon);
+      }
+    }
+
+    function updateAccuracyDisplay(accuracy) {
+      const elem = document.getElementById('step-accuracy');
+      if (accuracy > MIN_ACCURACY_M) {
+        elem.textContent = `⚠ Señal GPS débil (${Math.round(accuracy)}m)`;
+        elem.style.color = '#f59e0b';
+      } else {
+        elem.textContent = '';
+      }
+    }
+
+    function showError(msg) {
+      const toast = document.getElementById('error-toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 6000);
+    }
+
+    /* ==================== SECTION K: HAVERSINE DISTANCE ==================== */
+    function haversine(lat1, lon1, lat2, lon2) {
+      const R = 6371000; // metres
+      const dLat = ((lat2 - lat1) * Math.PI) / 180;
+      const dLon = ((lon2 - lon1) * Math.PI) / 180;
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos((lat1 * Math.PI) / 180) *
+          Math.cos((lat2 * Math.PI) / 180) *
+          Math.sin(dLon / 2) *
+          Math.sin(dLon / 2);
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
+    /* ==================== SECTION L: EVENT LISTENERS & BOOT ==================== */
+    document.getElementById('locate-btn').addEventListener('click', () => {
+      if (state.lastPosition) {
+        state.map.setView(
+          [state.lastPosition.latitude, state.lastPosition.longitude],
+          LOCATE_ZOOM,
+          { animate: true }
+        );
+      }
+    });
+
+    // Boot sequence
+    document.addEventListener('DOMContentLoaded', () => {
+      applyStoredTheme();
+      initMap();
+      startTracking();
+    });
+  </script>
 </body>
 </html>
