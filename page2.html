@@ -4,21 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
   <title>Navegación GPS</title>
 
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-
-  <!-- Leaflet Routing Machine CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css"/>
 
   <style>
-    /* CSS Variables */
     :root {
       --bg-page: #f5f5f5;
       --bg-panel: #ffffff;
@@ -51,290 +43,177 @@
       --shadow: rgba(0, 0, 0, 0.4);
     }
 
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; }
 
     body {
       font-family: 'Inter', sans-serif;
       background-color: var(--bg-page);
       color: var(--text-primary);
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.3s, color 0.3s;
     }
 
-    /* Full-screen map */
-    #map {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-    }
+    #map { position: fixed; inset: 0; z-index: 0; }
 
-    /* Dark mode map filter */
     [data-theme="dark"] .leaflet-tile-pane {
       filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(1.1);
     }
-
     [data-theme="dark"] .leaflet-marker-pane img {
       filter: invert(1) hue-rotate(180deg);
     }
 
-    /* Top bar */
     #topbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      position: fixed; top: 0; left: 0; right: 0;
       height: var(--topbar-height);
       background-color: var(--bg-topbar);
       border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1rem;
-      z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1rem; z-index: 1000;
       box-shadow: 0 2px 8px var(--shadow);
     }
 
-    #dest-label {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      flex: 1;
-      text-align: left;
-    }
+    #dest-label { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); flex: 1; }
 
     #theme-toggle {
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 50%;
-      background-color: transparent;
-      border: none;
-      color: var(--text-primary);
-      font-size: 1.25rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background-color 0.3s ease;
+      width: 2.5rem; height: 2.5rem; border-radius: 50%;
+      background-color: transparent; border: none;
+      color: var(--text-primary); font-size: 1.25rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
     }
 
-    #theme-toggle:hover {
-      background-color: var(--border);
-    }
-
-    #theme-toggle:active {
-      transform: scale(0.95);
-    }
-
-    /* Bottom panel */
     #bottom-panel {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      position: fixed; bottom: 0; left: 0; right: 0;
       background-color: var(--bg-panel);
       border-radius: 20px 20px 0 0;
       padding: 0.75rem 1.25rem 2rem;
       z-index: 1000;
       box-shadow: 0 -4px 16px var(--shadow);
       min-height: var(--panel-peek);
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     #panel-handle {
-      width: 40px;
-      height: 4px;
+      width: 40px; height: 4px;
       background-color: var(--border);
-      border-radius: 2px;
-      margin: 0 auto 0.75rem;
+      border-radius: 2px; margin: 0 auto 0.75rem;
     }
 
     #step-counter {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-size: 0.75rem; color: var(--text-secondary);
+      font-weight: 500; margin-bottom: 0.5rem;
+      text-transform: uppercase; letter-spacing: 0.05em;
     }
 
     #step-instruction {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      line-height: 1.4;
-      margin-bottom: 0.5rem;
+      font-size: 1.25rem; font-weight: 600;
+      color: var(--text-primary); line-height: 1.4; margin-bottom: 0.5rem;
     }
 
     #step-distance {
-      font-size: 1rem;
-      color: var(--accent-step);
-      font-weight: 500;
-      margin-bottom: 0.5rem;
+      font-size: 1rem; color: var(--accent-step); font-weight: 500;
     }
 
     #step-accuracy {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      margin-top: 0.5rem;
+      font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;
     }
 
-    /* Locate me button */
     #locate-btn {
-      position: fixed;
-      bottom: calc(var(--panel-peek) + 1rem);
-      right: 1rem;
-      width: 3rem;
-      height: 3rem;
-      border-radius: 50%;
-      border: none;
-      background-color: var(--bg-button);
-      color: var(--text-on-button);
-      font-size: 1.4rem;
-      cursor: pointer;
-      z-index: 1000;
+      position: fixed; bottom: calc(var(--panel-peek) + 1rem); right: 1rem;
+      width: 3rem; height: 3rem; border-radius: 50%; border: none;
+      background-color: var(--bg-button); color: var(--text-on-button);
+      font-size: 1.4rem; cursor: pointer; z-index: 1000;
       box-shadow: 0 2px 8px var(--shadow);
-      transition: background-color 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
     }
 
-    #locate-btn:hover {
-      background-color: var(--bg-button-hover);
-    }
-
-    #locate-btn:active {
-      transform: scale(0.95);
-    }
-
-    /* User directional arrow */
     .user-arrow {
-      font-size: 1.5rem;
-      color: var(--accent-step);
-      text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+      font-size: 1.5rem; color: #2563eb;
+      text-shadow: 0 0 6px rgba(37, 99, 235, 0.6);
       transition: transform 0.3s ease;
     }
 
-    /* Arrival banner */
-    #arrival-banner {
-      position: fixed;
-      inset: 0;
-      background-color: var(--accent-arrival);
+    /* Arrival popup */
+    #arrival-popup {
       display: none;
-      align-items: center;
-      justify-content: center;
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: var(--bg-panel);
+      border-radius: 1rem;
+      padding: 2rem;
       z-index: 2000;
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #ffffff;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       text-align: center;
-      padding: 1rem;
-      flex-direction: column;
-      gap: 1rem;
+      max-width: 320px;
+      width: 90%;
     }
 
-    #arrival-banner.show {
-      display: flex;
-    }
+    #arrival-popup.show { display: block; }
 
-    #arrival-banner span {
+    #arrival-popup .icon {
       font-size: 3rem;
+      margin-bottom: 1rem;
     }
 
-    /* Error toast */
+    #arrival-popup h2 {
+      font-size: 1.5rem;
+      color: var(--accent-arrival);
+      margin-bottom: 0.5rem;
+    }
+
+    #arrival-popup p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    #arrival-popup button {
+      background-color: var(--accent-arrival);
+      color: #fff; border: none;
+      padding: 0.75rem 2rem; border-radius: 0.5rem;
+      font-size: 1rem; font-weight: 600; cursor: pointer;
+    }
+
+    #arrival-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1999;
+    }
+    #arrival-overlay.show { display: block; }
+
     #error-toast {
       position: fixed;
       top: calc(var(--topbar-height) + 0.5rem);
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #dc2626;
-      color: #ffffff;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      font-size: 0.9rem;
-      z-index: 2000;
-      max-width: 90vw;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      left: 50%; transform: translateX(-50%);
+      background-color: #dc2626; color: #fff;
+      padding: 0.75rem 1rem; border-radius: 0.5rem;
+      font-size: 0.9rem; z-index: 2000;
+      max-width: 90vw; text-align: center;
       display: none;
     }
+    #error-toast.show { display: block; }
 
-    #error-toast.show {
-      display: block;
-    }
+    .leaflet-routing-container { display: none !important; }
 
-    /* Loading indicator */
-    #loading-spinner {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1500;
-      display: none;
-    }
-
-    #loading-spinner.show {
-      display: block;
-    }
-
-    .spinner {
-      width: 48px;
-      height: 48px;
-      border: 4px solid var(--border);
-      border-top-color: var(--accent-step);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    /* Leaflet Routing Machine override */
-    .leaflet-routing-container {
-      display: none !important;
+    /* Debug panel */
+    #debug-log {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background-color: rgba(0,0,0,0.9); color: #0f0;
+      font-family: monospace; font-size: 0.6rem;
+      padding: 0.4rem; max-height: 100px; overflow-y: auto;
+      z-index: 3000; border-top: 1px solid #0f0;
     }
   </style>
 </head>
 <body>
-  <!-- TOP BAR -->
   <header id="topbar">
     <span id="dest-label">Av. Mistral 10, Barcelona</span>
     <button id="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema">☀</button>
   </header>
 
-  <!-- MAP -->
   <div id="map"></div>
 
-  <!-- LOCATE ME BUTTON -->
   <button id="locate-btn" aria-label="Centrar en mi posición">⊕</button>
 
-  <!-- DEBUG LOG (visible for debugging) -->
-  <div id="debug-log" style="position: fixed; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,0.9); color: #0f0; font-family: monospace; font-size: 0.65rem; padding: 0.5rem; max-height: 120px; overflow-y: auto; z-index: 3000; display: block; border-top: 1px solid #0f0;">
-    <div id="debug-output" style="line-height: 1.2;"></div>
-  </div>
-
-  <!-- PERMISSION OVERLAY (shown initially on iOS) -->
-  <div id="permission-overlay" style="position: fixed; inset: 0; background-color: var(--bg-page); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2500; padding: 2rem; text-align: center;">
-    <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary);">¿Dónde estás?</h2>
-    <p style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.5;">Esta app necesita acceso a tu ubicación para guiarte paso a paso hasta Avenida Mistral.</p>
-    <button id="start-tracking-btn" onclick="handleStartTracking()" style="padding: 0.75rem 2rem; background-color: var(--bg-button); color: var(--text-on-button); border: none; border-radius: 0.5rem; cursor: pointer; font-size: 1rem; font-weight: 600; width: 100%; max-width: 250px; margin-bottom: 1rem; transition: all 0.2s;">Permitir ubicación</button>
-    <button id="deny-tracking-btn" onclick="handleDenyTracking()" style="padding: 0.75rem 2rem; background-color: transparent; color: var(--accent-step); border: 2px solid var(--accent-step); border-radius: 0.5rem; cursor: pointer; font-size: 1rem; font-weight: 600; width: 100%; max-width: 250px; transition: all 0.2s;">Cancelar</button>
-  </div>
-
-  <!-- BOTTOM PANEL -->
   <div id="bottom-panel">
     <div id="panel-handle"></div>
     <div id="step-counter">— / —</div>
@@ -343,40 +222,31 @@
     <p id="step-accuracy"></p>
   </div>
 
-  <!-- ARRIVAL BANNER -->
-  <div id="arrival-banner">
-    <span>✓</span>
-    <span>Objetivo alcanzado</span>
+  <!-- Arrival popup (centered card, not fullscreen) -->
+  <div id="arrival-overlay"></div>
+  <div id="arrival-popup">
+    <div class="icon">&#10003;</div>
+    <h2>Has llegado al destino</h2>
+    <p>Av. Mistral 10, 08015 Barcelona</p>
+    <button onclick="document.getElementById('arrival-popup').classList.remove('show'); document.getElementById('arrival-overlay').classList.remove('show');">Cerrar</button>
   </div>
 
-  <!-- LOADING SPINNER -->
-  <div id="loading-spinner">
-    <div class="spinner"></div>
-  </div>
-
-  <!-- ERROR TOAST -->
   <div id="error-toast"></div>
 
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <div id="debug-log"><div id="debug-output"></div></div>
 
-  <!-- Leaflet Routing Machine JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
 
   <script>
-    // IMMEDIATE LOG: confirm script is running
-    console.log('✓ page2.html script tag executing');
-
-    /* ==================== SECTION A: CONSTANTS & CONFIG ==================== */
+    /* ==================== CONFIG ==================== */
     const DESTINATION = { lat: 41.3762, lng: 2.1641 };
     const DESTINATION_LABEL = 'Av. Mistral 10, 08015 Barcelona';
-    const ARRIVAL_RADIUS_M = 30;
+    const ARRIVAL_RADIUS_M = 15;
     const STEP_ADVANCE_RADIUS = 25;
-    const REROUTE_THRESHOLD_M = 50;
     const LOCATE_ZOOM = 17;
-    const MIN_ACCURACY_M = 50;
 
-    /* ==================== SECTION B: STATE OBJECT ==================== */
+    /* ==================== STATE ==================== */
     const state = {
       map: null,
       routingControl: null,
@@ -387,59 +257,55 @@
       arrived: false,
       lastPosition: null,
       heading: null,
-      route: null,
-      lastRerouteTime: 0,
+      origin: null, // { lat, lng, display_name } from index.html
     };
 
-    /* ==================== SECTION C: THEME MANAGEMENT ==================== */
+    /* ==================== DEBUG ==================== */
+    function debugLog(msg) {
+      console.log(msg);
+      const out = document.getElementById('debug-output');
+      if (!out) return;
+      const t = new Date().toLocaleTimeString();
+      out.innerHTML += `<div>[${t}] ${msg}</div>`;
+      out.parentElement.scrollTop = out.parentElement.scrollHeight;
+    }
+
+    /* ==================== THEME ==================== */
     function applyStoredTheme() {
       const saved = localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', saved);
-      updateThemeToggleIcon(saved);
+      document.getElementById('theme-toggle').textContent = saved === 'dark' ? '🌙' : '☀';
     }
 
     function toggleTheme() {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
-      updateThemeToggleIcon(next);
+      document.getElementById('theme-toggle').textContent = next === 'dark' ? '🌙' : '☀';
     }
 
-    function updateThemeToggleIcon(theme) {
-      const btn = document.getElementById('theme-toggle');
-      btn.textContent = theme === 'dark' ? '🌙' : '☀';
-    }
-
-    /* ==================== SECTION D: MAP INITIALIZATION ==================== */
+    /* ==================== MAP ==================== */
     function initMap() {
-      state.map = L.map('map', {
-        zoomControl: false,
-        attributionControl: true,
-      }).setView([DESTINATION.lat, DESTINATION.lng], 13);
+      state.map = L.map('map', { zoomControl: false }).setView([DESTINATION.lat, DESTINATION.lng], 14);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: '© OpenStreetMap contributors',
+        attribution: '&copy; OpenStreetMap',
       }).addTo(state.map);
 
       L.control.zoom({ position: 'bottomright' }).addTo(state.map);
 
-      // Destination marker
-      L.marker([DESTINATION.lat, DESTINATION.lng], {
-        title: DESTINATION_LABEL,
-      })
+      // Destination marker (red pin)
+      L.marker([DESTINATION.lat, DESTINATION.lng])
         .addTo(state.map)
         .bindPopup(DESTINATION_LABEL);
     }
 
-    /* ==================== SECTION E: OSRM STEP PARSING ==================== */
+    /* ==================== ROUTING ==================== */
     const MANEUVER_ES = {
-      'Head': 'Dirígete',
-      'Continue': 'Continúa',
+      'Head': 'Dirígete', 'Continue': 'Continúa',
       'SlightRight': 'Gira ligeramente a la derecha',
-      'Right': 'Gira a la derecha',
-      'SharpRight': 'Gira bruscamente a la derecha',
+      'Right': 'Gira a la derecha', 'SharpRight': 'Gira bruscamente a la derecha',
       'Uturn': 'Da media vuelta',
       'SharpLeft': 'Gira bruscamente a la izquierda',
       'Left': 'Gira a la izquierda',
@@ -447,39 +313,32 @@
       'WaypointReached': 'Llegaste al punto intermedio',
       'Roundabout': 'En la rotonda',
       'DestinationReached': 'Has llegado a tu destino',
-      'EnterAgainstAllowedDirection': 'Cambia de sentido',
-      'LeaveAgainstAllowedDirection': 'Cambia de sentido',
     };
 
     function parseSteps(instructions, coordinates) {
-      return instructions.map((instr, i) => {
+      return instructions.map(instr => {
         const verb = MANEUVER_ES[instr.type] || 'Continúa';
         const road = instr.road ? ` por ${instr.road}` : '';
         const exit = instr.exit ? ` (salida ${instr.exit})` : '';
-
         let latLng = null;
         if (instr.index != null && coordinates && coordinates[instr.index]) {
-          const coord = coordinates[instr.index];
-          latLng = { lat: coord[0], lng: coord[1] };
+          const c = coordinates[instr.index];
+          latLng = { lat: c[0], lng: c[1] };
         }
-
-        return {
-          instruction: `${verb}${road}${exit}`,
-          latLng: latLng,
-          distance: instr.distance || 0,
-        };
+        return { instruction: `${verb}${road}${exit}`, latLng, distance: instr.distance || 0 };
       });
     }
 
-    /* ==================== SECTION F: ROUTING INITIALIZATION ==================== */
-    function initRouting(userLatLng) {
+    function initRouting(originLatLng) {
+      debugLog(`✓ Routing: ${originLatLng.lat.toFixed(4)},${originLatLng.lng.toFixed(4)} → ${DESTINATION.lat},${DESTINATION.lng}`);
+
       if (state.routingControl) {
         state.map.removeControl(state.routingControl);
       }
 
       state.routingControl = L.Routing.control({
         waypoints: [
-          L.latLng(userLatLng.lat, userLatLng.lng),
+          L.latLng(originLatLng.lat, originLatLng.lng),
           L.latLng(DESTINATION.lat, DESTINATION.lng),
         ],
         router: L.Routing.osrmv1({
@@ -493,138 +352,92 @@
         lineOptions: {
           styles: [{ color: '#2563eb', weight: 5, opacity: 0.8 }],
         },
+        createMarker: function() { return null; }, // hide default waypoint markers
       }).addTo(state.map);
 
       state.routingControl.on('routesfound', function (e) {
-        debugLog('✓ Route found! Computing steps...');
         const route = e.routes[0];
-        state.route = route;
         state.steps = parseSteps(route.instructions, route.coordinates);
         state.currentStepIdx = 0;
-        debugLog(`✓ Route has ${state.steps.length} steps`);
+        debugLog(`✓ Route found: ${state.steps.length} steps`);
         updateStepUI();
-        document.getElementById('loading-spinner').classList.remove('show');
+
+        // Add origin marker (green)
+        L.circleMarker([originLatLng.lat, originLatLng.lng], {
+          radius: 8, color: '#2563eb', fillColor: '#2563eb', fillOpacity: 1, weight: 2,
+        }).addTo(state.map).bindPopup('Origen: ' + (state.origin ? state.origin.display_name : 'Tu dirección'));
       });
 
-      state.routingControl.on('routingerror', function (e) {
-        debugLog('✗ Routing error: ' + (e.message || 'unknown error'));
+      state.routingControl.on('routingerror', function () {
+        debugLog('✗ Routing error');
         showError('No se pudo calcular la ruta. Comprueba tu conexión.');
-        document.getElementById('loading-spinner').classList.remove('show');
       });
     }
 
-    /* ==================== SECTION G: GPS TRACKING ==================== */
+    /* ==================== GPS TRACKING ==================== */
     function startTracking() {
-      debugLog('✓ startTracking() called');
-
       if (!('geolocation' in navigator)) {
-        const msg = 'Tu dispositivo no soporta GPS.';
-        debugLog('✗ ' + msg);
-        showError(msg);
+        debugLog('✗ Geolocation not supported');
+        showError('Tu dispositivo no soporta GPS.');
         return;
       }
 
-      debugLog('✓ navigator.geolocation available');
-
-      const options = {
-        enableHighAccuracy: true,
-        maximumAge: 2000,
-        timeout: 10000,
-      };
-
-      debugLog('✓ Calling watchPosition...');
+      debugLog('✓ Starting GPS tracking...');
       try {
-        startPositionTimeout();  // Start 15-second timeout
-        debugLog('✓ Position timeout started (15s)');
-
         state.watchId = navigator.geolocation.watchPosition(
           onPositionUpdate,
           onPositionError,
-          options
+          { enableHighAccuracy: true, maximumAge: 2000, timeout: 10000 }
         );
         debugLog('✓ watchPosition started, ID: ' + state.watchId);
       } catch (err) {
         debugLog('✗ watchPosition error: ' + err.message);
-        clearPositionTimeout();
-        showError('Error al iniciar GPS: ' + err.message);
+        showError('Error GPS: ' + err.message);
       }
     }
 
     function onPositionUpdate(pos) {
       try {
         const { latitude: lat, longitude: lng, heading, accuracy } = pos.coords;
-        debugLog(`✓ Position: ${lat.toFixed(4)}, ${lng.toFixed(4)}, accuracy: ${Math.round(accuracy)}m`);
+        debugLog(`✓ GPS: ${lat.toFixed(4)}, ${lng.toFixed(4)} (${Math.round(accuracy)}m)`);
         state.lastPosition = pos.coords;
         state.heading = heading;
-        clearPositionTimeout();
 
-        debugLog('✓ Updating user marker...');
         updateUserMarker(lat, lng, heading);
-        debugLog('✓ User marker updated');
 
+        // Arrival check
         if (!state.arrived) {
-          const distToDest = haversine(lat, lng, DESTINATION.lat, DESTINATION.lng);
-          debugLog(`✓ Distance to destination: ${Math.round(distToDest)}m`);
-          if (distToDest <= ARRIVAL_RADIUS_M) {
+          const dist = haversine(lat, lng, DESTINATION.lat, DESTINATION.lng);
+          debugLog(`✓ Distance to dest: ${Math.round(dist)}m`);
+          if (dist <= ARRIVAL_RADIUS_M) {
             handleArrival();
             return;
           }
         }
 
         advanceStepIfNeeded(lat, lng);
-
-        if (state.steps.length === 0 && !state.routingControl) {
-          debugLog('✓ First position: initializing route...');
-          document.getElementById('loading-spinner').classList.add('show');
-          initRouting({ lat, lng });
-        }
-
         updateAccuracyDisplay(accuracy);
       } catch (err) {
         debugLog('✗ ERROR in onPositionUpdate: ' + err.message);
-        debugLog('✗ Stack: ' + err.stack);
       }
     }
 
     function onPositionError(err) {
-      debugLog(`✗ Geolocation error code: ${err.code}, message: ${err.message}`);
+      debugLog(`✗ GPS error ${err.code}: ${err.message}`);
       const msgs = {
-        1: 'Permiso de ubicación denegado. Actívalo en ajustes.',
-        2: 'Posición no disponible. Asegúrate de tener señal GPS.',
-        3: 'Tiempo de espera agotado. Muévete a un lugar con mejor señal.',
+        1: 'Permiso de ubicación denegado.',
+        2: 'Posición no disponible.',
+        3: 'Tiempo agotado. Comprueba señal GPS.',
       };
-      const msg = msgs[err.code] || 'Error de ubicación desconocido.';
-      debugLog('✗ Error: ' + msg);
-      showError(msg);
+      showError(msgs[err.code] || 'Error de ubicación.');
     }
 
-    // Timeout: if no position in 15 seconds, show error
-    let positionTimeoutId = null;
-    function startPositionTimeout() {
-      positionTimeoutId = setTimeout(() => {
-        if (state.lastPosition === null) {
-          debugLog('✗ TIMEOUT: No position after 15 seconds');
-          showError('No se pudo obtener tu ubicación. Verifica los permisos.');
-        }
-      }, 15000);
-    }
-
-    function clearPositionTimeout() {
-      if (positionTimeoutId) {
-        clearTimeout(positionTimeoutId);
-        positionTimeoutId = null;
-      }
-    }
-
-    /* ==================== SECTION H: STEP ADVANCEMENT ==================== */
+    /* ==================== STEP ADVANCEMENT ==================== */
     function advanceStepIfNeeded(lat, lng) {
       if (state.currentStepIdx >= state.steps.length - 1) return;
-
-      const nextStep = state.steps[state.currentStepIdx];
-      if (!nextStep.latLng) return;
-
-      const dist = haversine(lat, lng, nextStep.latLng.lat, nextStep.latLng.lng);
-
+      const step = state.steps[state.currentStepIdx];
+      if (!step.latLng) return;
+      const dist = haversine(lat, lng, step.latLng.lat, step.latLng.lng);
       if (dist <= STEP_ADVANCE_RADIUS) {
         state.currentStepIdx++;
         updateStepUI();
@@ -632,61 +445,53 @@
       }
     }
 
-    /* ==================== SECTION I: ARRIVAL DETECTION ==================== */
+    /* ==================== ARRIVAL ==================== */
     function handleArrival() {
+      debugLog('✓ ARRIVED! Showing popup.');
       state.arrived = true;
       if (state.watchId !== null) {
         navigator.geolocation.clearWatch(state.watchId);
         state.watchId = null;
       }
-      document.getElementById('bottom-panel').style.display = 'none';
-      document.getElementById('locate-btn').style.display = 'none';
-      document.getElementById('arrival-banner').classList.add('show');
+      document.getElementById('arrival-overlay').classList.add('show');
+      document.getElementById('arrival-popup').classList.add('show');
       if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
     }
 
-    /* ==================== SECTION J: UI UPDATE FUNCTIONS ==================== */
+    /* ==================== UI UPDATES ==================== */
     function updateStepUI() {
       const step = state.steps[state.currentStepIdx];
       if (!step) return;
-
       document.getElementById('step-instruction').textContent = step.instruction;
-
-      const dist = step.distance;
+      const d = step.distance;
       document.getElementById('step-distance').textContent =
-        dist >= 1000
-          ? `${(dist / 1000).toFixed(1)} km`
-          : `${Math.round(dist)} m`;
-
+        d >= 1000 ? `${(d / 1000).toFixed(1)} km` : `${Math.round(d)} m`;
       document.getElementById('step-counter').textContent =
         `${state.currentStepIdx + 1} / ${state.steps.length}`;
     }
 
     function updateUserMarker(lat, lng, heading) {
-      const rotation = heading != null ? heading : 0;
+      const rot = heading != null ? heading : 0;
       const icon = L.divIcon({
-        className: 'user-marker-icon',
-        html: `<div class="user-arrow" style="transform:rotate(${rotation}deg)">▲</div>`,
+        className: '',
+        html: `<div class="user-arrow" style="transform:rotate(${rot}deg)">&#9650;</div>`,
         iconSize: [32, 32],
         iconAnchor: [16, 16],
       });
-
       if (!state.userMarker) {
-        state.userMarker = L.marker([lat, lng], { icon, zIndexOffset: 1000 }).addTo(
-          state.map
-        );
+        state.userMarker = L.marker([lat, lng], { icon, zIndexOffset: 1000 }).addTo(state.map);
       } else {
         state.userMarker.setLatLng([lat, lng]).setIcon(icon);
       }
     }
 
     function updateAccuracyDisplay(accuracy) {
-      const elem = document.getElementById('step-accuracy');
-      if (accuracy > MIN_ACCURACY_M) {
-        elem.textContent = `⚠ Señal GPS débil (${Math.round(accuracy)}m)`;
-        elem.style.color = '#f59e0b';
+      const el = document.getElementById('step-accuracy');
+      if (accuracy > 50) {
+        el.textContent = `⚠ Señal GPS débil (${Math.round(accuracy)}m)`;
+        el.style.color = '#f59e0b';
       } else {
-        elem.textContent = '';
+        el.textContent = '';
       }
     }
 
@@ -694,98 +499,62 @@
       const toast = document.getElementById('error-toast');
       toast.textContent = msg;
       toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 6000);
+      setTimeout(() => toast.classList.remove('show'), 6000);
     }
 
-    /* ==================== SECTION K: HAVERSINE DISTANCE ==================== */
+    /* ==================== HAVERSINE ==================== */
     function haversine(lat1, lon1, lat2, lon2) {
-      const R = 6371000; // metres
-      const dLat = ((lat2 - lat1) * Math.PI) / 180;
-      const dLon = ((lon2 - lon1) * Math.PI) / 180;
-      const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos((lat1 * Math.PI) / 180) *
-          Math.cos((lat2 * Math.PI) / 180) *
-          Math.sin(dLon / 2) *
-          Math.sin(dLon / 2);
+      const R = 6371000;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
       return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     }
 
-    /* ==================== SECTION L: DEBUG & EVENT HANDLERS ==================== */
-    function debugLog(msg) {
-      console.log(msg);
-      const output = document.getElementById('debug-output');
-      if (!output) {
-        console.warn('✗ debug-output element not found');
-        return;
-      }
-      const timestamp = new Date().toLocaleTimeString();
-      output.innerHTML += `<div>[${timestamp}] ${msg}</div>`;
-      const logContainer = document.getElementById('debug-log');
-      if (logContainer) {
-        logContainer.scrollTop = logContainer.scrollHeight;
-      }
-    }
-
-    // Log that debugging functions are ready
-    console.log('✓ debugLog() function defined');
-
-    function handleStartTracking() {
-      debugLog('✓ handleStartTracking() called via onclick');
-      const btn = document.getElementById('start-tracking-btn');
-      const overlay = document.getElementById('permission-overlay');
-
-      btn.disabled = true;
-      btn.style.opacity = '0.7';
-      btn.textContent = 'Solicitando permiso...';
-
-      debugLog('✓ Button disabled, text changed');
-
-      setTimeout(() => {
-        debugLog('✓ Hiding overlay');
-        overlay.style.display = 'none';
-        document.getElementById('step-instruction').textContent = 'Solicitando ubicación...';
-
-        debugLog('✓ About to call startTracking()');
-        try {
-          startTracking();
-          debugLog('✓ startTracking() completed without error');
-        } catch (err) {
-          debugLog('✗ Error in startTracking(): ' + err.message);
-          showError('Error: ' + err.message);
-        }
-      }, 300);
-    }
-
-    function handleDenyTracking() {
-      debugLog('✓ handleDenyTracking() called');
-      const overlay = document.getElementById('permission-overlay');
-      overlay.style.display = 'none';
-      document.getElementById('step-instruction').textContent = 'Sin permiso de ubicación no puedo guiarte.';
-    }
-
+    /* ==================== LOCATE BUTTON ==================== */
     document.getElementById('locate-btn').addEventListener('click', () => {
       if (state.lastPosition) {
         state.map.setView(
           [state.lastPosition.latitude, state.lastPosition.longitude],
-          LOCATE_ZOOM,
-          { animate: true }
+          LOCATE_ZOOM, { animate: true }
         );
       }
     });
 
-    // Boot sequence
+    /* ==================== BOOT ==================== */
     document.addEventListener('DOMContentLoaded', () => {
-      debugLog('✓ DOMContentLoaded fired');
-      debugLog('✓ Applying theme');
+      debugLog('✓ DOMContentLoaded');
       applyStoredTheme();
 
-      debugLog('✓ Initializing map');
-      initMap();
+      // Read origin from localStorage (set by index.html)
+      const originJson = localStorage.getItem('origin');
+      if (!originJson) {
+        debugLog('✗ No origin in localStorage, redirecting...');
+        showError('No se ha indicado dirección de origen.');
+        setTimeout(() => location.href = 'index.html', 2000);
+        return;
+      }
 
-      debugLog('✓ Boot sequence complete, waiting for button click');
+      try {
+        state.origin = JSON.parse(originJson);
+        debugLog(`✓ Origin: ${state.origin.display_name} (${state.origin.lat.toFixed(4)}, ${state.origin.lng.toFixed(4)})`);
+      } catch (e) {
+        debugLog('✗ Invalid origin data');
+        location.href = 'index.html';
+        return;
+      }
+
+      debugLog('✓ Initializing map...');
+      initMap();
+      debugLog('✓ Map ready');
+
+      // Calculate and draw route from origin to destination
+      debugLog('✓ Calculating route...');
+      initRouting({ lat: state.origin.lat, lng: state.origin.lng });
+
+      // Start GPS tracking for real-time position
+      debugLog('✓ Requesting GPS permission...');
+      startTracking();
     });
   </script>
 </body>

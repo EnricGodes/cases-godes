@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <title>Navegación a Av. Mistral</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* CSS Variables */
     :root {
       --bg-page: #f5f5f5;
       --bg-panel: #ffffff;
@@ -14,9 +14,12 @@
       --text-secondary: #6b7280;
       --bg-button: #2563eb;
       --bg-button-hover: #1d4ed8;
+      --bg-button-disabled: #93c5fd;
       --text-on-button: #ffffff;
       --border: #e5e7eb;
       --shadow: rgba(0, 0, 0, 0.1);
+      --accent-success: #16a34a;
+      --accent-error: #dc2626;
     }
 
     [data-theme="dark"] {
@@ -26,17 +29,15 @@
       --text-secondary: #94a3b8;
       --bg-button: #3b82f6;
       --bg-button-hover: #60a5fa;
+      --bg-button-disabled: #1e40af;
       --text-on-button: #ffffff;
       --border: #334155;
       --shadow: rgba(0, 0, 0, 0.4);
+      --accent-success: #4ade80;
+      --accent-error: #f87171;
     }
 
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Inter', sans-serif;
@@ -47,50 +48,120 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     main {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 2rem;
+      gap: 1.5rem;
       text-align: center;
       padding: 1.5rem;
+      width: 100%;
       max-width: 400px;
     }
 
-    h1 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      line-height: 1.2;
-      color: var(--text-primary);
+    h1 { font-size: 1.75rem; font-weight: 700; line-height: 1.2; }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
     }
 
+    /* Address input */
+    .input-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    #address-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      border: 2px solid var(--border);
+      border-radius: 0.5rem;
+      background-color: var(--bg-panel);
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    #address-input:focus {
+      border-color: var(--bg-button);
+    }
+
+    #address-input.valid {
+      border-color: var(--accent-success);
+    }
+
+    #address-input.invalid {
+      border-color: var(--accent-error);
+    }
+
+    /* Autocomplete dropdown */
+    #suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 0 0 0.5rem 0.5rem;
+      box-shadow: 0 4px 12px var(--shadow);
+      z-index: 100;
+      display: none;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .suggestion-item {
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+      transition: background-color 0.15s;
+    }
+
+    .suggestion-item:last-child { border-bottom: none; }
+    .suggestion-item:hover { background-color: var(--border); }
+
+    /* Validation message */
+    #validation-msg {
+      font-size: 0.8rem;
+      min-height: 1.2rem;
+      transition: color 0.2s;
+    }
+
+    /* Start button */
     .start-btn {
-      background-color: var(--bg-button);
+      background-color: var(--bg-button-disabled);
       color: var(--text-on-button);
       border: none;
       padding: 0.75rem 2rem;
       font-size: 1rem;
       font-weight: 600;
       border-radius: 0.5rem;
-      cursor: pointer;
+      cursor: not-allowed;
       width: 100%;
       max-width: 280px;
-      transition: background-color 0.2s ease;
+      transition: background-color 0.2s, transform 0.1s;
+      opacity: 0.6;
     }
 
-    .start-btn:hover {
-      background-color: var(--bg-button-hover);
+    .start-btn.enabled {
+      background-color: var(--bg-button);
+      cursor: pointer;
+      opacity: 1;
     }
 
-    .start-btn:active {
-      transform: scale(0.98);
-    }
+    .start-btn.enabled:hover { background-color: var(--bg-button-hover); }
+    .start-btn.enabled:active { transform: scale(0.98); }
 
-    /* Theme toggle button */
+    /* Theme toggle */
     .theme-toggle {
       position: fixed;
       top: 1.5rem;
@@ -106,51 +177,145 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.2s ease;
       box-shadow: 0 2px 8px var(--shadow);
     }
 
-    .theme-toggle:hover {
-      box-shadow: 0 4px 12px var(--shadow);
-    }
-
-    .theme-toggle:active {
-      transform: scale(0.95);
-    }
+    .version { font-size: 0.7rem; color: var(--text-secondary); margin-top: 1rem; }
   </style>
 </head>
 <body>
   <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema">☀</button>
 
   <main>
-    <h1>te voy a llevar a una dirección</h1>
-    <button class="start-btn" onclick="location.href='page2.html'">Empezar</button>
-    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 2rem;">v1.5</p>
+    <h1>Te voy a llevar a una dirección</h1>
+    <p class="subtitle">Destino: Av. Mistral 10, 08015 Barcelona</p>
+
+    <div class="input-wrapper">
+      <input id="address-input" type="text" placeholder="Escribe tu dirección actual..." autocomplete="off">
+      <div id="suggestions"></div>
+    </div>
+    <p id="validation-msg"></p>
+
+    <button class="start-btn" id="start-btn" disabled>Empezar</button>
+    <p class="version">v2.0</p>
   </main>
 
   <script>
-    // Theme initialization and management
+    // Theme
     function applyStoredTheme() {
       const saved = localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', saved);
-      updateThemeToggleIcon(saved);
+      document.querySelector('.theme-toggle').textContent = saved === 'dark' ? '🌙' : '☀';
     }
-
     function toggleTheme() {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
-      updateThemeToggleIcon(next);
+      document.querySelector('.theme-toggle').textContent = next === 'dark' ? '🌙' : '☀';
     }
-
-    function updateThemeToggleIcon(theme) {
-      const btn = document.querySelector('.theme-toggle');
-      btn.textContent = theme === 'dark' ? '🌙' : '☀';
-    }
-
-    // Apply theme on page load
     applyStoredTheme();
+
+    // State
+    let selectedOrigin = null; // { lat, lng, display_name }
+    let debounceTimer = null;
+
+    const input = document.getElementById('address-input');
+    const suggestionsEl = document.getElementById('suggestions');
+    const validationMsg = document.getElementById('validation-msg');
+    const startBtn = document.getElementById('start-btn');
+
+    // Nominatim search (debounced)
+    input.addEventListener('input', () => {
+      const query = input.value.trim();
+      selectedOrigin = null;
+      updateValidation(null);
+
+      if (debounceTimer) clearTimeout(debounceTimer);
+
+      if (query.length < 3) {
+        suggestionsEl.style.display = 'none';
+        return;
+      }
+
+      debounceTimer = setTimeout(() => searchAddress(query), 400);
+    });
+
+    async function searchAddress(query) {
+      try {
+        const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=5&countrycodes=es&accept-language=es`;
+        const resp = await fetch(url, {
+          headers: { 'User-Agent': 'NavMistralApp/2.0' }
+        });
+        const results = await resp.json();
+
+        if (results.length === 0) {
+          suggestionsEl.innerHTML = '<div class="suggestion-item" style="color: var(--text-secondary); cursor:default;">No se encontraron resultados</div>';
+          suggestionsEl.style.display = 'block';
+          return;
+        }
+
+        suggestionsEl.innerHTML = '';
+        results.forEach(r => {
+          const div = document.createElement('div');
+          div.className = 'suggestion-item';
+          div.textContent = r.display_name;
+          div.addEventListener('click', () => selectAddress(r));
+          suggestionsEl.appendChild(div);
+        });
+        suggestionsEl.style.display = 'block';
+      } catch (err) {
+        console.error('Nominatim error:', err);
+      }
+    }
+
+    function selectAddress(result) {
+      selectedOrigin = {
+        lat: parseFloat(result.lat),
+        lng: parseFloat(result.lon),
+        display_name: result.display_name,
+      };
+      input.value = result.display_name;
+      suggestionsEl.style.display = 'none';
+      updateValidation(true);
+    }
+
+    function updateValidation(valid) {
+      input.classList.remove('valid', 'invalid');
+      if (valid === true) {
+        input.classList.add('valid');
+        validationMsg.textContent = '✓ Dirección validada';
+        validationMsg.style.color = 'var(--accent-success)';
+        startBtn.disabled = false;
+        startBtn.classList.add('enabled');
+      } else if (valid === false) {
+        input.classList.add('invalid');
+        validationMsg.textContent = 'Selecciona una dirección de la lista';
+        validationMsg.style.color = 'var(--accent-error)';
+        startBtn.disabled = true;
+        startBtn.classList.remove('enabled');
+      } else {
+        validationMsg.textContent = '';
+        startBtn.disabled = true;
+        startBtn.classList.remove('enabled');
+      }
+    }
+
+    // Close suggestions on click outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.input-wrapper')) {
+        suggestionsEl.style.display = 'none';
+      }
+    });
+
+    // Navigate to page2
+    startBtn.addEventListener('click', () => {
+      if (!selectedOrigin) {
+        updateValidation(false);
+        return;
+      }
+      localStorage.setItem('origin', JSON.stringify(selectedOrigin));
+      location.href = 'page2.html';
+    });
   </script>
 </body>
 </html>
