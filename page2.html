@@ -323,12 +323,17 @@
   <!-- LOCATE ME BUTTON -->
   <button id="locate-btn" aria-label="Centrar en mi posición">⊕</button>
 
+  <!-- DEBUG LOG (visible for debugging) -->
+  <div id="debug-log" style="position: fixed; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,0.9); color: #0f0; font-family: monospace; font-size: 0.65rem; padding: 0.5rem; max-height: 120px; overflow-y: auto; z-index: 3000; display: block; border-top: 1px solid #0f0;">
+    <div id="debug-output" style="line-height: 1.2;"></div>
+  </div>
+
   <!-- PERMISSION OVERLAY (shown initially on iOS) -->
   <div id="permission-overlay" style="position: fixed; inset: 0; background-color: var(--bg-page); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2500; padding: 2rem; text-align: center;">
     <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary);">¿Dónde estás?</h2>
     <p style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.5;">Esta app necesita acceso a tu ubicación para guiarte paso a paso hasta Avenida Mistral.</p>
-    <button id="start-tracking-btn" style="padding: 0.75rem 2rem; background-color: var(--bg-button); color: var(--text-on-button); border: none; border-radius: 0.5rem; cursor: pointer; font-size: 1rem; font-weight: 600; width: 100%; max-width: 250px; margin-bottom: 1rem;">Permitir ubicación</button>
-    <button id="deny-tracking-btn" style="padding: 0.75rem 2rem; background-color: transparent; color: var(--accent-step); border: 2px solid var(--accent-step); border-radius: 0.5rem; cursor: pointer; font-size: 1rem; font-weight: 600; width: 100%; max-width: 250px;">Cancelar</button>
+    <button id="start-tracking-btn" onclick="handleStartTracking()" style="padding: 0.75rem 2rem; background-color: var(--bg-button); color: var(--text-on-button); border: none; border-radius: 0.5rem; cursor: pointer; font-size: 1rem; font-weight: 600; width: 100%; max-width: 250px; margin-bottom: 1rem; transition: all 0.2s;">Permitir ubicación</button>
+    <button id="deny-tracking-btn" onclick="handleDenyTracking()" style="padding: 0.75rem 2rem; background-color: transparent; color: var(--accent-step); border: 2px solid var(--accent-step); border-radius: 0.5rem; cursor: pointer; font-size: 1rem; font-weight: 600; width: 100%; max-width: 250px; transition: all 0.2s;">Cancelar</button>
   </div>
 
   <!-- BOTTOM PANEL -->
@@ -363,6 +368,9 @@
   <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
 
   <script>
+    // IMMEDIATE LOG: confirm script is running
+    console.log('✓ page2.html script tag executing');
+
     /* ==================== SECTION A: CONSTANTS & CONFIG ==================== */
     const DESTINATION = { lat: 41.3762, lng: 2.1641 };
     const DESTINATION_LABEL = 'Av. Mistral 10, 08015 Barcelona';
@@ -695,7 +703,59 @@
       return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     }
 
-    /* ==================== SECTION L: EVENT LISTENERS & BOOT ==================== */
+    /* ==================== SECTION L: DEBUG & EVENT HANDLERS ==================== */
+    function debugLog(msg) {
+      console.log(msg);
+      const output = document.getElementById('debug-output');
+      if (!output) {
+        console.warn('✗ debug-output element not found');
+        return;
+      }
+      const timestamp = new Date().toLocaleTimeString();
+      output.innerHTML += `<div>[${timestamp}] ${msg}</div>`;
+      const logContainer = document.getElementById('debug-log');
+      if (logContainer) {
+        logContainer.scrollTop = logContainer.scrollHeight;
+      }
+    }
+
+    // Log that debugging functions are ready
+    console.log('✓ debugLog() function defined');
+
+    function handleStartTracking() {
+      debugLog('✓ handleStartTracking() called via onclick');
+      const btn = document.getElementById('start-tracking-btn');
+      const overlay = document.getElementById('permission-overlay');
+
+      btn.disabled = true;
+      btn.style.opacity = '0.7';
+      btn.textContent = 'Solicitando permiso...';
+
+      debugLog('✓ Button disabled, text changed');
+
+      setTimeout(() => {
+        debugLog('✓ Hiding overlay');
+        overlay.style.display = 'none';
+        document.getElementById('step-instruction').textContent = 'Solicitando ubicación...';
+
+        debugLog('✓ About to call startTracking()');
+        try {
+          startTracking();
+          debugLog('✓ startTracking() completed without error');
+        } catch (err) {
+          debugLog('✗ Error in startTracking(): ' + err.message);
+          showError('Error: ' + err.message);
+        }
+      }, 300);
+    }
+
+    function handleDenyTracking() {
+      debugLog('✓ handleDenyTracking() called');
+      const overlay = document.getElementById('permission-overlay');
+      overlay.style.display = 'none';
+      document.getElementById('step-instruction').textContent = 'Sin permiso de ubicación no puedo guiarte.';
+    }
+
     document.getElementById('locate-btn').addEventListener('click', () => {
       if (state.lastPosition) {
         state.map.setView(
@@ -708,41 +768,14 @@
 
     // Boot sequence
     document.addEventListener('DOMContentLoaded', () => {
+      debugLog('✓ DOMContentLoaded fired');
+      debugLog('✓ Applying theme');
       applyStoredTheme();
+
+      debugLog('✓ Initializing map');
       initMap();
 
-      // Permission overlay buttons
-      const startBtn = document.getElementById('start-tracking-btn');
-      const denyBtn = document.getElementById('deny-tracking-btn');
-      const overlay = document.getElementById('permission-overlay');
-
-      console.log('✓ Buttons found:', startBtn, denyBtn, overlay);
-
-      startBtn.addEventListener('click', (e) => {
-        console.log('✓ Start tracking button clicked');
-        e.preventDefault();
-        e.stopPropagation();
-
-        startBtn.disabled = true;
-        startBtn.textContent = 'Solicitando permiso...';
-        overlay.style.display = 'none';
-
-        console.log('✓ About to call startTracking()');
-        try {
-          startTracking();
-          console.log('✓ startTracking() called successfully');
-        } catch (err) {
-          console.error('✗ Error in startTracking():', err);
-          showError('Error al iniciar geolocalización: ' + err.message);
-        }
-      });
-
-      denyBtn.addEventListener('click', (e) => {
-        console.log('✓ Deny button clicked');
-        e.preventDefault();
-        overlay.style.display = 'none';
-        document.getElementById('step-instruction').textContent = 'Sin permiso de ubicación no puedo guiarte.';
-      });
+      debugLog('✓ Boot sequence complete, waiting for button click');
     });
   </script>
 </body>
