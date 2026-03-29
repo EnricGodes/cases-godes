@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <title>Navegación a Av. Mistral</title>
+  <title>Navegación a pie</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -64,17 +64,7 @@
 
     h1 { font-size: 1.75rem; font-weight: 700; line-height: 1.2; }
 
-    .subtitle {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.4;
-    }
-
-    /* Address input */
-    .input-wrapper {
-      position: relative;
-      width: 100%;
-    }
+    .input-wrapper { position: relative; width: 100%; }
 
     #address-input {
       width: 100%;
@@ -89,24 +79,13 @@
       transition: border-color 0.2s;
     }
 
-    #address-input:focus {
-      border-color: var(--bg-button);
-    }
+    #address-input:focus { border-color: var(--bg-button); }
+    #address-input.valid { border-color: var(--accent-success); }
+    #address-input.invalid { border-color: var(--accent-error); }
 
-    #address-input.valid {
-      border-color: var(--accent-success);
-    }
-
-    #address-input.invalid {
-      border-color: var(--accent-error);
-    }
-
-    /* Autocomplete dropdown */
     #suggestions {
       position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
+      top: 100%; left: 0; right: 0;
       background-color: var(--bg-panel);
       border: 1px solid var(--border);
       border-radius: 0 0 0.5rem 0.5rem;
@@ -129,14 +108,12 @@
     .suggestion-item:last-child { border-bottom: none; }
     .suggestion-item:hover { background-color: var(--border); }
 
-    /* Validation message */
     #validation-msg {
       font-size: 0.8rem;
       min-height: 1.2rem;
       transition: color 0.2s;
     }
 
-    /* Start button */
     .start-btn {
       background-color: var(--bg-button-disabled);
       color: var(--text-on-button);
@@ -161,22 +138,17 @@
     .start-btn.enabled:hover { background-color: var(--bg-button-hover); }
     .start-btn.enabled:active { transform: scale(0.98); }
 
-    /* Theme toggle */
     .theme-toggle {
       position: fixed;
-      top: 1.5rem;
-      right: 1.5rem;
-      width: 2.5rem;
-      height: 2.5rem;
+      top: 1.5rem; right: 1.5rem;
+      width: 2.5rem; height: 2.5rem;
       border-radius: 50%;
       background-color: var(--bg-panel);
       border: 1px solid var(--border);
       color: var(--text-primary);
       font-size: 1.25rem;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       box-shadow: 0 2px 8px var(--shadow);
     }
 
@@ -187,17 +159,16 @@
   <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema">☀</button>
 
   <main>
-    <h1>Te voy a llevar a una dirección</h1>
-    <p class="subtitle">Destino: Av. Mistral 10, 08015 Barcelona</p>
+    <h1>¿Dónde quieres ir?</h1>
 
     <div class="input-wrapper">
-      <input id="address-input" type="text" placeholder="Escribe tu dirección actual..." autocomplete="off">
+      <input id="address-input" type="text" placeholder="Escribe una dirección de destino..." autocomplete="off">
       <div id="suggestions"></div>
     </div>
     <p id="validation-msg"></p>
 
     <button class="start-btn" id="start-btn" disabled>Empezar</button>
-    <p class="version">v2.1</p>
+    <p class="version">v3.0</p>
   </main>
 
   <script>
@@ -216,7 +187,7 @@
     applyStoredTheme();
 
     // State
-    let selectedOrigin = null; // { lat, lng, display_name }
+    let selectedDestination = null;
     let debounceTimer = null;
 
     const input = document.getElementById('address-input');
@@ -227,16 +198,14 @@
     // Nominatim search (debounced)
     input.addEventListener('input', () => {
       const query = input.value.trim();
-      selectedOrigin = null;
+      selectedDestination = null;
       updateValidation(null);
 
       if (debounceTimer) clearTimeout(debounceTimer);
-
       if (query.length < 3) {
         suggestionsEl.style.display = 'none';
         return;
       }
-
       debounceTimer = setTimeout(() => searchAddress(query), 400);
     });
 
@@ -244,7 +213,7 @@
       try {
         const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=5&countrycodes=es&accept-language=es`;
         const resp = await fetch(url, {
-          headers: { 'User-Agent': 'NavMistralApp/2.0' }
+          headers: { 'User-Agent': 'NavApp/3.0' }
         });
         const results = await resp.json();
 
@@ -269,7 +238,7 @@
     }
 
     function selectAddress(result) {
-      selectedOrigin = {
+      selectedDestination = {
         lat: parseFloat(result.lat),
         lng: parseFloat(result.lon),
         display_name: result.display_name,
@@ -300,20 +269,17 @@
       }
     }
 
-    // Close suggestions on click outside
     document.addEventListener('click', (e) => {
-      if (!e.target.closest('.input-wrapper')) {
-        suggestionsEl.style.display = 'none';
-      }
+      if (!e.target.closest('.input-wrapper')) suggestionsEl.style.display = 'none';
     });
 
-    // Navigate to page2
+    // Navigate to page2 with destination in localStorage
     startBtn.addEventListener('click', () => {
-      if (!selectedOrigin) {
+      if (!selectedDestination) {
         updateValidation(false);
         return;
       }
-      localStorage.setItem('origin', JSON.stringify(selectedOrigin));
+      localStorage.setItem('destination', JSON.stringify(selectedDestination));
       location.href = 'page2.html';
     });
   </script>
