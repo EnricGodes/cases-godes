@@ -240,7 +240,7 @@
 
   <script>
     /* ==================== CONFIG ==================== */
-    const DESTINATION = { lat: 41.3762, lng: 2.1641 };
+    const DESTINATION = { lat: 41.3775664, lng: 2.1562934 };
     const DESTINATION_LABEL = 'Av. Mistral 10, 08015 Barcelona';
     const ARRIVAL_RADIUS_M = 15;
     const STEP_ADVANCE_RADIUS = 25;
@@ -342,8 +342,8 @@
           L.latLng(DESTINATION.lat, DESTINATION.lng),
         ],
         router: L.Routing.osrmv1({
-          serviceUrl: 'https://router.project-osrm.org/route/v1',
-          profile: 'foot',
+          serviceUrl: 'https://routing.openstreetmap.de/routed-foot/route/v1',
+          profile: 'driving',  // server has foot profile built-in, OSRM API expects 'driving' as placeholder
         }),
         routeWhileDragging: false,
         addWaypoints: false,
