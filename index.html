@@ -168,7 +168,7 @@
     <p id="validation-msg"></p>
 
     <button class="start-btn" id="start-btn" disabled>Empezar</button>
-    <p class="version">v3.1</p>
+    <p class="version">v3.2</p>
   </main>
 
   <script>
@@ -199,14 +199,21 @@
     input.addEventListener('input', () => {
       const query = input.value.trim();
       selectedDestination = null;
-      updateValidation(null);
 
       if (debounceTimer) clearTimeout(debounceTimer);
-      if (query.length < 3) {
+
+      // Enable button if there's text (free input allowed)
+      if (query.length >= 3) {
+        startBtn.disabled = false;
+        startBtn.classList.add('enabled');
+        validationMsg.textContent = '';
+        debounceTimer = setTimeout(() => searchAddress(query), 400);
+      } else {
         suggestionsEl.style.display = 'none';
-        return;
+        startBtn.disabled = true;
+        startBtn.classList.remove('enabled');
+        validationMsg.textContent = '';
       }
-      debounceTimer = setTimeout(() => searchAddress(query), 400);
     });
 
     async function searchAddress(query) {
@@ -245,42 +252,63 @@
       };
       input.value = result.display_name;
       suggestionsEl.style.display = 'none';
-      updateValidation(true);
+      input.classList.remove('invalid');
+      input.classList.add('valid');
+      validationMsg.textContent = '✓ Dirección validada';
+      validationMsg.style.color = 'var(--accent-success)';
     }
 
-    function updateValidation(valid) {
-      input.classList.remove('valid', 'invalid');
-      if (valid === true) {
-        input.classList.add('valid');
-        validationMsg.textContent = '✓ Dirección validada';
-        validationMsg.style.color = 'var(--accent-success)';
-        startBtn.disabled = false;
-        startBtn.classList.add('enabled');
-      } else if (valid === false) {
-        input.classList.add('invalid');
-        validationMsg.textContent = 'Selecciona una dirección de la lista';
-        validationMsg.style.color = 'var(--accent-error)';
-        startBtn.disabled = true;
-        startBtn.classList.remove('enabled');
-      } else {
-        validationMsg.textContent = '';
-        startBtn.disabled = true;
-        startBtn.classList.remove('enabled');
-      }
+    // Geocode free text via Nominatim
+    async function geocodeFreeText(query) {
+      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&countrycodes=es&accept-language=es`;
+      const resp = await fetch(url, { headers: { 'User-Agent': 'NavApp/3.2' } });
+      const results = await resp.json();
+      if (results.length === 0) return null;
+      return {
+        lat: parseFloat(results[0].lat),
+        lng: parseFloat(results[0].lon),
+        display_name: results[0].display_name,
+      };
     }
 
     document.addEventListener('click', (e) => {
       if (!e.target.closest('.input-wrapper')) suggestionsEl.style.display = 'none';
     });
 
-    // Navigate to page2 with destination in localStorage
-    startBtn.addEventListener('click', () => {
-      if (!selectedDestination) {
-        updateValidation(false);
+    // Navigate to page2
+    startBtn.addEventListener('click', async () => {
+      const query = input.value.trim();
+      if (query.length < 3) return;
+
+      // If user already selected a suggestion, use it directly
+      if (selectedDestination) {
+        localStorage.setItem('destination', JSON.stringify(selectedDestination));
+        location.href = 'page2.html';
         return;
       }
-      localStorage.setItem('destination', JSON.stringify(selectedDestination));
-      location.href = 'page2.html';
+
+      // Otherwise geocode the free text
+      startBtn.disabled = true;
+      startBtn.textContent = 'Buscando dirección...';
+
+      try {
+        const result = await geocodeFreeText(query);
+        if (result) {
+          localStorage.setItem('destination', JSON.stringify(result));
+          location.href = 'page2.html';
+        } else {
+          input.classList.add('invalid');
+          validationMsg.textContent = 'No se encontró esa dirección. Intenta ser más específico.';
+          validationMsg.style.color = 'var(--accent-error)';
+          startBtn.disabled = false;
+          startBtn.textContent = 'Empezar';
+        }
+      } catch (err) {
+        validationMsg.textContent = 'Error de conexión. Inténtalo de nuevo.';
+        validationMsg.style.color = 'var(--accent-error)';
+        startBtn.disabled = false;
+        startBtn.textContent = 'Empezar';
+      }
     });
   </script>
 </body>
