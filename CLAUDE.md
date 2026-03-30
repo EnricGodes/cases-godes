@@ -8,8 +8,9 @@ This is a static HTML website with simple navigation between two pages. The proj
 
 ## Project Structure
 
-- **index.html** — Main landing page with a red "Siguiente" button that navigates to page2.html. Uses the Inter font from Google Fonts.
-- **page2.html** — Second page displaying "hello world".
+- **index.html** — Landing page for the historical expedition "Experiencia Godes Caballeria" (imported from Stitch). Uses Tailwind CSS, Noto Serif + Manrope fonts.
+- **navegacion.html** — Walking navigation page with destination input and GPS-based routing.
+- **page2.html** — Step-by-step navigation view with real-time GPS tracking and turn-by-turn instructions.
 
 ## Local Development
 

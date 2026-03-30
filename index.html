@@ -1,315 +1,214 @@
-<!DOCTYPE html>
-<html data-theme="light" lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <title>Navegación a pie</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-page: #f5f5f5;
-      --bg-panel: #ffffff;
-      --text-primary: #111827;
-      --text-secondary: #6b7280;
-      --bg-button: #2563eb;
-      --bg-button-hover: #1d4ed8;
-      --bg-button-disabled: #93c5fd;
-      --text-on-button: #ffffff;
-      --border: #e5e7eb;
-      --shadow: rgba(0, 0, 0, 0.1);
-      --accent-success: #16a34a;
-      --accent-error: #dc2626;
-    }
-
-    [data-theme="dark"] {
-      --bg-page: #0f172a;
-      --bg-panel: #1e293b;
-      --text-primary: #f1f5f9;
-      --text-secondary: #94a3b8;
-      --bg-button: #3b82f6;
-      --bg-button-hover: #60a5fa;
-      --bg-button-disabled: #1e40af;
-      --text-on-button: #ffffff;
-      --border: #334155;
-      --shadow: rgba(0, 0, 0, 0.4);
-      --accent-success: #4ade80;
-      --accent-error: #f87171;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>1859: Barcelona - El Archivo Digital</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "on-secondary-fixed-variant": "#4a4644",
+                "surface-container-highest": "#e7e2d9",
+                "on-surface-variant": "#4d4639",
+                "on-primary": "#ffffff",
+                "inverse-primary": "#e4c375",
+                "surface-container": "#f2ede4",
+                "secondary-container": "#e5dedb",
+                "outline": "#7e7667",
+                "tertiary-fixed": "#fdddba",
+                "inverse-on-surface": "#f5f0e7",
+                "surface-bright": "#fef9f0",
+                "primary-fixed": "#ffdf97",
+                "tertiary-fixed-dim": "#e0c1a0",
+                "inverse-surface": "#32302a",
+                "on-primary-fixed-variant": "#5a4300",
+                "on-error": "#ffffff",
+                "surface-variant": "#e7e2d9",
+                "primary-fixed-dim": "#e4c375",
+                "error": "#ba1a1a",
+                "on-tertiary": "#ffffff",
+                "surface-dim": "#ded9d1",
+                "surface-container-high": "#ece8df",
+                "primary-container": "#8c712d",
+                "surface-container-lowest": "#ffffff",
+                "on-tertiary-fixed-variant": "#584329",
+                "secondary-fixed-dim": "#cbc5c2",
+                "surface-container-low": "#f8f3ea",
+                "tertiary": "#6f583d",
+                "primary": "#715915",
+                "on-secondary-container": "#66625f",
+                "surface-tint": "#745b18",
+                "on-background": "#1d1c16",
+                "error-container": "#ffdad6",
+                "outline-variant": "#d0c5b4",
+                "tertiary-container": "#897053",
+                "background": "#fef9f0",
+                "on-tertiary-container": "#fffbff",
+                "on-primary-container": "#fffbff",
+                "on-secondary-fixed": "#1e1b19",
+                "on-tertiary-fixed": "#281804",
+                "on-error-container": "#93000a",
+                "on-primary-fixed": "#251a00",
+                "secondary-fixed": "#e8e1de",
+                "on-secondary": "#ffffff",
+                "on-surface": "#1d1c16",
+                "surface": "#fef9f0",
+                "secondary": "#625e5b"
+              },
+              fontFamily: {
+                "headline": ["Noto Serif"],
+                "body": ["Manrope"],
+                "label": ["Manrope"]
+              },
+              borderRadius: {"DEFAULT": "0rem", "lg": "0rem", "xl": "0rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fef9f0;
+            color: #1d1c16;
+            font-family: 'Manrope', sans-serif;
+            overflow-x: hidden;
+        }
+        .serif-text { font-family: 'Noto Serif', serif; }
+        .sharp-corners { border-radius: 0 !important; }
+        .sepia-overlay {
+            background: linear-gradient(to bottom, rgba(29, 28, 22, 0.4), rgba(113, 89, 21, 0.7));
+        }
+        .vellum-blur {
+            backdrop-filter: blur(12px);
+            background-color: rgba(254, 249, 240, 0.8);
+        }
+    </style>
+<style>
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-page);
-      color: var(--text-primary);
-      height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: background-color 0.3s, color 0.3s;
+      min-height: max(884px, 100dvh);
     }
-
-    main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-      text-align: center;
-      padding: 1.5rem;
-      width: 100%;
-      max-width: 400px;
-    }
-
-    h1 { font-size: 1.75rem; font-weight: 700; line-height: 1.2; }
-
-    .input-wrapper { position: relative; width: 100%; }
-
-    #address-input {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      font-size: 1rem;
-      font-family: 'Inter', sans-serif;
-      border: 2px solid var(--border);
-      border-radius: 0.5rem;
-      background-color: var(--bg-panel);
-      color: var(--text-primary);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    #address-input:focus { border-color: var(--bg-button); }
-    #address-input.valid { border-color: var(--accent-success); }
-    #address-input.invalid { border-color: var(--accent-error); }
-
-    #suggestions {
-      position: absolute;
-      top: 100%; left: 0; right: 0;
-      background-color: var(--bg-panel);
-      border: 1px solid var(--border);
-      border-radius: 0 0 0.5rem 0.5rem;
-      box-shadow: 0 4px 12px var(--shadow);
-      z-index: 100;
-      display: none;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    .suggestion-item {
-      padding: 0.75rem 1rem;
-      font-size: 0.9rem;
-      cursor: pointer;
-      border-bottom: 1px solid var(--border);
-      color: var(--text-primary);
-      transition: background-color 0.15s;
-    }
-
-    .suggestion-item:last-child { border-bottom: none; }
-    .suggestion-item:hover { background-color: var(--border); }
-
-    #validation-msg {
-      font-size: 0.8rem;
-      min-height: 1.2rem;
-      transition: color 0.2s;
-    }
-
-    .start-btn {
-      background-color: var(--bg-button-disabled);
-      color: var(--text-on-button);
-      border: none;
-      padding: 0.75rem 2rem;
-      font-size: 1rem;
-      font-weight: 600;
-      border-radius: 0.5rem;
-      cursor: not-allowed;
-      width: 100%;
-      max-width: 280px;
-      transition: background-color 0.2s, transform 0.1s;
-      opacity: 0.6;
-    }
-
-    .start-btn.enabled {
-      background-color: var(--bg-button);
-      cursor: pointer;
-      opacity: 1;
-    }
-
-    .start-btn.enabled:hover { background-color: var(--bg-button-hover); }
-    .start-btn.enabled:active { transform: scale(0.98); }
-
-    .theme-toggle {
-      position: fixed;
-      top: 1.5rem; right: 1.5rem;
-      width: 2.5rem; height: 2.5rem;
-      border-radius: 50%;
-      background-color: var(--bg-panel);
-      border: 1px solid var(--border);
-      color: var(--text-primary);
-      font-size: 1.25rem;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 2px 8px var(--shadow);
-    }
-
-    .version { font-size: 0.7rem; color: var(--text-secondary); margin-top: 1rem; }
   </style>
-</head>
-<body>
-  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema">☀</button>
-
-  <main>
-    <h1>¿Dónde quieres ir?</h1>
-
-    <div class="input-wrapper">
-      <input id="address-input" type="text" placeholder="Escribe una dirección de destino..." autocomplete="off">
-      <div id="suggestions"></div>
-    </div>
-    <p id="validation-msg"></p>
-
-    <button class="start-btn" id="start-btn" disabled>Empezar</button>
-    <p class="version">v3.2</p>
-  </main>
-
-  <script>
-    // Theme
-    function applyStoredTheme() {
-      const saved = localStorage.getItem('theme') || 'light';
-      document.documentElement.setAttribute('data-theme', saved);
-      document.querySelector('.theme-toggle').textContent = saved === 'dark' ? '🌙' : '☀';
-    }
-    function toggleTheme() {
-      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      document.querySelector('.theme-toggle').textContent = next === 'dark' ? '🌙' : '☀';
-    }
-    applyStoredTheme();
-
-    // State
-    let selectedDestination = null;
-    let debounceTimer = null;
-
-    const input = document.getElementById('address-input');
-    const suggestionsEl = document.getElementById('suggestions');
-    const validationMsg = document.getElementById('validation-msg');
-    const startBtn = document.getElementById('start-btn');
-
-    // Nominatim search (debounced)
-    input.addEventListener('input', () => {
-      const query = input.value.trim();
-      selectedDestination = null;
-
-      if (debounceTimer) clearTimeout(debounceTimer);
-
-      // Enable button if there's text (free input allowed)
-      if (query.length >= 3) {
-        startBtn.disabled = false;
-        startBtn.classList.add('enabled');
-        validationMsg.textContent = '';
-        debounceTimer = setTimeout(() => searchAddress(query), 400);
-      } else {
-        suggestionsEl.style.display = 'none';
-        startBtn.disabled = true;
-        startBtn.classList.remove('enabled');
-        validationMsg.textContent = '';
-      }
-    });
-
-    async function searchAddress(query) {
-      try {
-        const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=5&countrycodes=es&accept-language=es`;
-        const resp = await fetch(url, {
-          headers: { 'User-Agent': 'NavApp/3.0' }
-        });
-        const results = await resp.json();
-
-        if (results.length === 0) {
-          suggestionsEl.innerHTML = '<div class="suggestion-item" style="color: var(--text-secondary); cursor:default;">No se encontraron resultados</div>';
-          suggestionsEl.style.display = 'block';
-          return;
-        }
-
-        suggestionsEl.innerHTML = '';
-        results.forEach(r => {
-          const div = document.createElement('div');
-          div.className = 'suggestion-item';
-          div.textContent = r.display_name;
-          div.addEventListener('click', () => selectAddress(r));
-          suggestionsEl.appendChild(div);
-        });
-        suggestionsEl.style.display = 'block';
-      } catch (err) {
-        console.error('Nominatim error:', err);
-      }
-    }
-
-    function selectAddress(result) {
-      selectedDestination = {
-        lat: parseFloat(result.lat),
-        lng: parseFloat(result.lon),
-        display_name: result.display_name,
-      };
-      input.value = result.display_name;
-      suggestionsEl.style.display = 'none';
-      input.classList.remove('invalid');
-      input.classList.add('valid');
-      validationMsg.textContent = '✓ Dirección validada';
-      validationMsg.style.color = 'var(--accent-success)';
-    }
-
-    // Geocode free text via Nominatim
-    async function geocodeFreeText(query) {
-      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&countrycodes=es&accept-language=es`;
-      const resp = await fetch(url, { headers: { 'User-Agent': 'NavApp/3.2' } });
-      const results = await resp.json();
-      if (results.length === 0) return null;
-      return {
-        lat: parseFloat(results[0].lat),
-        lng: parseFloat(results[0].lon),
-        display_name: results[0].display_name,
-      };
-    }
-
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.input-wrapper')) suggestionsEl.style.display = 'none';
-    });
-
-    // Navigate to page2
-    startBtn.addEventListener('click', async () => {
-      const query = input.value.trim();
-      if (query.length < 3) return;
-
-      // If user already selected a suggestion, use it directly
-      if (selectedDestination) {
-        localStorage.setItem('destination', JSON.stringify(selectedDestination));
-        location.href = 'page2.html';
-        return;
-      }
-
-      // Otherwise geocode the free text
-      startBtn.disabled = true;
-      startBtn.textContent = 'Buscando dirección...';
-
-      try {
-        const result = await geocodeFreeText(query);
-        if (result) {
-          localStorage.setItem('destination', JSON.stringify(result));
-          location.href = 'page2.html';
-        } else {
-          input.classList.add('invalid');
-          validationMsg.textContent = 'No se encontró esa dirección. Intenta ser más específico.';
-          validationMsg.style.color = 'var(--accent-error)';
-          startBtn.disabled = false;
-          startBtn.textContent = 'Empezar';
-        }
-      } catch (err) {
-        validationMsg.textContent = 'Error de conexión. Inténtalo de nuevo.';
-        validationMsg.style.color = 'var(--accent-error)';
-        startBtn.disabled = false;
-        startBtn.textContent = 'Empezar';
-      }
-    });
-  </script>
-</body>
-</html>
+  </head>
+<body class="bg-background text-on-background">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-6 h-16 bg-[#fef9f0]/80 dark:bg-[#1d1c16]/80 backdrop-blur-md border-b border-[#d0c5b4]/15 shadow-[0_0_40px_rgba(29,28,22,0.06)] z-50">
+<button class="text-[#715915] dark:text-[#e4c375] hover:text-[#e4c375] transition-colors duration-300" style="">
+<span class="material-symbols-outlined" data-icon="menu" style="">menu</span>
+</button>
+<h1 class="font-['Noto_Serif'] font-bold tracking-tight text-[#1d1c16] dark:text-[#fef9f0] text-lg" style="">1859: Barcelona</h1>
+<button class="text-[#4d4639] dark:text-[#d0c5b4] hover:text-[#e4c375] transition-colors duration-300" style="">
+<span class="material-symbols-outlined" data-icon="history_edu" style="">history_edu</span>
+</button>
+</header>
+<main class="relative min-h-screen pt-16 flex flex-col items-center justify-center overflow-hidden">
+<!-- Hero Background Section with Intentional Asymmetry -->
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 sepia-overlay z-10"></div>
+<img alt="Historical Barcelona street" class="w-full h-full object-cover filter sepia-[0.3] contrast-[1.1]" data-alt="Detailed sepia engraving of a narrow 19th-century street in Barcelona's Born district, crowded with people in period clothing and horse carriages under soft hazy light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuW2DKNc7a_2i8YOFRhFynBSUy_pUfr7hFUWDVFW3FpVeuxFzo4DNePIsAwYBM-aG0cA3j8FY94cleiUJNNPVohPsAutIRmNJHS9abFx51f_RABZZCwSYOGnjmXpaiBkHImchlu6RHRuzz_wSqWjwzKJDNAIcjv_EDab2Va4MKPs0WAG1dVszSJIUFDEUMBCilTwVUjB3JJ43kQbRR9I70rHCL4xVEygPKtNIvcvkBLRvINxtkiEtF1RM0I5IoRMKdn71FxwUDK1g" style="">
+</div>
+<!-- Central Content Canvas -->
+<div class="relative z-20 container mx-auto px-6 py-24 flex flex-col md:flex-row items-center gap-16">
+<!-- Hero Text Block (Asymmetric Placement) -->
+<div class="w-full md:w-3/5 lg:w-1/2 space-y-10">
+<div class="space-y-4">
+<span class="inline-block px-4 py-1 bg-primary text-on-primary font-label text-[10px] uppercase tracking-[0.2em] font-semibold" style="">
+                        Expedición Histórica
+                    </span>
+<h2 class="serif-text text-5xl md:text-7xl font-black text-white leading-tight tracking-tighter drop-shadow-lg" style=""><h2 data-section-id="ufp3bt" data-start="264" data-end="327"><span role="text"><em data-start="280" data-end="327">Tras los pasos de la familia Godes Caballeria</em></span></h2></h2>
+</div>
+<!-- Artifact Plate Layout for Content -->
+<div class="bg-surface-container-high/90 backdrop-blur-md p-10 md:p-14 border-l-4 border-primary shadow-2xl relative">
+<div class="absolute top-4 right-6 font-label text-[10px] text-on-surface-variant uppercase tracking-widest opacity-60" style="">
+                        Exp. N.º 1859-G
+                    </div>
+<p class="font-body text-lg md:text-xl text-on-surface leading-relaxed mb-10 font-light" style="">
+                        Vamos a iniciar un recorrido en la <span class="font-bold text-primary" style="">Barcelona de finales del siglo XIX</span>. Esta experiencia te llevará por las calles donde vivió la familia Godes Caballeria.
+                    </p>
+<div class="space-y-6 border-t border-outline-variant/30 pt-8">
+<p class="font-body text-base text-on-surface-variant leading-relaxed" style="">
+                            A través de un recorrido cronológico, descubrirás cómo era la vida en la Barcelona anterior al Eixample: una ciudad densa, intensa y en transformación. Cada parada se desbloquea al llegar físicamente al lugar.
+                        </p>
+<p class="font-body text-base italic text-on-surface-variant" style="">
+                            A medida que avances, irás reconstruyendo una historia familiar que forma parte de la historia de la ciudad.
+                        </p>
+</div>
+<div class="mt-12 flex flex-col sm:flex-row gap-6">
+<button class="bg-primary text-on-primary px-10 py-5 text-sm font-label uppercase tracking-[0.15em] font-bold sharp-corners hover:bg-primary-container transition-all active:scale-[0.98] flex items-center justify-center gap-3" style="">
+                            Iniciar el recorrido
+                            <span class="material-symbols-outlined text-sm" data-icon="arrow_forward" style="">arrow_forward</span>
+</button>
+<button class="border border-outline/30 text-on-surface px-8 py-5 text-sm font-label uppercase tracking-[0.15em] font-bold sharp-corners hover:bg-surface-container-low transition-all" style="">
+                            Ver archivos
+                        </button>
+</div>
+</div>
+</div>
+<!-- Asymmetric Decorative Element (The "Archivist's Eye") -->
+<div class="hidden lg:block w-1/3 relative">
+<div class="aspect-[3/4] bg-surface-container border border-outline-variant/20 p-4 shadow-xl rotate-3 translate-y-12">
+<img alt="Old family portrait" class="w-full h-full object-cover grayscale brightness-90 contrast-125" data-alt="High contrast black and white vintage portrait of a 19th century Spanish family in formal attire, slightly faded edges, professional museum archival style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7cOSAJMV3MLSRWdFf6sKUnsjgr_MWiqrHpJioY09VfH7xi0ox7A5mRwstbt4R7ioQb1IXU_n4OzEZQ6Xjw5Lr33YnK_-iYshU0S1OL6FAvRi3yQV6mnerY6eyGac73rlgjOT8_Q67ZPGJXKhrPVsbJWBdwnF60ONUKbqOgnokZ3e1ROxdrDMyhSDQBwXxYZROFqlJr0waXk9DKquY6HbT2RwNWejblmOskw-3_cy5LWLrX2MWAtyuA9hEE8a0Uqu6sGrvOoeDVH4" style="">
+<div class="mt-4 font-label text-[10px] text-tertiary uppercase tracking-widest text-right" style="">
+                        Ref: Fam. Godes Caballeria
+                     </div>
+</div>
+<div class="absolute -top-10 -left-10 w-32 h-32 border-t-2 border-l-2 border-primary/40"></div>
+<div class="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-primary/40"></div>
+</div>
+</div>
+</main>
+<!-- Navigation Drawer (State: Hidden/Floating) -->
+<nav class="fixed inset-y-0 left-0 z-[60] py-10 bg-[#fef9f0] dark:bg-[#1d1c16] h-full w-80 rounded-r-0 border-r border-[#d0c5b4]/10 shadow-2xl -translate-x-full transition-transform duration-500">
+<div class="px-8 mb-12 flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="auto_stories" style="">auto_stories</span>
+<span class="font-['Noto_Serif'] font-black text-[#715915] text-xl" style="">The Archivist</span>
+</div>
+<div class="flex flex-col gap-1">
+<a class="px-8 py-4 flex items-center gap-4 text-[#715915] bg-[#f2ede4] font-['Noto_Serif'] text-lg font-bold transition-all duration-300" href="#" style="">
+<span class="material-symbols-outlined" data-icon="map" style="">map</span> Cerdà Plan
+            </a>
+<a class="px-8 py-4 flex items-center gap-4 text-[#4d4639] hover:bg-[#f8f3ea] hover:pl-10 transition-all duration-300 font-['Noto_Serif'] text-lg" href="#" style="">
+<span class="material-symbols-outlined" data-icon="architecture" style="">architecture</span> Modernisme
+            </a>
+<a class="px-8 py-4 flex items-center gap-4 text-[#4d4639] hover:bg-[#f8f3ea] hover:pl-10 transition-all duration-300 font-['Noto_Serif'] text-lg" href="#" style="">
+<span class="material-symbols-outlined" data-icon="castle" style="">castle</span> City Walls
+            </a>
+<a class="px-8 py-4 flex items-center gap-4 text-[#4d4639] hover:bg-[#f8f3ea] hover:pl-10 transition-all duration-300 font-['Noto_Serif'] text-lg" href="#" style="">
+<span class="material-symbols-outlined" data-icon="factory" style="">factory</span> Industrialization
+            </a>
+<a class="px-8 py-4 flex items-center gap-4 text-[#4d4639] hover:bg-[#f8f3ea] hover:pl-10 transition-all duration-300 font-['Noto_Serif'] text-lg" href="#" style="">
+<span class="material-symbols-outlined" data-icon="format_list_numbered" style="">format_list_numbered</span> Historical Index
+            </a>
+</div>
+</nav>
+<!-- BottomNavBar (Visible on Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#f2ede4] dark:bg-[#1d1c16] border-t border-[#d0c5b4]/20 z-50">
+<div class="flex flex-col items-center justify-center text-[#4d4639] dark:text-[#d0c5b4] opacity-60 hover:opacity-100 transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="auto_stories" style="">auto_stories</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" style="">Archive</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#715915] dark:text-[#e4c375] scale-110">
+<span class="material-symbols-outlined" data-icon="explore" style="">explore</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" style="">Map</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#4d4639] dark:text-[#d0c5b4] opacity-60 hover:opacity-100 transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="timeline" style="">timeline</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" style="">Timeline</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#4d4639] dark:text-[#d0c5b4] opacity-60 hover:opacity-100 transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="edit_note" style="">edit_note</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" style="">Journal</span>
+</div>
+</nav>
+<!-- Decorative Textures & Atmospheric Elements -->
+<div class="fixed inset-0 pointer-events-none opacity-[0.03] z-[100]" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDg-8DvkKjjgBhzdbxeOmA3u2_YtbBtcKqe5u7dcVg6lPpn2mL2Eebc0M3LeffF7TouatU44Mf6jg4Qcx61N9N-c2uNdPVczDor1MSzzD3FT3xSb51FmiPaTxFPXd6I4O8qFG0qE0auY4vMZZX1k8HJOK3_NCmi4UKsjMIDEB3bJOMhjOMotLH4XI_W36GQzaGunS3btEpgVTH2LjGInFOPxgx9nNmLo6uEFKrEWVuuxxAwbAcyUprSeXJqAKprf1UwYb_sx3rPgSs&quot;);"></div>
+<div class="fixed bottom-12 right-12 pointer-events-none opacity-20 z-[100] hidden lg:block">
+<span class="serif-text text-[12rem] font-black select-none text-primary/10" style="">1859</span>
+</div>
+</body></html>
