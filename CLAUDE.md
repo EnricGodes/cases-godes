@@ -4,13 +4,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a static HTML website with simple navigation between two pages. The project is minimal and contains no build system, dependencies, or complex tooling.
+A location-based historical expedition through 19th-century Barcelona, tracing the Godes Caballeria family. Static HTML, no build system.
 
 ## Project Structure
 
-- **index.html** — Landing page for the historical expedition "Experiencia Godes Caballeria" (imported from Stitch). Uses Tailwind CSS, Noto Serif + Manrope fonts.
-- **navegacion.html** — Walking navigation page with destination input and GPS-based routing.
-- **page2.html** — Step-by-step navigation view with real-time GPS tracking and turn-by-turn instructions.
+```
+/
+├── index.html                         — Landing page (entry point)
+├── experiencia/                       — Historical expedition stops (from Stitch)
+│   ├── navegacion-born.html           — Walking directions to Born district
+│   └── carrer-fonollar.html           — Carrer del Fonollar stop
+├── navegacion/                        — GPS navigation app
+│   ├── destino.html                   — Destination input with geocoding
+│   └── ruta.html                      — Step-by-step turn-by-turn navigation
+└── docs/                             — Documentation
+    ├── design-system.md               — L'Eixample Chronology design system
+    └── README.md
+```
+
+### User flow
+`index.html` → `experiencia/navegacion-born.html` → `experiencia/carrer-fonollar.html`
 
 ## Local Development
 

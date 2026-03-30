@@ -283,7 +283,7 @@
       // If user already selected a suggestion, use it directly
       if (selectedDestination) {
         localStorage.setItem('destination', JSON.stringify(selectedDestination));
-        location.href = 'page2.html';
+        location.href = 'ruta.html';
         return;
       }
 
@@ -295,7 +295,7 @@
         const result = await geocodeFreeText(query);
         if (result) {
           localStorage.setItem('destination', JSON.stringify(result));
-          location.href = 'page2.html';
+          location.href = 'ruta.html';
         } else {
           input.classList.add('invalid');
           validationMsg.textContent = 'No se encontró esa dirección. Intenta ser más específico.';

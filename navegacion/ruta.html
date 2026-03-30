@@ -201,7 +201,7 @@
     <div class="icon">&#10003;</div>
     <h2>Has llegado al destino</h2>
     <p id="arrival-dest-text"></p>
-    <button onclick="location.href='navegacion.html'">Nuevo destino</button>
+    <button onclick="location.href='destino.html'">Nuevo destino</button>
   </div>
 
   <div id="error-toast"></div>
@@ -227,7 +227,7 @@
       arrived: false,
       lastPosition: null,
       heading: null,
-      destination: null,  // { lat, lng, display_name } from navegacion.html
+      destination: null,  // { lat, lng, display_name } from destino.html
       routeReady: false,
       gpsReady: false,
     };
@@ -546,18 +546,18 @@
     document.addEventListener('DOMContentLoaded', () => {
       applyStoredTheme();
 
-      // Read destination from localStorage (set by navegacion.html)
+      // Read destination from localStorage (set by destino.html)
       const destJson = localStorage.getItem('destination');
       if (!destJson) {
         showError('No se ha indicado destino.');
-        setTimeout(() => location.href = 'navegacion.html', 2000);
+        setTimeout(() => location.href = 'destino.html', 2000);
         return;
       }
 
       try {
         state.destination = JSON.parse(destJson);
       } catch (e) {
-        location.href = 'navegacion.html';
+        location.href = 'destino.html';
         return;
       }
 
