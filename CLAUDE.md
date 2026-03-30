@@ -37,7 +37,7 @@ Then open http://localhost:8000 in your browser.
 
 ## Git Workflow
 
-This project uses GitHub (EnricGodes/next-pages) for version control. **As work is completed, commit changes to git with clean, descriptive commit messages and push to GitHub.** This ensures we never lose work and maintain a clear history of changes. Each commit message should explain what changed and why, making it easy to understand the project's evolution.
+This project uses GitHub (EnricGodes/cases-godes) for version control. **As work is completed, commit changes to git with clean, descriptive commit messages and push to GitHub.** This ensures we never lose work and maintain a clear history of changes. Each commit message should explain what changed and why, making it easy to understand the project's evolution.
 
 ## Key Constraints
 
