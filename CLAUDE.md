@@ -12,8 +12,9 @@ A location-based historical expedition through 19th-century Barcelona, tracing t
 /
 ├── index.html                         — Landing page (entry point)
 ├── experiencia/                       — Historical expedition stops (from Stitch)
-│   ├── navegacion-1.html              — Walking directions to Born district
-│   └── carrer-fonollar-20.html        — Carrer del Fonollar 20 stop
+│   ├── navegacion-1.html              — Walking directions to Fonollar 20
+│   ├── carrer-fonollar-20.html        — Carrer del Fonollar 20 stop
+│   └── navegacion-2.html              — Walking directions to Mestres Casals i Martorell 14
 ├── navegacion/                        — GPS navigation app
 │   ├── destino.html                   — Destination input with geocoding
 │   └── ruta.html                      — Step-by-step turn-by-turn navigation
@@ -23,7 +24,7 @@ A location-based historical expedition through 19th-century Barcelona, tracing t
 ```
 
 ### User flow
-`index.html` → `experiencia/navegacion-1.html` → `experiencia/carrer-fonollar-20.html`
+`index.html` → `experiencia/navegacion-1.html` → `experiencia/carrer-fonollar-20.html` → `experiencia/navegacion-2.html`
 
 ## Local Development
 

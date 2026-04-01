@@ -109,6 +109,12 @@ In this system, depth is atmospheric, not structural.
 ### Specialized Component: The "Artifact Plate"
 *   A specific layout pattern for featured items: A `surface-container-high` container with no border, featuring a `headline-sm` title, a `body-sm` description, and a `label-sm` "Inventory Number" in the top right corner.
 
+### Specialized Component: The "Consulta de l'Arxiver" (Quiz)
+*   Interactive quiz sections always use a **dark background** (`#2b251e`) with the vellum texture overlay. This creates a dramatic tonal inversion that signals interactivity and separates the quiz from editorial content.
+*   Text uses `inverse-on-surface` (`#f5f0e7`) tones. Accent elements use gold (`#e4c375`, `#a68942`).
+*   Option borders use `#a68942` at 20% opacity. Hover state shifts to `#3d342a`.
+*   Correct answers highlight with green (`#2d5016` bg, `#4ade80` border). Incorrect answers dim with red (`#4a1c1c` bg, `#ef4444` border, 60% opacity).
+
 ---
 
 ## 6. Do's and Don'ts
