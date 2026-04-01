@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html class="light" lang="ca"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=no" name="viewport"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Etapa 3/20 - Rere les passes de la familia Godes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-fixed-variant": "#4a4644",
+            "surface-container-highest": "#e7e2d9",
+            "on-surface-variant": "#4d4639",
+            "on-primary": "#ffffff",
+            "inverse-primary": "#e4c375",
+            "surface-container": "#f2ede4",
+            "secondary-container": "#e5dedb",
+            "outline": "#7e7667",
+            "tertiary-fixed": "#fdddba",
+            "inverse-on-surface": "#f5f0e7",
+            "surface-bright": "#fef9f0",
+            "primary-fixed": "#ffdf97",
+            "tertiary-fixed-dim": "#e0c1a0",
+            "inverse-surface": "#32302a",
+            "on-primary-fixed-variant": "#5a4300",
+            "on-error": "#ffffff",
+            "surface-variant": "#e7e2d9",
+            "primary-fixed-dim": "#e4c375",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#ded9d1",
+            "surface-container-high": "#ece8df",
+            "primary-container": "#8c712d",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#584329",
+            "secondary-fixed-dim": "#cbc5c2",
+            "surface-container-low": "#f8f3ea",
+            "tertiary": "#6f583d",
+            "primary": "#715915",
+            "on-secondary-container": "#66625f",
+            "surface-tint": "#745b18",
+            "on-background": "#1d1c16",
+            "error-container": "#ffdad6",
+            "outline-variant": "#d0c5b4",
+            "tertiary-container": "#897053",
+            "background": "#fef9f0",
+            "on-tertiary-container": "#fffbff",
+            "on-primary-container": "#fffbff",
+            "on-secondary-fixed": "#1e1b19",
+            "on-tertiary-fixed": "#281804",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#251a00",
+            "secondary-fixed": "#e8e1de",
+            "on-secondary": "#ffffff",
+            "on-surface": "#1d1c16",
+            "surface": "#fef9f0",
+            "secondary": "#625e5b"
+          },
+          fontFamily: {
+            "headline": ["Noto Serif"],
+            "body": ["Manrope"],
+            "label": ["Manrope"]
+          },
+          borderRadius: {"DEFAULT": "0rem", "lg": "0rem", "xl": "0rem", "full": "9999px"},
+        },
+      },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .leaflet-tile-pane {
+      filter: sepia(0.35) contrast(0.9) brightness(1.05);
+    }
+    .leaflet-marker-pane img,
+    .leaflet-marker-pane .user-arrow {
+      filter: none;
+    }
+    .leaflet-routing-container { display: none !important; }
+    .leaflet-control-zoom a {
+      background-color: #fef9f0 !important;
+      color: #715915 !important;
+      border-color: #d0c5b4 !important;
+      border-radius: 0 !important;
+      font-family: 'Manrope', sans-serif !important;
+    }
+    .leaflet-control-zoom a:hover {
+      background-color: #f2ede4 !important;
+    }
+    .leaflet-control-zoom {
+      border: none !important;
+      box-shadow: 0 0 40px rgba(29,28,22,0.06) !important;
+    }
+    .user-arrow {
+      font-size: 1.5rem;
+      color: #715915;
+      text-shadow: 0 0 6px rgba(113, 89, 21, 0.5);
+      transition: transform 0.3s ease;
+    }
+    .map-gradient-overlay {
+      background: linear-gradient(to bottom, rgba(254, 249, 240, 0) 70%, rgba(254, 249, 240, 1) 100%);
+    }
+    #arrival-overlay {
+      display: none; position: fixed; inset: 0;
+      background-color: rgba(29, 28, 22, 0.6); z-index: 1999;
+    }
+    #arrival-overlay.show { display: block; }
+    #arrival-popup {
+      display: none; position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fef9f0;
+      padding: 3rem 2.5rem;
+      z-index: 2000;
+      box-shadow: 0 0 60px rgba(29,28,22,0.15);
+      text-align: center; max-width: 340px; width: 90%;
+    }
+    #arrival-popup.show { display: block; }
+    #error-toast {
+      position: fixed; top: 5rem;
+      left: 50%; transform: translateX(-50%);
+      background-color: #ba1a1a; color: #fff;
+      padding: 0.75rem 1rem;
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.85rem; z-index: 2000;
+      max-width: 90vw; text-align: center;
+      display: none;
+    }
+    #error-toast.show { display: block; }
+    #menu-overlay {
+      display: none; position: fixed; inset: 0;
+      background-color: rgba(29, 28, 22, 0.5); z-index: 55;
+    }
+    #menu-overlay.show { display: block; }
+</style>
+</head>
+
+<body class="bg-background text-on-background font-body antialiased min-h-screen flex flex-col">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-6 h-16 bg-[#fef9f0]/80 backdrop-blur-md z-50 border-b border-[#d0c5b4]/15 shadow-[0_0_40px_rgba(29,28,22,0.06)]">
+  <button id="menu-btn" class="text-[#715915] hover:text-[#e4c375] transition-colors duration-300">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <h1 class="font-['Noto_Serif'] font-bold tracking-tight text-[#1d1c16] text-lg" data-ca="Etapa 3/20" data-es="Etapa 3/20">Etapa 3/20</h1>
+  <div class="w-10"></div>
+</header>
+
+<!-- Side Menu -->
+<div id="menu-overlay"></div>
+<nav id="side-menu" class="fixed inset-y-0 left-0 z-[60] bg-[#fef9f0] h-full w-80 border-r border-[#d0c5b4]/10 shadow-2xl -translate-x-full transition-transform duration-400 overflow-y-auto">
+  <div class="px-6 pt-6 pb-4 flex items-center justify-between border-b border-outline-variant/20">
+    <span class="font-['Noto_Serif'] font-black text-primary text-lg">Les Cases dels Godes</span>
+    <button id="menu-close" class="text-on-surface-variant hover:text-primary transition-colors">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+  <div class="px-6 py-6 space-y-8">
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Idioma" data-es="Idioma">Idioma</p>
+      <div class="flex gap-2">
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="ca">Català</button>
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="es">Castellano</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Mida de la lletra" data-es="Tamaño de fuente">Mida de la lletra</p>
+      <div class="flex gap-2">
+        <button class="font-btn px-3 py-2 text-xs font-label font-semibold border border-outline-variant/30 transition-all" data-size="normal">A</button>
+        <button class="font-btn px-3 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-size="grande">A+</button>
+        <button class="font-btn px-3 py-2 text-base font-label font-semibold border border-outline-variant/30 transition-all" data-size="extragrande">A++</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Equip de recerca" data-es="Equipo de investigación">Equip de recerca</p>
+      <div class="space-y-1 font-body text-sm text-on-surface leading-relaxed">
+        <p>Emili Godes i Faura</p>
+        <p>Enric Godes Maté</p>
+        <p>Ignasi Palazuelos Salvadó</p>
+        <p>Oriol Mestre Campi</p>
+      </div>
+      <div class="space-y-1 font-body text-sm text-on-surface-variant leading-relaxed mt-3">
+        <p>Maria Rosa Godes Diago (+)</p>
+        <p>Jesús Mestre Godes (+)</p>
+        <p>Montserrat Godes Diago (+)</p>
+        <p>Enric Cabestany Carreras (+)</p>
+      </div>
+    </div>
+    <div class="border-t border-outline-variant/20 pt-6">
+      <p class="font-label text-xs text-on-surface-variant" data-ca="Experiència creada per Enric Godes" data-es="Experiencia creada por Enric Godes">Experiència creada per Enric Godes</p>
+    </div>
+  </div>
+</nav>
+
+<main class="flex-grow pt-16 pb-20 overflow-x-hidden">
+
+  <!-- Title Section -->
+  <section class="px-6 pt-8 pb-6 md:px-24 bg-surface">
+    <div class="max-w-3xl mx-auto space-y-4">
+      <div class="flex items-center gap-4">
+        <span class="h-px w-12 bg-outline-variant"></span>
+        <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Navegació Activa" data-es="Navegación Activa">Navegació Activa</p>
+      </div>
+      <h2 class="font-headline text-3xl md:text-5xl font-bold text-on-background leading-tight tracking-tight" data-ca="Desplaça't fins a la <span class='italic text-primary'>Plaça de Sant Agustí Vell, 19</span>." data-es="Desplázate hasta la <span class='italic text-primary'>Plaça de Sant Agustí Vell, 19</span>.">Desplaça't fins a la <span class="italic text-primary">Plaça de Sant Agustí Vell, 19</span>.</h2>
+    </div>
+  </section>
+
+  <!-- Live Map Section -->
+  <section class="relative w-full h-[486px] md:h-[530px] overflow-hidden">
+    <div id="map" class="absolute inset-0 z-0"></div>
+    <div class="absolute top-4 left-4 bg-[#fef9f0]/90 backdrop-blur-sm p-4 shadow-[0_0_40px_rgba(29,28,22,0.06)] border border-[#d0c5b4]/15 max-w-[220px] z-[400]">
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mb-1" data-ca="Registre Cartogràfic" data-es="Registro Cartográfico">Registre Cartogràfic</p>
+      <h3 class="font-headline text-lg font-bold text-primary leading-tight">Ciutat Vella</h3>
+      <div class="mt-3 flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm text-primary">directions_walk</span>
+        <span id="map-eta" class="font-label text-xs font-semibold text-on-surface" data-ca="Calculant..." data-es="Calculando...">Calculant...</span>
+      </div>
+    </div>
+    <button id="locate-btn" class="absolute bottom-20 right-4 z-[400] w-12 h-12 bg-[#fef9f0] text-primary flex items-center justify-center shadow-[0_0_40px_rgba(29,28,22,0.06)] border border-[#d0c5b4]/15 hover:bg-surface-container-low transition-all" aria-label="Centrar en la meva posició">
+      <span class="material-symbols-outlined">my_location</span>
+    </button>
+    <div id="step-panel" class="absolute bottom-0 left-0 right-0 z-[400] bg-[#fef9f0]/90 backdrop-blur-md border-t border-[#d0c5b4]/15 px-5 py-4">
+      <p id="step-counter" class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">- / -</p>
+      <p id="step-instruction" class="font-headline text-base font-bold text-on-background leading-snug mb-1" data-ca="Obtenint ubicació GPS..." data-es="Obteniendo ubicación GPS...">Obtenint ubicació GPS...</p>
+      <p id="step-distance" class="font-label text-sm font-semibold text-primary"></p>
+      <p id="step-accuracy" class="font-label text-xs text-on-surface-variant mt-1"></p>
+    </div>
+    <div class="absolute inset-0 map-gradient-overlay pointer-events-none z-[300]"></div>
+  </section>
+
+  <!-- Information Content Section -->
+  <section class="px-6 py-10 md:px-24 md:py-16 bg-surface">
+    <div class="max-w-3xl mx-auto space-y-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
+        <div class="md:col-span-8">
+          <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Continuem cap al proper domicili de la família Godes. La Plaça de Sant Agustí Vell es troba a pocs minuts caminant des de Mestres Casals i Martorell." data-es="Continuamos hacia el siguiente domicilio de la familia Godes. La Plaça de Sant Agustí Vell se encuentra a pocos minutos caminando desde Mestres Casals i Martorell.">Continuem cap al proper domicili de la família Godes. La Plaça de Sant Agustí Vell es troba a pocs minuts caminant des de Mestres Casals i Martorell.</p>
+          <p class="font-body text-base text-on-surface-variant mt-4 leading-relaxed italic" data-ca="La plaça era un punt de trobada del barri, un espai obert enmig de la trama densa de carrers medievals." data-es="La plaza era un punto de encuentro del barrio, un espacio abierto en medio de la trama densa de calles medievales.">La plaça era un punt de trobada del barri, un espai obert enmig de la trama densa de carrers medievals.</p>
+        </div>
+        <div class="md:col-span-4 bg-surface-container-high p-6 flex flex-col gap-2">
+          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant" data-ca="Temps estimat" data-es="Tiempo estimado">Temps estimat</span>
+          <div class="flex items-baseline gap-1">
+            <span id="eta-minutes" class="font-headline text-4xl font-bold text-primary">-</span>
+            <span class="font-body text-sm font-semibold uppercase text-on-surface" data-ca="minuts" data-es="minutos">minuts</span>
+          </div>
+          <p id="eta-detail" class="font-label text-xs text-on-surface-variant mt-2" data-ca="Calculant ruta..." data-es="Calculando ruta...">Calculant ruta...</p>
+        </div>
+      </div>
+      <div class="pt-8 flex flex-col sm:flex-row gap-4">
+        <button id="btn-arrived" class="bg-primary text-on-primary px-10 py-5 font-label font-bold uppercase tracking-widest text-sm hover:bg-primary-fixed-dim transition-all duration-300 active:scale-95" data-ca="Ja hi he arribat" data-es="Ya he llegado">Ja hi he arribat</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#f2ede4] z-50 border-t border-[#d0c5b4]/20">
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="#">
+    <span class="material-symbols-outlined">auto_stories</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Arxiu" data-es="Archivo">Arxiu</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#715915] scale-110" href="#">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Mapa" data-es="Mapa">Mapa</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="#">
+    <span class="material-symbols-outlined">timeline</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Cronologia" data-es="Cronología">Cronologia</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="#">
+    <span class="material-symbols-outlined">edit_note</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Diari" data-es="Diario">Diari</span>
+  </a>
+</nav>
+
+<!-- Arrival Overlay & Popup -->
+<div id="arrival-overlay"></div>
+<div id="arrival-popup">
+  <span class="material-symbols-outlined text-5xl text-primary mb-4" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+  <h2 class="font-headline text-2xl font-bold text-on-background mb-2" data-ca="Has arribat" data-es="Has llegado">Has arribat</h2>
+  <p class="font-body text-sm text-on-surface-variant mb-2">Plaça de Sant Agustí Vell, 19</p>
+  <p class="font-body text-base text-on-surface-variant mb-8" data-ca="La següent parada de l'expedició està preparada per a tu." data-es="La siguiente parada de la expedición está lista para ti.">La següent parada de l'expedició està preparada per a tu.</p>
+  <a href="#" class="block bg-primary text-on-primary px-10 py-4 font-label font-bold uppercase tracking-widest text-sm hover:bg-primary-fixed-dim transition-all duration-300 active:scale-95 no-underline text-center" data-ca="Continuar expedició" data-es="Continuar expedición">Continuar expedició</a>
+</div>
+
+<div id="error-toast"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+<script src="../js/shared.js"></script>
+
+<script>
+  /* ==================== CONFIG ==================== */
+  const DESTINATION = {
+    lat: 41.3877094,
+    lng: 2.1806801,
+    display_name: 'Plaça de Sant Agustí Vell 19, Barcelona'
+  };
+  const ARRIVAL_RADIUS_M = 15;
+  const STEP_ADVANCE_RADIUS = 25;
+  const LOCATE_ZOOM = 17;
+  const WALK_SPEED_KMH = 5;
+
+  const MANEUVER = {
+    ca: {
+      'Head': 'Dirigeix-te', 'Continue': 'Continua',
+      'SlightRight': 'Gira lleugerament a la dreta', 'Right': 'Gira a la dreta',
+      'SharpRight': 'Gira bruscament a la dreta', 'Uturn': 'Fes mitja volta',
+      'SharpLeft': 'Gira bruscament a l\'esquerra', 'Left': 'Gira a l\'esquerra',
+      'SlightLeft': 'Gira lleugerament a l\'esquerra',
+      'WaypointReached': 'Has arribat al punt intermedi',
+      'Roundabout': 'A la rotonda', 'DestinationReached': 'Has arribat al teu destí',
+    },
+    es: {
+      'Head': 'Dirígete', 'Continue': 'Continúa',
+      'SlightRight': 'Gira ligeramente a la derecha', 'Right': 'Gira a la derecha',
+      'SharpRight': 'Gira bruscamente a la derecha', 'Uturn': 'Da media vuelta',
+      'SharpLeft': 'Gira bruscamente a la izquierda', 'Left': 'Gira a la izquierda',
+      'SlightLeft': 'Gira ligeramente a la izquierda',
+      'WaypointReached': 'Llegaste al punto intermedio',
+      'Roundabout': 'En la rotonda', 'DestinationReached': 'Has llegado a tu destino',
+    }
+  };
+
+  /* ==================== STATE ==================== */
+  const state = {
+    map: null, routingControl: null, watchId: null, userMarker: null,
+    steps: [], currentStepIdx: 0, arrived: false,
+    lastPosition: null, heading: null, routeReady: false, gpsReady: false,
+  };
+
+  function lang() { return localStorage.getItem('lang') || 'ca'; }
+
+  /* ==================== MAP ==================== */
+  function initMap() {
+    state.map = L.map('map', { zoomControl: false, attributionControl: false })
+      .setView([DESTINATION.lat, DESTINATION.lng], 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(state.map);
+    L.control.zoom({ position: 'bottomright' }).addTo(state.map);
+    const destIcon = L.divIcon({
+      className: '',
+      html: '<span class="material-symbols-outlined" style="font-size:2rem;color:#715915;font-variation-settings:\'FILL\' 1;text-shadow:0 2px 8px rgba(113,89,21,0.3);">location_on</span>',
+      iconSize: [32, 32], iconAnchor: [16, 32],
+    });
+    L.marker([DESTINATION.lat, DESTINATION.lng], { icon: destIcon }).addTo(state.map);
+  }
+
+  /* ==================== ROUTING ==================== */
+  function formatDistance(m) { return m >= 1000 ? `${(m/1000).toFixed(1)} km` : `${Math.round(m)} m`; }
+
+  function parseSteps(instructions, coordinates) {
+    const maneuvers = MANEUVER[lang()];
+    return instructions.map(instr => {
+      const verb = maneuvers[instr.type] || (lang() === 'ca' ? 'Continua' : 'Continua');
+      const road = instr.road ? (lang() === 'ca' ? ` per ${instr.road}` : ` por ${instr.road}`) : '';
+      let latLng = null;
+      if (instr.index != null && coordinates?.[instr.index]) {
+        const c = coordinates[instr.index];
+        latLng = { lat: c.lat ?? c[0], lng: c.lng ?? c[1] };
+      }
+      return { instruction: `${verb}${road}`, latLng, distance: instr.distance || 0 };
+    });
+  }
+
+  function initRouting(originLatLng) {
+    if (state.routingControl) state.map.removeControl(state.routingControl);
+    state.routingControl = L.Routing.control({
+      waypoints: [L.latLng(originLatLng.lat, originLatLng.lng), L.latLng(DESTINATION.lat, DESTINATION.lng)],
+      router: L.Routing.osrmv1({ serviceUrl: 'https://routing.openstreetmap.de/routed-foot/route/v1', profile: 'driving' }),
+      routeWhileDragging: false, addWaypoints: false, show: false, fitSelectedRoutes: false,
+      lineOptions: { styles: [{ color: '#715915', weight: 4, opacity: 0.7 }] },
+      createMarker: () => null,
+    }).addTo(state.map);
+
+    state.routingControl.on('routesfound', function (e) {
+      const route = e.routes[0];
+      state.steps = parseSteps(route.instructions, route.coordinates);
+      state.currentStepIdx = 0;
+      state.routeReady = true;
+      const totalDistM = route.summary.totalDistance;
+      const walkMins = Math.round((totalDistM / 1000) / WALK_SPEED_KMH * 60);
+      document.getElementById('map-eta').textContent = `${formatDistance(totalDistM)} · ${walkMins} min`;
+      document.getElementById('eta-minutes').textContent = walkMins;
+      const walkLabel = lang() === 'ca' ? 'caminant' : 'caminando';
+      document.getElementById('eta-detail').textContent = `${formatDistance(totalDistM)} ${walkLabel}`;
+      updateStepUI();
+      state.map.fitBounds(L.latLngBounds([originLatLng.lat, originLatLng.lng], [DESTINATION.lat, DESTINATION.lng]), { padding: [60, 40], maxZoom: 16 });
+    });
+
+    state.routingControl.on('routingerror', () => {
+      showError(lang() === 'ca' ? 'No s\'ha pogut calcular la ruta. Comprova la connexió.' : 'No se pudo calcular la ruta. Comprueba tu conexión.');
+    });
+  }
+
+  /* ==================== GPS ==================== */
+  function startTracking() {
+    if (!('geolocation' in navigator)) { showError(lang() === 'ca' ? 'El teu dispositiu no suporta GPS.' : 'Tu dispositivo no soporta GPS.'); return; }
+    state.watchId = navigator.geolocation.watchPosition(onPositionUpdate, onPositionError, { enableHighAccuracy: true, maximumAge: 2000, timeout: 15000 });
+  }
+
+  function onPositionUpdate(pos) {
+    try {
+      const { latitude: lat, longitude: lng, heading, accuracy } = pos.coords;
+      state.lastPosition = pos.coords; state.heading = heading;
+      updateUserMarker(lat, lng, heading);
+      if (!state.gpsReady) {
+        state.gpsReady = true;
+        document.getElementById('step-instruction').textContent = lang() === 'ca' ? 'Calculant ruta...' : 'Calculando ruta...';
+        initRouting({ lat, lng });
+      }
+      if (!state.arrived) {
+        if (haversine(lat, lng, DESTINATION.lat, DESTINATION.lng) <= ARRIVAL_RADIUS_M) { handleArrival(); return; }
+      }
+      advanceStepIfNeeded(lat, lng);
+      if (accuracy > 50) {
+        const el = document.getElementById('step-accuracy');
+        el.textContent = (lang() === 'ca' ? 'Senyal GPS feble' : 'Señal GPS débil') + ` (${Math.round(accuracy)}m)`;
+        el.style.color = '#8c712d';
+      } else { document.getElementById('step-accuracy').textContent = ''; }
+    } catch (err) { console.error(err); }
+  }
+
+  function onPositionError(err) {
+    const msgs = lang() === 'ca'
+      ? { 1: 'Permís d\'ubicació denegat. Activa\'l a la configuració.', 2: 'Posició no disponible.', 3: 'Temps esgotat. Comprova el senyal GPS.' }
+      : { 1: 'Permiso de ubicación denegado. Actívalo en ajustes.', 2: 'Posición no disponible.', 3: 'Tiempo agotado. Comprueba señal GPS.' };
+    showError(msgs[err.code] || (lang() === 'ca' ? 'Error d\'ubicació.' : 'Error de ubicación.'));
+  }
+
+  function advanceStepIfNeeded(lat, lng) {
+    if (state.currentStepIdx >= state.steps.length - 1) return;
+    let bestIdx = state.currentStepIdx;
+    for (let i = state.currentStepIdx + 1; i < state.steps.length; i++) {
+      const s = state.steps[i];
+      if (s.latLng && haversine(lat, lng, s.latLng.lat, s.latLng.lng) <= STEP_ADVANCE_RADIUS) bestIdx = i;
+    }
+    if (bestIdx > state.currentStepIdx) { state.currentStepIdx = bestIdx; updateStepUI(); if (navigator.vibrate) navigator.vibrate(100); }
+  }
+
+  function handleArrival() {
+    state.arrived = true;
+    if (state.watchId !== null) { navigator.geolocation.clearWatch(state.watchId); state.watchId = null; }
+    document.getElementById('arrival-overlay').classList.add('show');
+    document.getElementById('arrival-popup').classList.add('show');
+    if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+  }
+
+  function updateStepUI() {
+    const step = state.steps[state.currentStepIdx]; if (!step) return;
+    const d = formatDistance(step.distance);
+    let txt = step.instruction;
+    if (step.distance > 0 && state.currentStepIdx < state.steps.length - 1) txt += ` (${d})`;
+    document.getElementById('step-instruction').textContent = txt;
+    const nextLabel = lang() === 'ca' ? 'Proper pas en' : 'Próximo paso en';
+    document.getElementById('step-distance').textContent = state.currentStepIdx < state.steps.length - 1 ? `${nextLabel} ${d}` : '';
+    const stepLabel = lang() === 'ca' ? 'Pas' : 'Paso';
+    const ofLabel = lang() === 'ca' ? 'de' : 'de';
+    document.getElementById('step-counter').textContent = `${stepLabel} ${state.currentStepIdx + 1} ${ofLabel} ${state.steps.length}`;
+  }
+
+  function updateUserMarker(lat, lng, heading) {
+    const rot = heading ?? 0;
+    const icon = L.divIcon({ className: '', html: `<div class="user-arrow" style="transform:rotate(${rot}deg)">&#9650;</div>`, iconSize: [32, 32], iconAnchor: [16, 16] });
+    if (!state.userMarker) state.userMarker = L.marker([lat, lng], { icon, zIndexOffset: 1000 }).addTo(state.map);
+    else state.userMarker.setLatLng([lat, lng]).setIcon(icon);
+  }
+
+  function showError(msg) {
+    const t = document.getElementById('error-toast'); t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 6000);
+  }
+
+  function haversine(lat1, lon1, lat2, lon2) {
+    const R = 6371000, dLat = (lat2-lat1)*Math.PI/180, dLon = (lon2-lon1)*Math.PI/180;
+    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  }
+
+  document.getElementById('locate-btn').addEventListener('click', () => {
+    if (state.lastPosition) state.map.setView([state.lastPosition.latitude, state.lastPosition.longitude], LOCATE_ZOOM, { animate: true });
+  });
+  document.getElementById('btn-arrived').addEventListener('click', () => handleArrival());
+
+  document.addEventListener('DOMContentLoaded', () => { initMap(); startTracking(); });
+</script>
+
+</body></html>
