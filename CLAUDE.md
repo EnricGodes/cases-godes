@@ -17,6 +17,7 @@ A location-based historical expedition through 19th-century Barcelona, tracing t
 │   ├── navegacion-2.html              — Walking directions to Mestres Casals i Martorell 14
 │   ├── claveguera-14.html             — Claveguera 14 stop (1860-1864)
 │   ├── navegacion-3.html              — Walking directions to Plaça de Sant Agustí Vell 19
+│   ├── cronologia.html                — Visual timeline of family houses and events
 │   └── restaurant.html                — GPS navigation to Restaurant La Fonda (final destination)
 ├── navegacion/                        — GPS navigation app
 │   ├── destino.html                   — Destination input with geocoding
