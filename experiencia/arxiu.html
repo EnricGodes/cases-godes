@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html class="light" lang="ca"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Arxiu - Rere les passes de la família Godes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-fixed-variant": "#4a4644",
+            "surface-container-highest": "#e7e2d9",
+            "on-surface-variant": "#4d4639",
+            "on-primary": "#ffffff",
+            "inverse-primary": "#e4c375",
+            "surface-container": "#f2ede4",
+            "secondary-container": "#e5dedb",
+            "outline": "#7e7667",
+            "tertiary-fixed": "#fdddba",
+            "inverse-on-surface": "#f5f0e7",
+            "surface-bright": "#fef9f0",
+            "primary-fixed": "#ffdf97",
+            "tertiary-fixed-dim": "#e0c1a0",
+            "inverse-surface": "#32302a",
+            "on-primary-fixed-variant": "#5a4300",
+            "on-error": "#ffffff",
+            "surface-variant": "#e7e2d9",
+            "primary-fixed-dim": "#e4c375",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#ded9d1",
+            "surface-container-high": "#ece8df",
+            "primary-container": "#8c712d",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#584329",
+            "secondary-fixed-dim": "#cbc5c2",
+            "surface-container-low": "#f8f3ea",
+            "tertiary": "#6f583d",
+            "primary": "#715915",
+            "on-secondary-container": "#66625f",
+            "surface-tint": "#745b18",
+            "on-background": "#1d1c16",
+            "error-container": "#ffdad6",
+            "outline-variant": "#d0c5b4",
+            "tertiary-container": "#897053",
+            "background": "#fef9f0",
+            "on-tertiary-container": "#fffbff",
+            "on-primary-container": "#fffbff",
+            "on-secondary-fixed": "#1e1b19",
+            "on-tertiary-fixed": "#281804",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#251a00",
+            "secondary-fixed": "#e8e1de",
+            "on-secondary": "#ffffff",
+            "on-surface": "#1d1c16",
+            "surface": "#fef9f0",
+            "secondary": "#625e5b"
+          },
+          fontFamily: {
+            "headline": ["Noto Serif"],
+            "body": ["Manrope"],
+            "label": ["Manrope"]
+          },
+          borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+        },
+      },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+    #menu-overlay {
+      display: none; position: fixed; inset: 0;
+      background-color: rgba(29, 28, 22, 0.5); z-index: 55;
+    }
+    #menu-overlay.show { display: block; }
+</style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed-dim selection:text-on-primary-fixed overflow-x-hidden">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-6 h-16 bg-[#fef9f0]/80 backdrop-blur-md z-50 border-b border-[#d0c5b4]/15 shadow-[0_0_40px_rgba(29,28,22,0.06)]">
+  <button id="menu-btn" class="text-[#715915] hover:text-[#e4c375] transition-colors duration-300">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <h1 class="font-['Noto_Serif'] font-bold tracking-tight text-[#1d1c16] text-lg" data-ca="Arxiu" data-es="Archivo">Arxiu</h1>
+  <button onclick="history.back()" class="text-[#715915] hover:text-[#e4c375] transition-colors duration-300">
+    <span class="material-symbols-outlined">arrow_back</span>
+  </button>
+</header>
+
+<!-- Side Menu -->
+<div id="menu-overlay"></div>
+<nav id="side-menu" class="fixed inset-y-0 left-0 z-[60] bg-[#fef9f0] h-full w-80 border-r border-[#d0c5b4]/10 shadow-2xl -translate-x-full transition-transform duration-400 overflow-y-auto">
+  <div class="px-6 pt-6 pb-4 flex items-center justify-between border-b border-outline-variant/20">
+    <span class="font-['Noto_Serif'] font-black text-primary text-lg">Les Cases dels Godes</span>
+    <button id="menu-close" class="text-on-surface-variant hover:text-primary transition-colors">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+  <div class="px-6 py-6 space-y-8">
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Idioma" data-es="Idioma">Idioma</p>
+      <div class="flex gap-2">
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="ca">Català</button>
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="es">Castellano</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Mida de la lletra" data-es="Tamaño de fuente">Mida de la lletra</p>
+      <div class="flex gap-2">
+        <button class="font-btn px-3 py-2 text-xs font-label font-semibold border border-outline-variant/30 transition-all" data-size="normal">A</button>
+        <button class="font-btn px-3 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-size="grande">A+</button>
+        <button class="font-btn px-3 py-2 text-base font-label font-semibold border border-outline-variant/30 transition-all" data-size="extragrande">A++</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Equip de recerca" data-es="Equipo de investigación">Equip de recerca</p>
+      <div class="space-y-1 font-body text-sm text-on-surface leading-relaxed">
+        <p>Emili Godes i Faura</p><p>Enric Godes Maté</p><p>Ignasi Palazuelos Salvadó</p><p>Oriol Mestre Campi</p>
+      </div>
+      <div class="space-y-1 font-body text-sm text-on-surface-variant leading-relaxed mt-3">
+        <p>Maria Rosa Godes Diago (+)</p><p>Jesús Mestre Godes (+)</p><p>Montserrat Godes Diago (+)</p><p>Enric Cabestany Carreras (+)</p>
+      </div>
+    </div>
+    <div class="border-t border-outline-variant/20 pt-6">
+      <p class="font-label text-xs text-on-surface-variant" data-ca="Experiència creada per Enric Godes" data-es="Experiencia creada por Enric Godes">Experiència creada per Enric Godes</p>
+    </div>
+  </div>
+</nav>
+
+<main class="pt-24 pb-32 px-6 md:px-12 max-w-4xl mx-auto space-y-20">
+
+  <!-- Intro -->
+  <section>
+    <div class="flex items-center gap-4 mb-6">
+      <span class="h-px w-12 bg-outline-variant"></span>
+      <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Com ho sabem" data-es="Cómo lo sabemos">Com ho sabem</p>
+    </div>
+    <h2 class="font-headline text-4xl md:text-5xl font-black text-on-background leading-tight tracking-tighter mb-6" data-ca="L'<span class='text-primary'>Arxiu</span>" data-es="El <span class='text-primary'>Archivo</span>">L'<span class="text-primary">Arxiu</span></h2>
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Aquesta ruta no és una llegenda familiar: és una reconstrucció feta a partir de registres. Aquí hi ha les persones documentades, el que sabem del cert, el que només sabem a mitges i el que sabem que està malament." data-es="Esta ruta no es una leyenda familiar: es una reconstrucción hecha a partir de registros. Aquí están las personas documentadas, lo que sabemos con certeza, lo que solo sabemos a medias y lo que sabemos que está mal.">Aquesta ruta no és una llegenda familiar: és una reconstrucció feta a partir de registres. Aquí hi ha les persones documentades, el que sabem del cert, el que només sabem a mitges i el que sabem que està malament.</p>
+  </section>
+
+  <!-- Pasqual i Rosa -->
+  <section class="space-y-8">
+    <div class="flex items-center gap-4">
+      <span class="h-px w-12 bg-outline-variant"></span>
+      <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Pasqual i Rosa" data-es="Pasqual y Rosa">Pasqual i Rosa</p>
+    </div>
+    <div class="space-y-4">
+      <div class="bg-surface-container-high p-5 border-l-4 border-primary">
+        <div class="flex items-baseline justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background">Pasqual Godes Gomis</h4>
+          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1824 — 1891</span>
+        </div>
+        <p class="font-body text-xs text-on-surface-variant italic mt-1">Cap de família</p>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-3" data-ca="Arriba a Barcelona el 6 de gener de 1852. Mor a Banys Vells 15 el 17 de desembre de 1891, a les tres de la matinada, de pneumònia. Enterrat al Cementiri del Poblenou l'endemà." data-es="Llega a Barcelona el 6 de enero de 1852. Muere en Banys Vells 15 el 17 de diciembre de 1891, a las tres de la madrugada, de neumonía. Enterrado en el Cementiri del Poblenou al día siguiente.">Arriba a Barcelona el 6 de gener de 1852. Mor a Banys Vells 15 el 17 de desembre de 1891, a les tres de la matinada, de pneumònia. Enterrat al Cementiri del Poblenou l'endemà.</p>
+      </div>
+      <div class="bg-surface-container-high p-5 border-l-4 border-primary">
+        <div class="flex items-baseline justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background">Rosa Caballeria Madiroles</h4>
+          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1834 — 1893</span>
+        </div>
+        <p class="font-body text-xs text-on-surface-variant italic mt-1">Cap de família</p>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-3" data-ca="Es casa amb Pasqual el 1857 a l'església de Sant Cugat del Rec. Mor a Banys Vells 15 el 24 de desembre de 1893, als 59 anys, d'apoplexia. Enterrada al Poblenou el dia de Nadal." data-es="Se casa con Pasqual en 1857 en la iglesia de Sant Cugat del Rec. Muere en Banys Vells 15 el 24 de diciembre de 1893, a los 59 años, de apoplejía. Enterrada en el Poblenou el día de Navidad.">Es casa amb Pasqual el 1857 a l'església de Sant Cugat del Rec. Mor a Banys Vells 15 el 24 de desembre de 1893, als 59 anys, d'apoplexia. Enterrada al Poblenou el dia de Nadal.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Els nou fills -->
+  <section class="space-y-8">
+    <div class="flex items-center gap-4">
+      <span class="h-px w-12 bg-outline-variant"></span>
+      <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Els nou fills" data-es="Los nueve hijos">Els nou fills</p>
+    </div>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Quatre van arribar a l'edat adulta. Cinc van morir abans. La barra de color de cada fitxa marca aquesta diferència, no cap jerarquia." data-es="Cuatro llegaron a la edad adulta. Cinco murieron antes. La barra de color de cada ficha marca esa diferencia, no ninguna jerarquía.">Quatre van arribar a l'edat adulta. Cinc van morir abans. La barra de color de cada fitxa marca aquesta diferència, no cap jerarquia.</p>
+    <div class="space-y-4">
+      <div class="bg-surface-container-high p-5 border-l-4 border-primary">
+        <div class="flex items-baseline justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background">Dolors</h4>
+          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1860 — 1935</span>
+        </div>
+        <p class="font-body text-xs text-on-surface-variant italic mt-1">Claveguera, 14</p>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-3" data-ca="La filla gran, coneguda a la família com la «tia Dolores». Va superar la infància en uns anys en què els seus germans anaven morint." data-es="La hija mayor, conocida en la familia como la «tía Dolores». Superó la infancia en unos años en que sus hermanos iban muriendo.">La filla gran, coneguda a la família com la «tia Dolores». Va superar la infància en uns anys en què els seus germans anaven morint.</p>
+      </div>
+      <div class="bg-surface-container-high p-5 border-l-4 border-outline-variant">
+        <div class="flex items-baseline justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background">Anna</h4>
+          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">c. 1862</span>
+        </div>
+        <p class="font-body text-xs text-on-surface-variant italic mt-1">Claveguera, 14</p>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-3" data-ca="Va néixer dos anys després de Dolors i va morir abans de complir el primer any. Les fonts no en donen dates exactes." data-es="Nació dos años después de Dolors y murió antes de cumplir el primer año. Las fuentes no dan fechas exactas.">Va néixer dos anys després de Dolors i va morir abans de complir el primer any. Les fonts no en donen dates exactes.</p>
+      </div>
+      <div class="bg-surface-container-high p-5 border-l-4 border-outline-variant">
+        <div class="flex items-baseline justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background">Avelina</h4>
+          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1864 — 1865</span>
+        </div>
+        <p class="font-body text-xs text-on-surface-variant italic mt-1">Pl. Sant Agustí Vell, 19</p>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-3" data-ca="Va morir tot just un any després de néixer." data-es="Murió apenas un año después de nacer.">Va morir tot just un any després de néixer.</p>
+      </div>
+      <div class="bg-surface-container-high p-5 border-l-4 border-outline-variant">
+        <div class="flex items-baseline justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background">Vicent</h4>
+          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1866 — 1868</span>
+        </div>
+        <p class="font-body text-xs text-on-surface-variant italic mt-1">Pl. Sant Agustí Vell, 19</p>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-3" data-ca="Nascut el juny de 1866. Va morir un mes després del naixement d'Artur, amb dos anys." data-es="Nacido en junio de 1866. Murió un mes después del nacimiento de Artur, con dos años.">Nascut el juny de 1866. Va morir un mes després del naixement d'Artur, amb dos anys.</p>
+      </div>
+      <div class="bg-surface-container-high p-5 border-l-4 border-primary">
+        <div class="flex items-baseline justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background">Artur</h4>
+          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1868 — 1925</span>
+        </div>
+        <p class="font-body text-xs text-on-surface-variant italic mt-1">Fonollar, 30</p>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-3" data-ca="El nostre avantpassat comú. Batejat a la Catedral l'11 d'abril de 1868. Casat amb Emília Hurtado Giró a Santa Maria del Mar el 23 de juny de 1894; set fills. Músic, pianista i compositor, tenor del Liceu i mestre de capella a Santa Maria del Mar i la Bonanova. Mor el 9 de març de 1925, als 56 anys." data-es="Nuestro antepasado común. Bautizado en la Catedral el 11 de abril de 1868. Casado con Emília Hurtado Giró en Santa Maria del Mar el 23 de junio de 1894; siete hijos. Músico, pianista y compositor, tenor del Liceu y maestro de capilla en Santa Maria del Mar y la Bonanova. Muere el 9 de marzo de 1925, a los 56 años.">El nostre avantpassat comú. Batejat a la Catedral l'11 d'abril de 1868. Casat amb Emília Hurtado Giró a Santa Maria del Mar el 23 de juny de 1894; set fills. Músic, pianista i compositor, tenor del Liceu i mestre de capella a Santa Maria del Mar i la Bonanova. Mor el 9 de març de 1925, als 56 anys.</p>
+      </div>
+      <div class="bg-surface-container-high p-5 border-l-4 border-outline-variant">
+        <div class="flex items-baseline justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background">Ramona</h4>
+          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1870 — 1874</span>
+        </div>
+        <p class="font-body text-xs text-on-surface-variant italic mt-1">Fonollar, 30 o 3</p>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-3" data-ca="Nascuda el 2 de novembre de 1870. Va morir de tisi pulmonar quatre dies després del naixement de la seva germana Mercè." data-es="Nacida el 2 de noviembre de 1870. Murió de tisis pulmonar cuatro días después del nacimiento de su hermana Mercè.">Nascuda el 2 de novembre de 1870. Va morir de tisi pulmonar quatre dies després del naixement de la seva germana Mercè.</p>
+      </div>
+      <div class="bg-surface-container-high p-5 border-l-4 border-primary">
+        <div class="flex items-baseline justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background">Pau</h4>
+          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1872 — ?</span>
+        </div>
+        <p class="font-body text-xs text-on-surface-variant italic mt-1">Fonollar, 3</p>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-3" data-ca="Nascut el 18 d'octubre de 1872. Casat amb Anna Terrats Bertrán el 9 de novembre de 1895; dos fills. Músic, tenor i poeta, i cap d'estació de Sarrià. Iniciador de la branca dels Godes de Sarrià." data-es="Nacido el 18 de octubre de 1872. Casado con Anna Terrats Bertrán el 9 de noviembre de 1895; dos hijos. Músico, tenor y poeta, y jefe de estación de Sarrià. Iniciador de la rama de los Godes de Sarrià.">Nascut el 18 d'octubre de 1872. Casat amb Anna Terrats Bertrán el 9 de novembre de 1895; dos fills. Músic, tenor i poeta, i cap d'estació de Sarrià. Iniciador de la branca dels Godes de Sarrià.</p>
+      </div>
+      <div class="bg-surface-container-high p-5 border-l-4 border-primary">
+        <div class="flex items-baseline justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background">Mercè</h4>
+          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1874 — 1962</span>
+        </div>
+        <p class="font-body text-xs text-on-surface-variant italic mt-1">Jaume Giralt, 3</p>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-3" data-ca="Nascuda el 27 d'agost de 1874. Soltera, va ser el gran suport dels Godes Hurtado al costat de la seva cunyada Emília. Mor a Barcelona el 13 de març de 1962." data-es="Nacida el 27 de agosto de 1874. Soltera, fue el gran apoyo de los Godes Hurtado junto a su cuñada Emília. Muere en Barcelona el 13 de marzo de 1962.">Nascuda el 27 d'agost de 1874. Soltera, va ser el gran suport dels Godes Hurtado al costat de la seva cunyada Emília. Mor a Barcelona el 13 de març de 1962.</p>
+      </div>
+      <div class="bg-surface-container-high p-5 border-l-4 border-outline-variant">
+        <div class="flex items-baseline justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background">Josep</h4>
+          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1877 — 1885</span>
+        </div>
+        <p class="font-body text-xs text-on-surface-variant italic mt-1">Jaume Giralt, 3</p>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-3" data-ca="Nascut el 9 de març de 1877. Va morir de diftèria a Sant Pere Més Baix 40 el 31 de maig de 1885, als vuit anys." data-es="Nacido el 9 de marzo de 1877. Murió de difteria en Sant Pere Més Baix 40 el 31 de mayo de 1885, a los ocho años.">Nascut el 9 de març de 1877. Va morir de diftèria a Sant Pere Més Baix 40 el 31 de maig de 1885, als vuit anys.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Discrepàncies -->
+  <section class="space-y-8">
+    <div class="flex items-center gap-4">
+      <span class="h-px w-12 bg-outline-variant"></span>
+      <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Nivells de certesa" data-es="Niveles de certeza">Nivells de certesa</p>
+    </div>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="No tot el que explica aquesta ruta té el mateix pes documental. Aquestes són les qüestions obertes i les decisions que hem pres." data-es="No todo lo que cuenta esta ruta tiene el mismo peso documental. Estas son las cuestiones abiertas y las decisiones que hemos tomado.">No tot el que explica aquesta ruta té el mateix pes documental. Aquestes són les qüestions obertes i les decisions que hem pres.</p>
+    <div class="space-y-4">
+      <div class="bg-surface-container p-6 border-l-4 border-primary/20 space-y-3">
+        <div class="flex items-start justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background" data-ca="L'edat de Josep en morir" data-es="La edad de Josep al morir">L'edat de Josep en morir</h4>
+          <span class="font-label text-[9px] uppercase tracking-widest font-bold px-2 py-1" style="background-color:#8c712d;color:#ffffff;" data-ca="Conflicte de fonts" data-es="Conflicto de fuentes">Conflicte de fonts</span>
+        </div>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Una nota genealògica li assigna quatre anys. Entre el 9 de març de 1877 i el 31 de maig de 1885 hi ha vuit anys. Tractem el quatre com un error de transcripció i fixem la narració en vuit." data-es="Una nota genealógica le asigna cuatro años. Entre el 9 de marzo de 1877 y el 31 de mayo de 1885 hay ocho años. Tratamos el cuatro como un error de transcripción y fijamos la narración en ocho.">Una nota genealògica li assigna quatre anys. Entre el 9 de març de 1877 i el 31 de maig de 1885 hi ha vuit anys. Tractem el quatre com un error de transcripció i fixem la narració en vuit.</p>
+      </div>
+      <div class="bg-surface-container p-6 border-l-4 border-primary/20 space-y-3">
+        <div class="flex items-start justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background" data-ca="La numeració dels portals" data-es="La numeración de los portales">La numeració dels portals</h4>
+          <span class="font-label text-[9px] uppercase tracking-widest font-bold px-2 py-1" style="background-color:#7e7667;color:#ffffff;" data-ca="Aproximat" data-es="Aproximado">Aproximat</span>
+        </div>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Les coordenades GPS de les cases corresponen al portal actual. La numeració dels carrers de Ciutat Vella s'ha modificat diverses vegades des del segle XIX. Cal contrastar-ho amb padró i cartografia històrica." data-es="Las coordenadas GPS de las casas corresponden al portal actual. La numeración de las calles de Ciutat Vella se ha modificado varias veces desde el siglo XIX. Hay que contrastarlo con padrón y cartografía histórica.">Les coordenades GPS de les cases corresponen al portal actual. La numeració dels carrers de Ciutat Vella s'ha modificat diverses vegades des del segle XIX. Cal contrastar-ho amb padró i cartografia històrica.</p>
+      </div>
+      <div class="bg-surface-container p-6 border-l-4 border-primary/20 space-y-3">
+        <div class="flex items-start justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background" data-ca="El trasllat a Banys Vells" data-es="El traslado a Banys Vells">El trasllat a Banys Vells</h4>
+          <span class="font-label text-[9px] uppercase tracking-widest font-bold px-2 py-1" style="background-color:#7e7667;color:#ffffff;" data-ca="Datació parcial" data-es="Datación parcial">Datació parcial</span>
+        </div>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Només podem datar-lo com «1891, abans del 17 de desembre». Les fonts no permeten precisar-ne ni el dia ni el mes." data-es="Solo podemos datarlo como «1891, antes del 17 de diciembre». Las fuentes no permiten precisar ni el día ni el mes.">Només podem datar-lo com «1891, abans del 17 de desembre». Les fonts no permeten precisar-ne ni el dia ni el mes.</p>
+      </div>
+      <div class="bg-surface-container p-6 border-l-4 border-primary/20 space-y-3">
+        <div class="flex items-start justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background" data-ca="Diftèria i còlera" data-es="Difteria y cólera">Diftèria i còlera</h4>
+          <span class="font-label text-[9px] uppercase tracking-widest font-bold px-2 py-1" style="background-color:#715915;color:#ffffff;" data-ca="Documentat" data-es="Documentado">Documentat</span>
+        </div>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="El 1885 hi va haver una epidèmia de còlera a Catalunya, però el registre de Josep assenyala diftèria. Són fets independents i no s'han de vincular." data-es="En 1885 hubo una epidemia de cólera en Catalunya, pero el registro de Josep señala difteria. Son hechos independientes y no deben vincularse.">El 1885 hi va haver una epidèmia de còlera a Catalunya, però el registre de Josep assenyala diftèria. Són fets independents i no s'han de vincular.</p>
+      </div>
+      <div class="bg-surface-container p-6 border-l-4 border-primary/20 space-y-3">
+        <div class="flex items-start justify-between gap-3 flex-wrap">
+          <h4 class="font-headline text-lg font-bold text-on-background" data-ca="La sepultura del Poblenou" data-es="La sepultura del Poblenou">La sepultura del Poblenou</h4>
+          <span class="font-label text-[9px] uppercase tracking-widest font-bold px-2 py-1" style="background-color:#2d5016;color:#ffffff;" data-ca="Verificat sobre el terreny" data-es="Verificado sobre el terreno">Verificat sobre el terreny</span>
+        </div>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Illa 1a, departament 3r interior, pis 3r, número 128. Ubicació i conservació comprovades personalment sobre el terreny. La sepultura de Rosa és una altra i les seves restes es van traslladar a l'ossera general el 1988." data-es="Isla 1.ª, departamento 3.º interior, piso 3.º, número 128. Ubicación y conservación comprobadas personalmente sobre el terreno. La sepultura de Rosa es otra y sus restos se trasladaron al osario general en 1988.">Illa 1a, departament 3r interior, pis 3r, número 128. Ubicació i conservació comprovades personalment sobre el terreny. La sepultura de Rosa és una altra i les seves restes es van traslladar a l'ossera general el 1988.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fonts -->
+  <section class="space-y-8">
+    <div class="flex items-center gap-4">
+      <span class="h-px w-12 bg-outline-variant"></span>
+      <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Fonts" data-es="Fuentes">Fonts</p>
+    </div>
+    <ul class="space-y-4">
+      <li class="border-b border-outline-variant/25 pb-4">
+        <span class="font-headline text-base font-bold text-on-background">GEDCOM familiar Godes Caballeria</span>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="Registres de naixement, matrimoni, defunció, residència i enterrament. Font primària de tota la ruta." data-es="Registros de nacimiento, matrimonio, defunción, residencia y entierro. Fuente primaria de toda la ruta.">Registres de naixement, matrimoni, defunció, residència i enterrament. Font primària de tota la ruta.</p>
+      </li>
+      <li class="border-b border-outline-variant/25 pb-4">
+        <a href="https://www.congreso.es/cem/regmariacristina" target="_blank" rel="noopener" class="font-headline text-base font-bold text-primary hover:underline inline-flex items-center gap-1">La regencia de María Cristina — Congreso de los Diputados<span class="material-symbols-outlined" style="font-size:15px;">open_in_new</span></a>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="Marc polític del període 1885–1893." data-es="Marco político del periodo 1885–1893.">Marc polític del període 1885–1893.</p>
+      </li>
+      <li class="border-b border-outline-variant/25 pb-4">
+        <a href="https://www.enciclopedia.cat/gran-enciclopedia-catalana/memorial-de-greuges" target="_blank" rel="noopener" class="font-headline text-base font-bold text-primary hover:underline inline-flex items-center gap-1">Memorial de Greuges — Enciclopèdia Catalana<span class="material-symbols-outlined" style="font-size:15px;">open_in_new</span></a>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="Fita del catalanisme polític, 1885." data-es="Hito del catalanismo político, 1885.">Fita del catalanisme polític, 1885.</p>
+      </li>
+      <li class="border-b border-outline-variant/25 pb-4">
+        <a href="https://www.enciclopedia.cat/historia.-politica-societat-i-cultura-dels-paisos-catalans/lepidemia-de-colera-del-1885" target="_blank" rel="noopener" class="font-headline text-base font-bold text-primary hover:underline inline-flex items-center gap-1">L'epidèmia de còlera del 1885 — Enciclopèdia Catalana<span class="material-symbols-outlined" style="font-size:15px;">open_in_new</span></a>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="Context sanitari de Catalunya el 1885." data-es="Contexto sanitario de Catalunya en 1885.">Context sanitari de Catalunya el 1885.</p>
+      </li>
+      <li class="border-b border-outline-variant/25 pb-4">
+        <a href="https://www.enciclopedia.cat/historia.-politica-societat-i-cultura-dels-paisos-catalans/lexposicio-universal-de-barcelona-del" target="_blank" rel="noopener" class="font-headline text-base font-bold text-primary hover:underline inline-flex items-center gap-1">L'Exposició Universal de Barcelona — Enciclopèdia Catalana<span class="material-symbols-outlined" style="font-size:15px;">open_in_new</span></a>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="Transformació de la Ciutadella, 1888." data-es="Transformación de la Ciutadella, 1888.">Transformació de la Ciutadella, 1888.</p>
+      </li>
+      <li class="border-b border-outline-variant/25 pb-4">
+        <a href="https://www.enciclopedia.cat/el-modernisme/el-ferment-duna-arquitectura-diferent" target="_blank" rel="noopener" class="font-headline text-base font-bold text-primary hover:underline inline-flex items-center gap-1">El ferment d'una arquitectura diferent — Enciclopèdia Catalana<span class="material-symbols-outlined" style="font-size:15px;">open_in_new</span></a>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="Inicis del Modernisme a la Barcelona de 1891." data-es="Inicios del Modernisme en la Barcelona de 1891.">Inicis del Modernisme a la Barcelona de 1891.</p>
+      </li>
+      <li class="border-b border-outline-variant/25 pb-4">
+        <a href="https://cementiris.ajuntament.barcelona.cat/ca/cementiris/poblenou" target="_blank" rel="noopener" class="font-headline text-base font-bold text-primary hover:underline inline-flex items-center gap-1">Cementiri del Poblenou — Cementiris de Barcelona<span class="material-symbols-outlined" style="font-size:15px;">open_in_new</span></a>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="Història i organització del recinte obert el 1819." data-es="Historia y organización del recinto abierto en 1819.">Història i organització del recinte obert el 1819.</p>
+      </li>
+      <li class="border-b border-outline-variant/25 pb-4">
+        <a href="https://www.meet.barcelona/en/visit-and-love-it/points-interest-city/cementiri-poblenou-92086009474" target="_blank" rel="noopener" class="font-headline text-base font-bold text-primary hover:underline inline-flex items-center gap-1">Cementiri del Poblenou — Meet Barcelona<span class="material-symbols-outlined" style="font-size:15px;">open_in_new</span></a>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="Fitxa patrimonial del cementiri." data-es="Ficha patrimonial del cementerio.">Fitxa patrimonial del cementiri.</p>
+      </li>
+      <li class="border-b border-outline-variant/25 pb-4">
+        <span class="font-headline text-base font-bold text-on-background">Verificació presencial de la sepultura</span>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="Comprovació sobre el terreny feta per l'autor de l'experiència: coordenades 41.395163, 2.203171." data-es="Comprobación sobre el terreno hecha por el autor de la experiencia: coordenadas 41.395163, 2.203171.">Comprovació sobre el terreny feta per l'autor de l'experiència: coordenades 41.395163, 2.203171.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Pendent -->
+  <section>
+    <div class="bg-surface-container-high border-l-4 border-outline-variant p-6 space-y-2">
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Material pendent" data-es="Material pendiente">Material pendent</p>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Falten per incorporar les fotografies i les audioguies de les etapes de Sant Pere Més Baix, Banys Vells i el Cementiri del Poblenou. Mentrestant es mostren marcadors de posició." data-es="Faltan por incorporar las fotografías y las audioguías de las etapas de Sant Pere Més Baix, Banys Vells y el Cementiri del Poblenou. Mientras tanto se muestran marcadores de posición.">Falten per incorporar les fotografies i les audioguies de les etapes de Sant Pere Més Baix, Banys Vells i el Cementiri del Poblenou. Mentrestant es mostren marcadors de posició.</p>
+    </div>
+  </section>
+
+  <!-- Enllaços -->
+  <section class="flex flex-col sm:flex-row gap-4">
+    <a href="cronologia.html" class="flex-1 bg-primary text-on-primary px-8 py-4 font-label font-bold uppercase tracking-widest text-sm text-center no-underline hover:bg-primary-fixed-dim transition-all active:scale-95" data-ca="Veure la cronologia" data-es="Ver la cronología">Veure la cronologia</a>
+    <a href="mapa.html" class="flex-1 border border-primary text-primary px-8 py-4 font-label font-bold uppercase tracking-widest text-sm text-center no-underline hover:bg-surface-container transition-all active:scale-95" data-ca="Veure el mapa" data-es="Ver el mapa">Veure el mapa</a>
+  </section>
+
+</main>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#f2ede4] z-50 border-t border-[#d0c5b4]/20">
+  <a class="flex flex-col items-center justify-center text-[#715915] scale-110" href="arxiu.html">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Arxiu" data-es="Archivo">Arxiu</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="mapa.html">
+    <span class="material-symbols-outlined">explore</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Mapa" data-es="Mapa">Mapa</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="cronologia.html">
+    <span class="material-symbols-outlined">timeline</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Cronologia" data-es="Cronología">Cronologia</span>
+  </a>
+</nav>
+
+<script src="../js/shared.js"></script>
+</body>
+</html>

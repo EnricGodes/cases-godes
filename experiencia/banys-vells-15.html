@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html class="light" lang="ca"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Banys Vells, 15 - Rere les passes de la família Godes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-fixed-variant": "#4a4644",
+            "surface-container-highest": "#e7e2d9",
+            "on-surface-variant": "#4d4639",
+            "on-primary": "#ffffff",
+            "inverse-primary": "#e4c375",
+            "surface-container": "#f2ede4",
+            "secondary-container": "#e5dedb",
+            "outline": "#7e7667",
+            "tertiary-fixed": "#fdddba",
+            "inverse-on-surface": "#f5f0e7",
+            "surface-bright": "#fef9f0",
+            "primary-fixed": "#ffdf97",
+            "tertiary-fixed-dim": "#e0c1a0",
+            "inverse-surface": "#32302a",
+            "on-primary-fixed-variant": "#5a4300",
+            "on-error": "#ffffff",
+            "surface-variant": "#e7e2d9",
+            "primary-fixed-dim": "#e4c375",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#ded9d1",
+            "surface-container-high": "#ece8df",
+            "primary-container": "#8c712d",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#584329",
+            "secondary-fixed-dim": "#cbc5c2",
+            "surface-container-low": "#f8f3ea",
+            "tertiary": "#6f583d",
+            "primary": "#715915",
+            "on-secondary-container": "#66625f",
+            "surface-tint": "#745b18",
+            "on-background": "#1d1c16",
+            "error-container": "#ffdad6",
+            "outline-variant": "#d0c5b4",
+            "tertiary-container": "#897053",
+            "background": "#fef9f0",
+            "on-tertiary-container": "#fffbff",
+            "on-primary-container": "#fffbff",
+            "on-secondary-fixed": "#1e1b19",
+            "on-tertiary-fixed": "#281804",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#251a00",
+            "secondary-fixed": "#e8e1de",
+            "on-secondary": "#ffffff",
+            "on-surface": "#1d1c16",
+            "surface": "#fef9f0",
+            "secondary": "#625e5b"
+          },
+          fontFamily: {
+            "headline": ["Noto Serif"],
+            "body": ["Manrope"],
+            "label": ["Manrope"]
+          },
+          borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+        },
+      },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+    .vellum-texture {
+      background-color: #2b251e;
+    }
+    .sepia-overlay { filter: sepia(0.4) contrast(1.1) brightness(0.95); }
+    /* els marcadors de posició no porten filtre */
+    img[src$="placeholder.svg"] { filter: none; }
+    #menu-overlay {
+      display: none; position: fixed; inset: 0;
+      background-color: rgba(29, 28, 22, 0.5); z-index: 55;
+    }
+    #menu-overlay.show { display: block; }
+    #lightbox {
+      display: none; position: fixed; inset: 0;
+      background-color: rgba(29, 28, 22, 0.85);
+      z-index: 200; cursor: pointer;
+      justify-content: center; align-items: center;
+    }
+    #lightbox.show { display: flex; }
+    #lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; box-shadow: 0 0 60px rgba(29,28,22,0.3); }
+    .quiz-option { transition: all 0.3s; }
+    .quiz-option.correct { background-color: #2d5016; border-color: #4ade80; }
+    .quiz-option.incorrect { background-color: #4a1c1c; border-color: #ef4444; opacity: 0.6; }
+    .quiz-option.disabled { pointer-events: none; }
+    #quiz-feedback { display: none; }
+    #quiz-feedback.show { display: block; }
+</style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed-dim selection:text-on-primary-fixed overflow-x-hidden">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-6 h-16 bg-[#fef9f0]/80 backdrop-blur-md z-50 border-b border-[#d0c5b4]/15 shadow-[0_0_40px_rgba(29,28,22,0.06)]">
+  <button id="menu-btn" class="text-[#715915] hover:text-[#e4c375] transition-colors duration-300">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <h1 class="font-['Noto_Serif'] font-bold tracking-tight text-[#1d1c16] text-lg" data-ca="Banys Vells, 15" data-es="Banys Vells, 15">Banys Vells, 15</h1>
+  <div class="w-10"></div>
+</header>
+
+<!-- Side Menu -->
+<div id="menu-overlay"></div>
+<nav id="side-menu" class="fixed inset-y-0 left-0 z-[60] bg-[#fef9f0] h-full w-80 border-r border-[#d0c5b4]/10 shadow-2xl -translate-x-full transition-transform duration-400 overflow-y-auto">
+  <div class="px-6 pt-6 pb-4 flex items-center justify-between border-b border-outline-variant/20">
+    <span class="font-['Noto_Serif'] font-black text-primary text-lg">Les Cases dels Godes</span>
+    <button id="menu-close" class="text-on-surface-variant hover:text-primary transition-colors">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+  <div class="px-6 py-6 space-y-8">
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Idioma" data-es="Idioma">Idioma</p>
+      <div class="flex gap-2">
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="ca">Català</button>
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="es">Castellano</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Mida de la lletra" data-es="Tamaño de fuente">Mida de la lletra</p>
+      <div class="flex gap-2">
+        <button class="font-btn px-3 py-2 text-xs font-label font-semibold border border-outline-variant/30 transition-all" data-size="normal">A</button>
+        <button class="font-btn px-3 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-size="grande">A+</button>
+        <button class="font-btn px-3 py-2 text-base font-label font-semibold border border-outline-variant/30 transition-all" data-size="extragrande">A++</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Equip de recerca" data-es="Equipo de investigación">Equip de recerca</p>
+      <div class="space-y-1 font-body text-sm text-on-surface leading-relaxed">
+        <p>Emili Godes i Faura</p><p>Enric Godes Maté</p><p>Ignasi Palazuelos Salvadó</p><p>Oriol Mestre Campi</p>
+      </div>
+      <div class="space-y-1 font-body text-sm text-on-surface-variant leading-relaxed mt-3">
+        <p>Maria Rosa Godes Diago (+)</p><p>Jesús Mestre Godes (+)</p><p>Montserrat Godes Diago (+)</p><p>Enric Cabestany Carreras (+)</p>
+      </div>
+    </div>
+    <div class="border-t border-outline-variant/20 pt-6">
+      <p class="font-label text-xs text-on-surface-variant" data-ca="Experiència creada per Enric Godes" data-es="Experiencia creada por Enric Godes">Experiència creada per Enric Godes</p>
+    </div>
+  </div>
+</nav>
+
+<main class="pt-24 pb-32 px-4 md:px-12 max-w-4xl mx-auto space-y-20">
+<section>
+  <figure>
+    <img class="w-full aspect-[4/3] object-cover sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Carrer dels Banys Vells" src="../recursos/imagen/placeholder.svg"/>
+    <figcaption class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mt-3" data-ca="Últim domicili conegut de Pasqual Godes" data-es="Último domicilio conocido de Pasqual Godes">Últim domicili conegut de Pasqual Godes</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2 class="font-headline text-5xl md:text-7xl font-black text-on-background leading-tight tracking-tighter" data-ca="Banys Vells, 15 4t <span class=&quot;text-primary&quot;>(1891)</span>" data-es="Banys Vells, 15 4º <span class=&quot;text-primary&quot;>(1891)</span>">Banys Vells, 15 4t <span class="text-primary">(1891)</span></h2>
+</section>
+
+<section class="bg-surface-container p-6 space-y-4">
+  <div class="flex items-center gap-4">
+    <span class="material-symbols-outlined text-2xl text-primary" style="font-variation-settings: 'FILL' 1;">headphones</span>
+    <div>
+      <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Audioguia" data-es="Audioguía">Audioguia</p>
+      <p class="font-body text-sm text-on-surface-variant" data-ca="Prem play per escoltar la història" data-es="Pulsa play para escuchar la historia">Prem play per escoltar la història</p>
+    </div>
+  </div>
+  <audio id="audio-player" controls preload="none" class="w-full" style="height: 40px;">
+    <source id="audio-source" src="../recursos/audio/banys-vells-15-cat.mp3" type="audio/mpeg">
+  </audio>
+  <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant/70" data-ca="Àudio pendent de gravació" data-es="Audio pendiente de grabación">Àudio pendent de gravació</p>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="L'última casa" data-es="La última casa">L'última casa</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Aquest és l'últim domicili conegut de Pasqual: el quart pis del carrer dels Banys Vells, 15." data-es="Este es el último domicilio conocido de Pasqual: el cuarto piso del carrer dels Banys Vells, 15.">Aquest és l'últim domicili conegut de Pasqual: el quart pis del carrer dels Banys Vells, 15.</p>
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="La família s'hi va traslladar el 1891, abans del 17 de desembre. Els documents no permeten precisar-ne ni el dia ni el mes." data-es="La familia se trasladó aquí en 1891, antes del 17 de diciembre. Los documentos no permiten precisar ni el día ni el mes.">La família s'hi va traslladar el 1891, abans del 17 de desembre. Els documents no permeten precisar-ne ni el dia ni el mes.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Un carrer medieval i estret del barri de la Ribera, a pocs metres de Santa Maria del Mar, on tres anys després es casaria Artur." data-es="Una calle medieval y estrecha del barrio de la Ribera, a pocos metros de Santa Maria del Mar, donde tres años después se casaría Artur.">Un carrer medieval i estret del barri de la Ribera, a pocs metres de Santa Maria del Mar, on tres anys després es casaria Artur.</p>
+  </div>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="La mort de Pasqual" data-es="La muerte de Pasqual">La mort de Pasqual</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Pasqual Godes Gomis va morir en aquesta casa el 17 de desembre de 1891, a les tres de la matinada. Tenia 67 anys." data-es="Pasqual Godes Gomis murió en esta casa el 17 de diciembre de 1891, a las tres de la madrugada. Tenía 67 años.">Pasqual Godes Gomis va morir en aquesta casa el 17 de desembre de 1891, a les tres de la matinada. Tenia 67 anys.</p>
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="El registre atribueix la mort a una pneumònia. Va ser enterrat l'endemà al Cementiri del Poblenou." data-es="El registro atribuye la muerte a una neumonía. Fue enterrado al día siguiente en el Cementiri del Poblenou.">El registre atribueix la mort a una pneumònia. Va ser enterrat l'endemà al Cementiri del Poblenou.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Aquesta precisió —l'hora exacta, l'adreça, la causa registrada— contrasta amb els silencis del començament de la ruta. Sabem quan va arribar a Barcelona, el 6 de gener de 1852, però no on es va allotjar. Sabem amb tot detall on va acabar la seva vida gairebé quaranta anys després." data-es="Esa precisión —la hora exacta, la dirección, la causa registrada— contrasta con los silencios del comienzo de la ruta. Sabemos cuándo llegó a Barcelona, el 6 de enero de 1852, pero no dónde se alojó. Sabemos con todo detalle dónde terminó su vida casi cuarenta años después.">Aquesta precisió —l'hora exacta, l'adreça, la causa registrada— contrasta amb els silencis del començament de la ruta. Sabem quan va arribar a Barcelona, el 6 de gener de 1852, però no on es va allotjar. Sabem amb tot detall on va acabar la seva vida gairebé quaranta anys després.</p>
+  </div>
+</section>
+
+<section>
+  <figure>
+    <img class="w-full aspect-[4/3] object-cover sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Rosa Caballeria Madiroles" src="../recursos/imagen/placeholder.svg"/>
+  </figure>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Rosa, dos anys més" data-es="Rosa, dos años más">Rosa, dos anys més</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Rosa Caballeria Madiroles va continuar vivint a Banys Vells 15 després de quedar-se vídua." data-es="Rosa Caballeria Madiroles siguió viviendo en Banys Vells 15 tras quedarse viuda.">Rosa Caballeria Madiroles va continuar vivint a Banys Vells 15 després de quedar-se vídua.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Va morir en aquesta mateixa casa el 24 de desembre de 1893, als 59 anys, d'una apoplexia segons el registre. Va ser enterrada al Poblenou el dia de Nadal." data-es="Murió en esta misma casa el 24 de diciembre de 1893, a los 59 años, de una apoplejía según el registro. Fue enterrada en el Poblenou el día de Navidad.">Va morir en aquesta mateixa casa el 24 de desembre de 1893, als 59 anys, d'una apoplexia segons el registre. Va ser enterrada al Poblenou el dia de Nadal.</p>
+  </div>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="El llegat familiar" data-es="El legado familiar">El llegat familiar</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Quatre fills van arribar a l'edat adulta: Dolors, Artur, Pau i Mercè." data-es="Cuatro hijos llegaron a la edad adulta: Dolors, Artur, Pau y Mercè.">Quatre fills van arribar a l'edat adulta: Dolors, Artur, Pau i Mercè.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Les seves trajectòries van obrir mons molt diferents: família i xarxes de parentiu, música escènica i religiosa, ferrocarril, poesia i cures." data-es="Sus trayectorias abrieron mundos muy distintos: familia y redes de parentesco, música escénica y religiosa, ferrocarril, poesía y cuidados.">Les seves trajectòries van obrir mons molt diferents: família i xarxes de parentiu, música escènica i religiosa, ferrocarril, poesia i cures.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="No formen una moral de progrés lineal. Mostren les múltiples maneres en què una família obrera i artesana es va prolongar dins d'una ciutat que canviava sota els seus peus." data-es="No forman una moraleja de progreso lineal. Muestran las múltiples maneras en que una familia obrera y artesana se prolongó dentro de una ciudad que cambiaba bajo sus pies.">No formen una moral de progrés lineal. Mostren les múltiples maneres en què una família obrera i artesana es va prolongar dins d'una ciutat que canviava sota els seus peus.</p>
+  </div>
+</section>
+
+<section>
+  <div class="bg-surface-container-high border-l-4 border-outline-variant p-6 space-y-2">
+    <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Trenta-nou anys" data-es="Treinta y nueve años">Trenta-nou anys</p>
+    <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="De l'arribada a Barcelona el 6 de gener de 1852 a la mort el 17 de desembre de 1891 hi ha trenta-nou anys i vuit domicilis. Tots caben en poc més de mig quilòmetre de ciutat vella." data-es="De la llegada a Barcelona el 6 de enero de 1852 a la muerte el 17 de diciembre de 1891 hay treinta y nueve años y ocho domicilios. Todos caben en poco más de medio kilómetro de ciudad vieja.">De l'arribada a Barcelona el 6 de gener de 1852 a la mort el 17 de desembre de 1891 hi ha trenta-nou anys i vuit domicilis. Tots caben en poc més de mig quilòmetre de ciutat vella.</p>
+  </div>
+</section>
+
+<section class="space-y-10">
+  <div class="bg-surface-container p-10 relative border-l-4 border-primary/20">
+    <div class="absolute top-4 right-4 opacity-10"><span class="material-symbols-outlined text-6xl">gavel</span></div>
+    <h3 class="font-headline text-2xl font-bold mb-4 flex items-center gap-2">
+      <span class="w-8 h-[1px] bg-primary"></span>
+      <span data-ca="Context Espanya" data-es="Contexto España">Context Espanya</span>
+    </h3>
+    <div class="space-y-4 text-on-surface-variant leading-relaxed">
+      <p data-ca="Maria Cristina exercia la regència. La llei electoral de 1890 havia restablert el sufragi universal masculí i les eleccions generals de 1891 es van celebrar sota aquest nou marc." data-es="María Cristina ejercía la regencia. La ley electoral de 1890 había restablecido el sufragio universal masculino y las elecciones generales de 1891 se celebraron bajo ese nuevo marco.">Maria Cristina exercia la regència. La llei electoral de 1890 havia restablert el sufragi universal masculí i les eleccions generals de 1891 es van celebrar sota aquest nou marc.</p>
+      <p data-ca="«Universal», però, continuava excloent les dones." data-es="«Universal», sin embargo, seguía excluyendo a las mujeres.">«Universal», però, continuava excloent les dones.</p>
+    </div>
+  </div>
+
+  <div class="bg-surface-container p-10 relative border-l-4 border-primary/20">
+    <div class="absolute top-4 right-4 opacity-10"><span class="material-symbols-outlined text-6xl">flag</span></div>
+    <h3 class="font-headline text-2xl font-bold mb-4 flex items-center gap-2">
+      <span class="w-8 h-[1px] bg-primary"></span>
+      <span data-ca="Context Catalunya" data-es="Contexto Catalunya">Context Catalunya</span>
+    </h3>
+    <div class="space-y-4 text-on-surface-variant leading-relaxed">
+      <p data-ca="El catalanisme polític anava prenent forma després del Memorial de Greuges de 1885, mentre el moviment obrer recuperava visibilitat i organització." data-es="El catalanismo político iba tomando forma tras el Memorial de Greuges de 1885, mientras el movimiento obrero recuperaba visibilidad y organización.">El catalanisme polític anava prenent forma després del Memorial de Greuges de 1885, mentre el moviment obrer recuperava visibilitat i organització.</p>
+      <p data-ca="Cultura, llengua, demandes econòmiques i qüestió social no formaven un únic projecte, sinó debats diferents que compartien l'espai públic." data-es="Cultura, lengua, demandas económicas y cuestión social no formaban un único proyecto, sino debates distintos que compartían el espacio público.">Cultura, llengua, demandes econòmiques i qüestió social no formaven un únic projecte, sinó debats diferents que compartien l'espai públic.</p>
+    </div>
+  </div>
+
+  <div class="bg-surface-container p-10 relative border-l-4 border-primary/20">
+    <div class="absolute top-4 right-4 opacity-10"><span class="material-symbols-outlined text-6xl">location_city</span></div>
+    <h3 class="font-headline text-2xl font-bold mb-4 flex items-center gap-2">
+      <span class="w-8 h-[1px] bg-primary"></span>
+      <span data-ca="Context Barcelona" data-es="Contexto Barcelona">Context Barcelona</span>
+    </h3>
+    <div class="space-y-4 text-on-surface-variant leading-relaxed">
+      <p data-ca="La ciutat posterior a l'Exposició de 1888 projectava modernitat: nous passeigs, arquitectura de ferro, enllumenat i infraestructures. El ferment del Modernisme començava a fer-se visible." data-es="La ciudad posterior a la Exposición de 1888 proyectaba modernidad: nuevos paseos, arquitectura de hierro, alumbrado e infraestructuras. El fermento del Modernisme empezaba a hacerse visible.">La ciutat posterior a l'Exposició de 1888 projectava modernitat: nous passeigs, arquitectura de ferro, enllumenat i infraestructures. El ferment del Modernisme començava a fer-se visible.</p>
+      <p data-ca="La ruta dels Godes recorda que aquella transformació coexistia amb pisos alts a la ciutat vella, malaltia i cures familiars." data-es="La ruta de los Godes recuerda que aquella transformación coexistía con pisos altos en la ciudad vieja, enfermedad y cuidados familiares.">La ruta dels Godes recorda que aquella transformació coexistia amb pisos alts a la ciutat vella, malaltia i cures familiars.</p>
+    </div>
+  </div>
+</section>
+
+<section class="max-w-3xl mx-auto bg-[#2b251e] border border-[#a68942]/30 p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative vellum-texture">
+  <div class="text-center mb-10">
+    <span class="material-symbols-outlined text-[#e4c375] text-4xl mb-4" style="font-variation-settings: 'FILL' 1;">help_center</span>
+    <h2 class="font-headline text-3xl font-bold italic mb-2 text-[#f2ede4]" data-ca="Consulta de l'Arxiver" data-es="Consulta del Archivero">Consulta de l'Arxiver</h2>
+    <div class="h-px w-24 bg-[#a68942]/50 mx-auto"></div>
+  </div>
+  <p class="font-headline text-xl text-center mb-10 text-[#f2ede4]" data-ca="A les eleccions generals de 1891, a qui incloïa l'anomenat sufragi universal?" data-es="En las elecciones generales de 1891, ¿a quién incluía el llamado sufragio universal?">A les eleccions generals de 1891, a qui incloïa l'anomenat sufragi universal?</p>
+  <div id="quiz-options" class="space-y-4 mb-8">
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="true">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Als homes adults; les dones en continuaven excloses" data-es="A los hombres adultos; las mujeres seguían excluidas">Als homes adults; les dones en continuaven excloses</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
+    </button>
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="false">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="A tota la població adulta, dones i homes" data-es="A toda la población adulta, mujeres y hombres">A tota la població adulta, dones i homes</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
+    </button>
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="false">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Només als propietaris nobles" data-es="Solo a los propietarios nobles">Només als propietaris nobles</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
+    </button>
+  </div>
+  <div id="quiz-feedback" class="mb-8 p-6 border border-[#a68942]/30">
+    <p id="feedback-result" class="font-headline text-lg font-bold mb-3 text-[#f2ede4]"></p>
+    <p id="feedback-text" class="font-body text-sm text-[#d0c5b4] leading-relaxed"></p>
+  </div>
+  <div class="flex justify-center">
+    <a id="quiz-continue" href="navegacion-8.html" class="bg-[#a68942] text-[#f2ede4] px-10 py-4 font-label uppercase tracking-widest font-black hover:bg-[#8c712d] transition-colors shadow-lg active:scale-95 opacity-50 pointer-events-none no-underline inline-block text-center" data-ca="Continuar" data-es="Continuar">Continuar</a>
+  </div>
+</section>
+
+</main>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#f2ede4] z-50 border-t border-[#d0c5b4]/20">
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="arxiu.html">
+    <span class="material-symbols-outlined">auto_stories</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Arxiu" data-es="Archivo">Arxiu</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="mapa.html">
+    <span class="material-symbols-outlined">explore</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Mapa" data-es="Mapa">Mapa</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="cronologia.html">
+    <span class="material-symbols-outlined">timeline</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Cronologia" data-es="Cronología">Cronologia</span>
+  </a>
+</nav>
+
+<!-- Lightbox -->
+<div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
+
+<script src="../js/shared.js"></script>
+<script>
+  // Audio - switch source on language change
+  const AUDIO_SRC = { ca: '../recursos/audio/banys-vells-15-cat.mp3', es: '../recursos/audio/banys-vells-15-esp.mp3' };
+  const audioPlayer = document.getElementById('audio-player');
+  const audioSource = document.getElementById('audio-source');
+  function updateAudioSrc() {
+    const l = localStorage.getItem('lang') || 'ca';
+    audioSource.src = AUDIO_SRC[l];
+    audioPlayer.load();
+  }
+  updateAudioSrc();
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', updateAudioSrc);
+  });
+
+  // Lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  document.querySelectorAll('.lightbox-img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src; lightboxImg.alt = img.alt;
+      lightbox.classList.add('show');
+    });
+  });
+  lightbox.addEventListener('click', () => lightbox.classList.remove('show'));
+
+  // Quiz
+  const lang = () => localStorage.getItem('lang') || 'ca';
+  const FEEDBACK = {
+    ca: { correct: 'Correcte!', incorrect: 'No exactament...', explanation: 'La reforma de 1890 va ampliar el vot als homes adults. El sufragi femení no arribaria a Espanya fins a la Segona República, més de quaranta anys després.' },
+    es: { correct: '\u00a1Correcto!', incorrect: 'No exactamente...', explanation: 'La reforma de 1890 amplió el voto a los hombres adultos. El sufragio femenino no llegaría a España hasta la Segunda República, más de cuarenta años después.' }
+  };
+  let quizAnswered = false;
+  document.querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (quizAnswered) return;
+      quizAnswered = true;
+      const isCorrect = btn.dataset.correct === 'true';
+      const fb = FEEDBACK[lang()];
+      document.querySelectorAll('.quiz-option').forEach(b => {
+        b.classList.add('disabled');
+        if (b.dataset.correct === 'true') b.classList.add('correct');
+        else if (b === btn && !isCorrect) b.classList.add('incorrect');
+      });
+      document.getElementById('feedback-result').textContent = isCorrect ? fb.correct : fb.incorrect;
+      document.getElementById('feedback-text').textContent = fb.explanation;
+      document.getElementById('quiz-feedback').classList.add('show');
+      document.getElementById('quiz-continue').classList.remove('opacity-50', 'pointer-events-none');
+    });
+  });
+</script>
+
+</body></html>

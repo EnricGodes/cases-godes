@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Imatge pendent">
+  <defs>
+    <pattern id="hatch" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="16" stroke="#d0c5b4" stroke-width="3"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="#e7e2d9"/>
+  <rect width="800" height="600" fill="url(#hatch)" opacity="0.55"/>
+  <rect x="24" y="24" width="752" height="552" fill="none" stroke="#7e7667" stroke-width="2" stroke-dasharray="14 10" opacity="0.6"/>
+  <g transform="translate(400 268)" fill="none" stroke="#715915" stroke-width="9" stroke-linejoin="round" stroke-linecap="round" opacity="0.75">
+    <path d="M-96 -44 h48 l18 -24 h60 l18 24 h48 a12 12 0 0 1 12 12 v92 a12 12 0 0 1 -12 12 h-192 a12 12 0 0 1 -12 -12 v-92 a12 12 0 0 1 12 -12 z"/>
+    <circle cx="0" cy="18" r="34"/>
+  </g>
+  <text x="400" y="416" text-anchor="middle" font-family="Manrope, Helvetica, Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="7" fill="#715915">IMATGE PENDENT</text>
+  <text x="400" y="456" text-anchor="middle" font-family="Manrope, Helvetica, Arial, sans-serif" font-size="22" letter-spacing="4" fill="#7e7667">IMAGEN PENDIENTE</text>
+</svg>

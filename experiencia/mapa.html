@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html class="light" lang="ca"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mapa - Rere les passes de la família Godes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-fixed-variant": "#4a4644",
+            "surface-container-highest": "#e7e2d9",
+            "on-surface-variant": "#4d4639",
+            "on-primary": "#ffffff",
+            "inverse-primary": "#e4c375",
+            "surface-container": "#f2ede4",
+            "secondary-container": "#e5dedb",
+            "outline": "#7e7667",
+            "tertiary-fixed": "#fdddba",
+            "inverse-on-surface": "#f5f0e7",
+            "surface-bright": "#fef9f0",
+            "primary-fixed": "#ffdf97",
+            "tertiary-fixed-dim": "#e0c1a0",
+            "inverse-surface": "#32302a",
+            "on-primary-fixed-variant": "#5a4300",
+            "on-error": "#ffffff",
+            "surface-variant": "#e7e2d9",
+            "primary-fixed-dim": "#e4c375",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#ded9d1",
+            "surface-container-high": "#ece8df",
+            "primary-container": "#8c712d",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#584329",
+            "secondary-fixed-dim": "#cbc5c2",
+            "surface-container-low": "#f8f3ea",
+            "tertiary": "#6f583d",
+            "primary": "#715915",
+            "on-secondary-container": "#66625f",
+            "surface-tint": "#745b18",
+            "on-background": "#1d1c16",
+            "error-container": "#ffdad6",
+            "outline-variant": "#d0c5b4",
+            "tertiary-container": "#897053",
+            "background": "#fef9f0",
+            "on-tertiary-container": "#fffbff",
+            "on-primary-container": "#fffbff",
+            "on-secondary-fixed": "#1e1b19",
+            "on-tertiary-fixed": "#281804",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#251a00",
+            "secondary-fixed": "#e8e1de",
+            "on-secondary": "#ffffff",
+            "on-surface": "#1d1c16",
+            "surface": "#fef9f0",
+            "secondary": "#625e5b"
+          },
+          fontFamily: {
+            "headline": ["Noto Serif"],
+            "body": ["Manrope"],
+            "label": ["Manrope"]
+          },
+          borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+        },
+      },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+    #menu-overlay {
+      display: none; position: fixed; inset: 0;
+      background-color: rgba(29, 28, 22, 0.5); z-index: 55;
+    }
+    #menu-overlay.show { display: block; }
+    .leaflet-tile-pane { filter: sepia(0.35) contrast(0.9) brightness(1.05); }
+    .leaflet-marker-pane .stop-pin { filter: none; }
+    .leaflet-container { background: #ded9d1; font-family: 'Manrope', sans-serif; }
+    .leaflet-control-zoom a {
+      background-color: #fef9f0 !important; color: #715915 !important;
+      border-color: #d0c5b4 !important; border-radius: 0 !important;
+    }
+    .leaflet-control-zoom { border: none !important; box-shadow: 0 0 40px rgba(29,28,22,0.06) !important; }
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+      background: #fef9f0; border-radius: 0; box-shadow: 0 0 40px rgba(29,28,22,0.12);
+    }
+    .leaflet-popup-content { margin: 14px 16px; font-family: 'Manrope', sans-serif; }
+    .stop-pin {
+      width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+      background-color: #715915; color: #fff;
+      font-family: 'Noto Serif', serif; font-weight: 700; font-size: 14px;
+      box-shadow: 0 2px 10px rgba(29,28,22,0.35);
+    }
+    .stop-pin.grave { background-color: #2b251e; color: #e4c375; }
+    .stop-card { transition: all 0.3s ease; }
+    .stop-card:hover { box-shadow: 0 0 40px rgba(29,28,22,0.08); }
+</style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed-dim selection:text-on-primary-fixed overflow-x-hidden">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-6 h-16 bg-[#fef9f0]/80 backdrop-blur-md z-50 border-b border-[#d0c5b4]/15 shadow-[0_0_40px_rgba(29,28,22,0.06)]">
+  <button id="menu-btn" class="text-[#715915] hover:text-[#e4c375] transition-colors duration-300">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <h1 class="font-['Noto_Serif'] font-bold tracking-tight text-[#1d1c16] text-lg" data-ca="Mapa" data-es="Mapa">Mapa</h1>
+  <button onclick="history.back()" class="text-[#715915] hover:text-[#e4c375] transition-colors duration-300">
+    <span class="material-symbols-outlined">arrow_back</span>
+  </button>
+</header>
+
+<!-- Side Menu -->
+<div id="menu-overlay"></div>
+<nav id="side-menu" class="fixed inset-y-0 left-0 z-[60] bg-[#fef9f0] h-full w-80 border-r border-[#d0c5b4]/10 shadow-2xl -translate-x-full transition-transform duration-400 overflow-y-auto">
+  <div class="px-6 pt-6 pb-4 flex items-center justify-between border-b border-outline-variant/20">
+    <span class="font-['Noto_Serif'] font-black text-primary text-lg">Les Cases dels Godes</span>
+    <button id="menu-close" class="text-on-surface-variant hover:text-primary transition-colors">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+  <div class="px-6 py-6 space-y-8">
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Idioma" data-es="Idioma">Idioma</p>
+      <div class="flex gap-2">
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="ca">Català</button>
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="es">Castellano</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Mida de la lletra" data-es="Tamaño de fuente">Mida de la lletra</p>
+      <div class="flex gap-2">
+        <button class="font-btn px-3 py-2 text-xs font-label font-semibold border border-outline-variant/30 transition-all" data-size="normal">A</button>
+        <button class="font-btn px-3 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-size="grande">A+</button>
+        <button class="font-btn px-3 py-2 text-base font-label font-semibold border border-outline-variant/30 transition-all" data-size="extragrande">A++</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Equip de recerca" data-es="Equipo de investigación">Equip de recerca</p>
+      <div class="space-y-1 font-body text-sm text-on-surface leading-relaxed">
+        <p>Emili Godes i Faura</p><p>Enric Godes Maté</p><p>Ignasi Palazuelos Salvadó</p><p>Oriol Mestre Campi</p>
+      </div>
+      <div class="space-y-1 font-body text-sm text-on-surface-variant leading-relaxed mt-3">
+        <p>Maria Rosa Godes Diago (+)</p><p>Jesús Mestre Godes (+)</p><p>Montserrat Godes Diago (+)</p><p>Enric Cabestany Carreras (+)</p>
+      </div>
+    </div>
+    <div class="border-t border-outline-variant/20 pt-6">
+      <p class="font-label text-xs text-on-surface-variant" data-ca="Experiència creada per Enric Godes" data-es="Experiencia creada por Enric Godes">Experiència creada per Enric Godes</p>
+    </div>
+  </div>
+</nav>
+
+<main class="pt-24 pb-32">
+
+  <!-- Header -->
+  <section class="px-6 md:px-12 max-w-4xl mx-auto mb-10">
+    <div class="flex items-center gap-4 mb-6">
+      <span class="h-px w-12 bg-outline-variant"></span>
+      <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Registre Cartogràfic" data-es="Registro Cartográfico">Registre Cartogràfic</p>
+    </div>
+    <h2 class="font-headline text-4xl md:text-5xl font-black text-on-background leading-tight tracking-tighter mb-4" data-ca="Vuit adreces, <span class='text-primary'>trenta-nou anys</span>" data-es="Ocho direcciones, <span class='text-primary'>treinta y nueve años</span>">Vuit adreces, <span class="text-primary">trenta-nou anys</span></h2>
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Tots els domicilis coneguts de la família Godes Caballeria caben en poc més de mig quilòmetre de ciutat vella. Només l'última etapa, el cementiri, en surt." data-es="Todos los domicilios conocidos de la familia Godes Caballeria caben en poco más de medio kilómetro de ciudad vieja. Solo la última etapa, el cementerio, se sale.">Tots els domicilis coneguts de la família Godes Caballeria caben en poc més de mig quilòmetre de ciutat vella. Només l'última etapa, el cementiri, en surt.</p>
+  </section>
+
+  <!-- Map -->
+  <section class="relative w-full h-[460px] md:h-[540px] mb-6 border-y border-[#d0c5b4]/30">
+    <div id="map" class="absolute inset-0 z-0"></div>
+    <div class="absolute top-4 right-4 z-[400] flex flex-col gap-2">
+      <button id="btn-cases" class="bg-[#fef9f0] text-primary px-4 py-2 font-label text-[10px] uppercase tracking-widest font-bold border border-[#d0c5b4]/40 shadow-[0_0_30px_rgba(29,28,22,0.08)] hover:bg-surface-container-low transition-all" data-ca="Només les cases" data-es="Solo las casas">Només les cases</button>
+      <button id="btn-tot" class="bg-[#fef9f0] text-primary px-4 py-2 font-label text-[10px] uppercase tracking-widest font-bold border border-[#d0c5b4]/40 shadow-[0_0_30px_rgba(29,28,22,0.08)] hover:bg-surface-container-low transition-all" data-ca="Ruta sencera" data-es="Ruta entera">Ruta sencera</button>
+    </div>
+  </section>
+
+  <!-- Legend -->
+  <section class="px-6 md:px-12 max-w-4xl mx-auto mb-10">
+    <div class="flex flex-wrap gap-x-8 gap-y-3">
+      <div class="flex items-center gap-2">
+        <span class="w-5 h-5 bg-primary flex-shrink-0"></span>
+        <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Domicili documentat" data-es="Domicilio documentado">Domicili documentat</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="w-5 h-5 bg-[#2b251e] flex-shrink-0"></span>
+        <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Sepultura" data-es="Sepultura">Sepultura</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="w-8 h-[3px] bg-primary flex-shrink-0"></span>
+        <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Ordre cronològic" data-es="Orden cronológico">Ordre cronològic</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stop list -->
+  <section class="px-6 md:px-12 max-w-4xl mx-auto space-y-3">
+    <a href="carrer-fonollar-20.html" class="stop-card flex items-start gap-4 bg-surface-container-high p-4 border-l-4 border-primary">
+      <span class="flex-shrink-0 w-9 h-9 flex items-center justify-center font-headline font-bold text-sm bg-primary text-on-primary">1</span>
+      <span class="flex-1 min-w-0">
+        <span class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1857 — 1860</span>
+        <span class="block font-headline text-base font-bold text-on-background mt-0.5" data-ca="Fonollar, 20" data-es="Fonollar, 20">Fonollar, 20</span>
+        <span class="block font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="Primera casa. Pasqual i Rosa s'hi casen el 1857." data-es="Primera casa. Pasqual y Rosa se casan allí en 1857.">Primera casa. Pasqual i Rosa s'hi casen el 1857.</span>
+      </span>
+      <span class="material-symbols-outlined text-primary flex-shrink-0">arrow_forward</span>
+    </a>
+    <a href="claveguera-14.html" class="stop-card flex items-start gap-4 bg-surface-container-high p-4 border-l-4 border-primary">
+      <span class="flex-shrink-0 w-9 h-9 flex items-center justify-center font-headline font-bold text-sm bg-primary text-on-primary">2</span>
+      <span class="flex-1 min-w-0">
+        <span class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1860 — 1864</span>
+        <span class="block font-headline text-base font-bold text-on-background mt-0.5" data-ca="Claveguera, 14" data-es="Claveguera, 14">Claveguera, 14</span>
+        <span class="block font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="Avui Mestres Casals i Martorell. Hi neix Dolors." data-es="Hoy Mestres Casals i Martorell. Allí nace Dolors.">Avui Mestres Casals i Martorell. Hi neix Dolors.</span>
+      </span>
+      <span class="material-symbols-outlined text-primary flex-shrink-0">arrow_forward</span>
+    </a>
+    <a href="sant-agusti-vell-19.html" class="stop-card flex items-start gap-4 bg-surface-container-high p-4 border-l-4 border-primary">
+      <span class="flex-shrink-0 w-9 h-9 flex items-center justify-center font-headline font-bold text-sm bg-primary text-on-primary">3</span>
+      <span class="flex-1 min-w-0">
+        <span class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1864 — 1868</span>
+        <span class="block font-headline text-base font-bold text-on-background mt-0.5" data-ca="Pl. Sant Agustí Vell, 19" data-es="Pl. Sant Agustí Vell, 19">Pl. Sant Agustí Vell, 19</span>
+        <span class="block font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="Els anys marcats per la mortalitat infantil." data-es="Los años marcados por la mortalidad infantil.">Els anys marcats per la mortalitat infantil.</span>
+      </span>
+      <span class="material-symbols-outlined text-primary flex-shrink-0">arrow_forward</span>
+    </a>
+    <a href="fonollar-30.html" class="stop-card flex items-start gap-4 bg-surface-container-high p-4 border-l-4 border-primary">
+      <span class="flex-shrink-0 w-9 h-9 flex items-center justify-center font-headline font-bold text-sm bg-primary text-on-primary">4</span>
+      <span class="flex-1 min-w-0">
+        <span class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1868 — 1870</span>
+        <span class="block font-headline text-base font-bold text-on-background mt-0.5" data-ca="Fonollar, 30" data-es="Fonollar, 30">Fonollar, 30</span>
+        <span class="block font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="Tornada al Fonollar. Hi neix Artur, el nostre avantpassat comú." data-es="Vuelta al Fonollar. Allí nace Artur, nuestro antepasado común.">Tornada al Fonollar. Hi neix Artur, el nostre avantpassat comú.</span>
+      </span>
+      <span class="material-symbols-outlined text-primary flex-shrink-0">arrow_forward</span>
+    </a>
+    <a href="fonollar-30.html" class="stop-card flex items-start gap-4 bg-surface-container-high p-4 border-l-4 border-primary">
+      <span class="flex-shrink-0 w-9 h-9 flex items-center justify-center font-headline font-bold text-sm bg-primary text-on-primary">5</span>
+      <span class="flex-1 min-w-0">
+        <span class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1870 — 1874</span>
+        <span class="block font-headline text-base font-bold text-on-background mt-0.5" data-ca="Fonollar, 3" data-es="Fonollar, 3">Fonollar, 3</span>
+        <span class="block font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="A l'altre extrem del mateix carrer. Hi neixen Ramona i Pau." data-es="En el otro extremo de la misma calle. Allí nacen Ramona y Pau.">A l'altre extrem del mateix carrer. Hi neixen Ramona i Pau.</span>
+      </span>
+      <span class="material-symbols-outlined text-primary flex-shrink-0">arrow_forward</span>
+    </a>
+    <a href="jaume-giralt-3.html" class="stop-card flex items-start gap-4 bg-surface-container-high p-4 border-l-4 border-primary">
+      <span class="flex-shrink-0 w-9 h-9 flex items-center justify-center font-headline font-bold text-sm bg-primary text-on-primary">6</span>
+      <span class="flex-1 min-w-0">
+        <span class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1874 — 1885</span>
+        <span class="block font-headline text-base font-bold text-on-background mt-0.5" data-ca="Jaume Giralt, 3" data-es="Jaume Giralt, 3">Jaume Giralt, 3</span>
+        <span class="block font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="Onze anys al mateix pis: el més semblant a l'estabilitat." data-es="Once años en el mismo piso: lo más parecido a la estabilidad.">Onze anys al mateix pis: el més semblant a l'estabilitat.</span>
+      </span>
+      <span class="material-symbols-outlined text-primary flex-shrink-0">arrow_forward</span>
+    </a>
+    <a href="sant-pere-mes-baix-40.html" class="stop-card flex items-start gap-4 bg-surface-container-high p-4 border-l-4 border-primary">
+      <span class="flex-shrink-0 w-9 h-9 flex items-center justify-center font-headline font-bold text-sm bg-primary text-on-primary">7</span>
+      <span class="flex-1 min-w-0">
+        <span class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1885 — 1891</span>
+        <span class="block font-headline text-base font-bold text-on-background mt-0.5" data-ca="Sant Pere Més Baix, 40" data-es="Sant Pere Més Baix, 40">Sant Pere Més Baix, 40</span>
+        <span class="block font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="Als documents, «Baja de San Pedro». Hi mor Josep." data-es="En los documentos, «Baja de San Pedro». Allí muere Josep.">Als documents, «Baja de San Pedro». Hi mor Josep.</span>
+      </span>
+      <span class="material-symbols-outlined text-primary flex-shrink-0">arrow_forward</span>
+    </a>
+    <a href="banys-vells-15.html" class="stop-card flex items-start gap-4 bg-surface-container-high p-4 border-l-4 border-primary">
+      <span class="flex-shrink-0 w-9 h-9 flex items-center justify-center font-headline font-bold text-sm bg-primary text-on-primary">8</span>
+      <span class="flex-1 min-w-0">
+        <span class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1891</span>
+        <span class="block font-headline text-base font-bold text-on-background mt-0.5" data-ca="Banys Vells, 15" data-es="Banys Vells, 15">Banys Vells, 15</span>
+        <span class="block font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="L'últim domicili. Pasqual hi mor el 17 de desembre de 1891." data-es="El último domicilio. Pasqual muere allí el 17 de diciembre de 1891.">L'últim domicili. Pasqual hi mor el 17 de desembre de 1891.</span>
+      </span>
+      <span class="material-symbols-outlined text-primary flex-shrink-0">arrow_forward</span>
+    </a>
+    <a href="cementiri-poblenou.html" class="stop-card flex items-start gap-4 bg-surface-container-high p-4 border-l-4 border-[#a68942]">
+      <span class="flex-shrink-0 w-9 h-9 flex items-center justify-center font-headline font-bold text-sm bg-[#2b251e] text-[#e4c375]"><span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">local_florist</span></span>
+      <span class="flex-1 min-w-0">
+        <span class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">18.12.1891</span>
+        <span class="block font-headline text-base font-bold text-on-background mt-0.5" data-ca="Cementiri del Poblenou" data-es="Cementiri del Poblenou">Cementiri del Poblenou</span>
+        <span class="block font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="La sepultura de Pasqual. Illa 1a, departament 3r interior, número 128." data-es="La sepultura de Pasqual. Isla 1.ª, departamento 3.º interior, número 128.">La sepultura de Pasqual. Illa 1a, departament 3r interior, número 128.</span>
+      </span>
+      <span class="material-symbols-outlined text-primary flex-shrink-0">arrow_forward</span>
+    </a>
+  </section>
+
+  <!-- Note -->
+  <section class="px-6 md:px-12 max-w-4xl mx-auto mt-10">
+    <div class="bg-surface-container-high border-l-4 border-outline-variant p-6 space-y-2">
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Sobre les coordenades" data-es="Sobre las coordenadas">Sobre les coordenades</p>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Les coordenades dels domicilis corresponen al portal actual i s'usen com a punt de navegació. No demostren la continuïtat de la numeració històrica. La sepultura del Cementiri del Poblenou sí que està verificada sobre el terreny." data-es="Las coordenadas de los domicilios corresponden al portal actual y se usan como punto de navegación. No demuestran la continuidad de la numeración histórica. La sepultura del Cementiri del Poblenou sí está verificada sobre el terreno.">Les coordenades dels domicilis corresponen al portal actual i s'usen com a punt de navegació. No demostren la continuïtat de la numeració històrica. La sepultura del Cementiri del Poblenou sí que està verificada sobre el terreny.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#f2ede4] z-50 border-t border-[#d0c5b4]/20">
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="arxiu.html">
+    <span class="material-symbols-outlined">auto_stories</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Arxiu" data-es="Archivo">Arxiu</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#715915] scale-110" href="mapa.html">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Mapa" data-es="Mapa">Mapa</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="cronologia.html">
+    <span class="material-symbols-outlined">timeline</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Cronologia" data-es="Cronología">Cronologia</span>
+  </a>
+</nav>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="../js/shared.js"></script>
+<script>
+  const STOPS = [
+  {
+    "n": "1",
+    "ca": "Fonollar, 20",
+    "es": "Fonollar, 20",
+    "dates": "1857 — 1860",
+    "lat": 41.3869828,
+    "lng": 2.1794291,
+    "page": "carrer-fonollar-20.html"
+  },
+  {
+    "n": "2",
+    "ca": "Claveguera, 14",
+    "es": "Claveguera, 14",
+    "dates": "1860 — 1864",
+    "lat": 41.3873829,
+    "lng": 2.1783623,
+    "page": "claveguera-14.html"
+  },
+  {
+    "n": "3",
+    "ca": "Pl. Sant Agustí Vell, 19",
+    "es": "Pl. Sant Agustí Vell, 19",
+    "dates": "1864 — 1868",
+    "lat": 41.3877094,
+    "lng": 2.1806801,
+    "page": "sant-agusti-vell-19.html"
+  },
+  {
+    "n": "4",
+    "ca": "Fonollar, 30",
+    "es": "Fonollar, 30",
+    "dates": "1868 — 1870",
+    "lat": 41.38729,
+    "lng": 2.178885,
+    "page": "fonollar-30.html"
+  },
+  {
+    "n": "5",
+    "ca": "Fonollar, 3",
+    "es": "Fonollar, 3",
+    "dates": "1870 — 1874",
+    "lat": 41.38668,
+    "lng": 2.1799,
+    "page": "fonollar-30.html"
+  },
+  {
+    "n": "6",
+    "ca": "Jaume Giralt, 3",
+    "es": "Jaume Giralt, 3",
+    "dates": "1874 — 1885",
+    "lat": 41.38707,
+    "lng": 2.18005,
+    "page": "jaume-giralt-3.html"
+  },
+  {
+    "n": "7",
+    "ca": "Sant Pere Més Baix, 40",
+    "es": "Sant Pere Més Baix, 40",
+    "dates": "1885 — 1891",
+    "lat": 41.38736,
+    "lng": 2.17771,
+    "page": "sant-pere-mes-baix-40.html"
+  },
+  {
+    "n": "8",
+    "ca": "Banys Vells, 15",
+    "es": "Banys Vells, 15",
+    "dates": "1891",
+    "lat": 41.384225,
+    "lng": 2.1812058,
+    "page": "banys-vells-15.html"
+  },
+  {
+    "n": "",
+    "ca": "Cementiri del Poblenou",
+    "es": "Cementiri del Poblenou",
+    "dates": "18.12.1891",
+    "lat": 41.395163,
+    "lng": 2.203171,
+    "page": "cementiri-poblenou.html",
+    "grave": true
+  }
+];
+
+  const lang = () => localStorage.getItem('lang') || 'ca';
+
+  const map = L.map('map', { zoomControl: false, attributionControl: false, scrollWheelZoom: false });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+  L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+  const houses = STOPS.filter(s => !s.grave);
+  const markers = [];
+
+  STOPS.forEach(s => {
+    const icon = L.divIcon({
+      className: '',
+      html: s.grave
+        ? '<div class="stop-pin grave"><span class="material-symbols-outlined" style="font-size:17px;font-variation-settings:\'FILL\' 1;">local_florist</span></div>'
+        : '<div class="stop-pin">' + s.n + '</div>',
+      iconSize: [30, 30], iconAnchor: [15, 15],
+    });
+    const m = L.marker([s.lat, s.lng], { icon }).addTo(map);
+    m.bindPopup(
+      '<span style="font-family:\'Noto Serif\',serif;font-weight:700;font-size:15px;color:#1d1c16;display:block;">' + s[lang()] + '</span>' +
+      '<span style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#4d4639;display:block;margin-top:3px;">' + s.dates + '</span>' +
+      '<a href="' + s.page + '" style="font-size:12px;font-weight:700;color:#715915;text-decoration:underline;display:inline-block;margin-top:8px;">' +
+      (lang() === 'ca' ? 'Obrir la parada' : 'Abrir la parada') + '</a>'
+    );
+    markers.push(m);
+  });
+
+  const routeLine = L.polyline(STOPS.map(s => [s.lat, s.lng]),
+    { color: '#715915', weight: 3, opacity: 0.55, dashArray: '7 7' }).addTo(map);
+
+  const boundsAll = L.latLngBounds(STOPS.map(s => [s.lat, s.lng]));
+  const boundsHouses = L.latLngBounds(houses.map(s => [s.lat, s.lng]));
+
+  function fitHouses() { map.fitBounds(boundsHouses, { padding: [50, 50], maxZoom: 17 }); }
+  function fitAll() { map.fitBounds(boundsAll, { padding: [50, 50] }); }
+
+  document.getElementById('btn-cases').addEventListener('click', fitHouses);
+  document.getElementById('btn-tot').addEventListener('click', fitAll);
+
+  fitHouses();
+
+  // re-render popups when language changes
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      markers.forEach((m, i) => {
+        const s = STOPS[i];
+        m.setPopupContent(
+          '<span style="font-family:\'Noto Serif\',serif;font-weight:700;font-size:15px;color:#1d1c16;display:block;">' + s[lang()] + '</span>' +
+          '<span style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#4d4639;display:block;margin-top:3px;">' + s.dates + '</span>' +
+          '<a href="' + s.page + '" style="font-size:12px;font-weight:700;color:#715915;text-decoration:underline;display:inline-block;margin-top:8px;">' +
+          (lang() === 'ca' ? 'Obrir la parada' : 'Abrir la parada') + '</a>'
+        );
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

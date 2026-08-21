@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html class="light" lang="ca"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cementiri del Poblenou - Rere les passes de la família Godes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-fixed-variant": "#4a4644",
+            "surface-container-highest": "#e7e2d9",
+            "on-surface-variant": "#4d4639",
+            "on-primary": "#ffffff",
+            "inverse-primary": "#e4c375",
+            "surface-container": "#f2ede4",
+            "secondary-container": "#e5dedb",
+            "outline": "#7e7667",
+            "tertiary-fixed": "#fdddba",
+            "inverse-on-surface": "#f5f0e7",
+            "surface-bright": "#fef9f0",
+            "primary-fixed": "#ffdf97",
+            "tertiary-fixed-dim": "#e0c1a0",
+            "inverse-surface": "#32302a",
+            "on-primary-fixed-variant": "#5a4300",
+            "on-error": "#ffffff",
+            "surface-variant": "#e7e2d9",
+            "primary-fixed-dim": "#e4c375",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#ded9d1",
+            "surface-container-high": "#ece8df",
+            "primary-container": "#8c712d",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#584329",
+            "secondary-fixed-dim": "#cbc5c2",
+            "surface-container-low": "#f8f3ea",
+            "tertiary": "#6f583d",
+            "primary": "#715915",
+            "on-secondary-container": "#66625f",
+            "surface-tint": "#745b18",
+            "on-background": "#1d1c16",
+            "error-container": "#ffdad6",
+            "outline-variant": "#d0c5b4",
+            "tertiary-container": "#897053",
+            "background": "#fef9f0",
+            "on-tertiary-container": "#fffbff",
+            "on-primary-container": "#fffbff",
+            "on-secondary-fixed": "#1e1b19",
+            "on-tertiary-fixed": "#281804",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#251a00",
+            "secondary-fixed": "#e8e1de",
+            "on-secondary": "#ffffff",
+            "on-surface": "#1d1c16",
+            "surface": "#fef9f0",
+            "secondary": "#625e5b"
+          },
+          fontFamily: {
+            "headline": ["Noto Serif"],
+            "body": ["Manrope"],
+            "label": ["Manrope"]
+          },
+          borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+        },
+      },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+    .vellum-texture {
+      background-color: #2b251e;
+    }
+    .sepia-overlay { filter: sepia(0.4) contrast(1.1) brightness(0.95); }
+    /* els marcadors de posició no porten filtre */
+    img[src$="placeholder.svg"] { filter: none; }
+    #menu-overlay {
+      display: none; position: fixed; inset: 0;
+      background-color: rgba(29, 28, 22, 0.5); z-index: 55;
+    }
+    #menu-overlay.show { display: block; }
+    #lightbox {
+      display: none; position: fixed; inset: 0;
+      background-color: rgba(29, 28, 22, 0.85);
+      z-index: 200; cursor: pointer;
+      justify-content: center; align-items: center;
+    }
+    #lightbox.show { display: flex; }
+    #lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; box-shadow: 0 0 60px rgba(29,28,22,0.3); }
+    .quiz-option { transition: all 0.3s; }
+    .quiz-option.correct { background-color: #2d5016; border-color: #4ade80; }
+    .quiz-option.incorrect { background-color: #4a1c1c; border-color: #ef4444; opacity: 0.6; }
+    .quiz-option.disabled { pointer-events: none; }
+    #quiz-feedback { display: none; }
+    #quiz-feedback.show { display: block; }
+</style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed-dim selection:text-on-primary-fixed overflow-x-hidden">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-6 h-16 bg-[#fef9f0]/80 backdrop-blur-md z-50 border-b border-[#d0c5b4]/15 shadow-[0_0_40px_rgba(29,28,22,0.06)]">
+  <button id="menu-btn" class="text-[#715915] hover:text-[#e4c375] transition-colors duration-300">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <h1 class="font-['Noto_Serif'] font-bold tracking-tight text-[#1d1c16] text-lg" data-ca="Cementiri del Poblenou" data-es="Cementiri del Poblenou">Cementiri del Poblenou</h1>
+  <div class="w-10"></div>
+</header>
+
+<!-- Side Menu -->
+<div id="menu-overlay"></div>
+<nav id="side-menu" class="fixed inset-y-0 left-0 z-[60] bg-[#fef9f0] h-full w-80 border-r border-[#d0c5b4]/10 shadow-2xl -translate-x-full transition-transform duration-400 overflow-y-auto">
+  <div class="px-6 pt-6 pb-4 flex items-center justify-between border-b border-outline-variant/20">
+    <span class="font-['Noto_Serif'] font-black text-primary text-lg">Les Cases dels Godes</span>
+    <button id="menu-close" class="text-on-surface-variant hover:text-primary transition-colors">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+  <div class="px-6 py-6 space-y-8">
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Idioma" data-es="Idioma">Idioma</p>
+      <div class="flex gap-2">
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="ca">Català</button>
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="es">Castellano</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Mida de la lletra" data-es="Tamaño de fuente">Mida de la lletra</p>
+      <div class="flex gap-2">
+        <button class="font-btn px-3 py-2 text-xs font-label font-semibold border border-outline-variant/30 transition-all" data-size="normal">A</button>
+        <button class="font-btn px-3 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-size="grande">A+</button>
+        <button class="font-btn px-3 py-2 text-base font-label font-semibold border border-outline-variant/30 transition-all" data-size="extragrande">A++</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Equip de recerca" data-es="Equipo de investigación">Equip de recerca</p>
+      <div class="space-y-1 font-body text-sm text-on-surface leading-relaxed">
+        <p>Emili Godes i Faura</p><p>Enric Godes Maté</p><p>Ignasi Palazuelos Salvadó</p><p>Oriol Mestre Campi</p>
+      </div>
+      <div class="space-y-1 font-body text-sm text-on-surface-variant leading-relaxed mt-3">
+        <p>Maria Rosa Godes Diago (+)</p><p>Jesús Mestre Godes (+)</p><p>Montserrat Godes Diago (+)</p><p>Enric Cabestany Carreras (+)</p>
+      </div>
+    </div>
+    <div class="border-t border-outline-variant/20 pt-6">
+      <p class="font-label text-xs text-on-surface-variant" data-ca="Experiència creada per Enric Godes" data-es="Experiencia creada por Enric Godes">Experiència creada per Enric Godes</p>
+    </div>
+  </div>
+</nav>
+
+<main class="pt-24 pb-32 px-4 md:px-12 max-w-4xl mx-auto space-y-20">
+<section>
+  <figure>
+    <img class="w-full aspect-[4/3] object-cover sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Cementiri del Poblenou" src="../recursos/imagen/placeholder.svg"/>
+    <figcaption class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mt-3" data-ca="Sepultura de Pasqual Godes Gomis" data-es="Sepultura de Pasqual Godes Gomis">Sepultura de Pasqual Godes Gomis</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2 class="font-headline text-5xl md:text-7xl font-black text-on-background leading-tight tracking-tighter" data-ca="Cementiri del Poblenou <span class=&quot;text-primary&quot;>(18 de desembre de 1891)</span>" data-es="Cementiri del Poblenou <span class=&quot;text-primary&quot;>(18 de diciembre de 1891)</span>">Cementiri del Poblenou <span class="text-primary">(18 de desembre de 1891)</span></h2>
+</section>
+
+<section class="bg-surface-container p-6 space-y-4">
+  <div class="flex items-center gap-4">
+    <span class="material-symbols-outlined text-2xl text-primary" style="font-variation-settings: 'FILL' 1;">headphones</span>
+    <div>
+      <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Audioguia" data-es="Audioguía">Audioguia</p>
+      <p class="font-body text-sm text-on-surface-variant" data-ca="Prem play per escoltar la història" data-es="Pulsa play para escuchar la historia">Prem play per escoltar la història</p>
+    </div>
+  </div>
+  <audio id="audio-player" controls preload="none" class="w-full" style="height: 40px;">
+    <source id="audio-source" src="../recursos/audio/cementiri-poblenou-cat.mp3" type="audio/mpeg">
+  </audio>
+  <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant/70" data-ca="Àudio pendent de gravació" data-es="Audio pendiente de grabación">Àudio pendent de gravació</p>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="El final de la ruta" data-es="El final de la ruta">El final de la ruta</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="La ruta acaba davant la sepultura de Pasqual, al Cementiri del Poblenou. Hi va ser enterrat el 18 de desembre de 1891, un dia després de morir." data-es="La ruta termina ante la sepultura de Pasqual, en el Cementiri del Poblenou. Fue enterrado aquí el 18 de diciembre de 1891, un día después de morir.">La ruta acaba davant la sepultura de Pasqual, al Cementiri del Poblenou. Hi va ser enterrat el 18 de desembre de 1891, un dia després de morir.</p>
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="La ubicació i l'estat de conservació de la sepultura han estat comprovats personalment per l'autor d'aquesta experiència." data-es="La ubicación y el estado de conservación de la sepultura han sido comprobados personalmente por el autor de esta experiencia.">La ubicació i l'estat de conservació de la sepultura han estat comprovats personalment per l'autor d'aquesta experiència.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Aquest és un lloc per aturar-se, no per buscar. Si no podeu arribar fins al punt exacte, l'etapa es pot donar per acabada des d'on sigueu." data-es="Este es un lugar para detenerse, no para buscar. Si no podéis llegar hasta el punto exacto, la etapa puede darse por terminada desde donde estéis.">Aquest és un lloc per aturar-se, no per buscar. Si no podeu arribar fins al punt exacte, l'etapa es pot donar per acabada des d'on sigueu.</p>
+  </div>
+</section>
+
+<section>
+  <div class="bg-[#2b251e] border-l-4 border-[#a68942] p-8 space-y-5">
+    <p class="font-label text-[10px] uppercase tracking-widest text-[#e4c375] font-bold" data-ca="Localitzador funerari" data-es="Localizador funerario">Localitzador funerari</p>
+    <div class="space-y-4">
+      <div>
+        <p class="font-headline text-lg font-bold text-[#f2ede4] mb-1">Pasqual Godes Gomis</p>
+        <p class="font-body text-sm text-[#d0c5b4] leading-relaxed" data-ca="Illa 1a, Departament 3r Interior, pis 3r, número 128. Enterrat el 18 de desembre de 1891." data-es="Isla 1.ª, Departamento 3.º Interior, piso 3.º, número 128. Enterrado el 18 de diciembre de 1891.">Illa 1a, Departament 3r Interior, pis 3r, número 128. Enterrat el 18 de desembre de 1891.</p>
+      </div>
+      <div class="border-t border-[#a68942]/25 pt-4">
+        <p class="font-headline text-lg font-bold text-[#f2ede4] mb-1">Rosa Caballeria Madiroles</p>
+        <p class="font-body text-sm text-[#d0c5b4] leading-relaxed" data-ca="Illa 2a, Departament 1r Exterior, pis 7, número 1504. Enterrada el 25 de desembre de 1893. Les seves restes es van traslladar a l'ossera general el 30 de desembre de 1988, en caducar la concessió." data-es="Isla 2.ª, Departamento 1.º Exterior, piso 7, número 1504. Enterrada el 25 de diciembre de 1893. Sus restos se trasladaron al osario general el 30 de diciembre de 1988, al caducar la concesión.">Illa 2a, Departament 1r Exterior, pis 7, número 1504. Enterrada el 25 de desembre de 1893. Les seves restes es van traslladar a l'ossera general el 30 de desembre de 1988, en caducar la concessió.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Un cementiri fora de les muralles" data-es="Un cementerio fuera de las murallas">Un cementiri fora de les muralles</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="El Cementiri del Poblenou va obrir el 1819, després de la destrucció del recinte anterior durant la Guerra del Francès. Va ser el primer gran cementiri de Barcelona situat fora de les muralles." data-es="El Cementiri del Poblenou abrió en 1819, tras la destrucción del recinto anterior durante la Guerra del Francés. Fue el primer gran cementerio de Barcelona situado fuera de las murallas.">El Cementiri del Poblenou va obrir el 1819, després de la destrucció del recinte anterior durant la Guerra del Francès. Va ser el primer gran cementiri de Barcelona situat fora de les muralles.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="El projecte d'Antonio Ginesi va organitzar una ciutat dels morts amb carrers, recintes, nínxols i monuments, on també es feien visibles les diferències socials." data-es="El proyecto de Antonio Ginesi organizó una ciudad de los muertos con calles, recintos, nichos y monumentos, donde también se hacían visibles las diferencias sociales.">El projecte d'Antonio Ginesi va organitzar una ciutat dels morts amb carrers, recintes, nínxols i monuments, on també es feien visibles les diferències socials.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Quan Pasqual hi va ser enterrat, les muralles que havien definit la Barcelona de la seva arribada ja no existien i la ciutat s'estenia cap a l'Eixample i els antics municipis del pla. El seu recorregut funerari des de Banys Vells fins al Poblenou travessava, simbòlicament, tota la transformació urbana que li havia tocat viure." data-es="Cuando Pasqual fue enterrado, las murallas que habían definido la Barcelona de su llegada ya no existían y la ciudad se extendía hacia el Eixample y los antiguos municipios del llano. Su recorrido funerario desde Banys Vells hasta el Poblenou atravesaba, simbólicamente, toda la transformación urbana que le había tocado vivir.">Quan Pasqual hi va ser enterrat, les muralles que havien definit la Barcelona de la seva arribada ja no existien i la ciutat s'estenia cap a l'Eixample i els antics municipis del pla. El seu recorregut funerari des de Banys Vells fins al Poblenou travessava, simbòlicament, tota la transformació urbana que li havia tocat viure.</p>
+  </div>
+</section>
+
+<section>
+  <figure>
+    <img class="w-full aspect-[4/3] object-cover sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Barcelona el 1852 i el 1891" src="../recursos/imagen/placeholder.svg"/>
+    <figcaption class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mt-3" data-ca="La Barcelona emmurallada de 1852 i la ciutat de 1891" data-es="La Barcelona amurallada de 1852 y la ciudad de 1891">La Barcelona emmurallada de 1852 i la ciutat de 1891</figcaption>
+  </figure>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Epíleg: Rosa" data-es="Epílogo: Rosa">Epíleg: Rosa</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Rosa Caballeria Madiroles va sobreviure a Pasqual dos anys. Va morir a Banys Vells 15 el 24 de desembre de 1893 i va ser enterrada aquí mateix el dia de Nadal." data-es="Rosa Caballeria Madiroles sobrevivió a Pasqual dos años. Murió en Banys Vells 15 el 24 de diciembre de 1893 y fue enterrada aquí mismo el día de Navidad.">Rosa Caballeria Madiroles va sobreviure a Pasqual dos anys. Va morir a Banys Vells 15 el 24 de desembre de 1893 i va ser enterrada aquí mateix el dia de Nadal.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="El registre li assigna una altra sepultura, en una altra illa del cementiri. No compartien localitzador funerari." data-es="El registro le asigna otra sepultura, en otra isla del cementerio. No compartían localizador funerario.">El registre li assigna una altra sepultura, en una altra illa del cementiri. No compartien localitzador funerari.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="La història continua a través de Dolors, Artur, Pau i Mercè, i dels seus descendents. No com una llista de vencedors i desapareguts, sinó com una xarxa on cada vida documentada ocupa el seu lloc." data-es="La historia continúa a través de Dolors, Artur, Pau y Mercè, y de sus descendientes. No como una lista de vencedores y desaparecidos, sino como una red donde cada vida documentada ocupa su lugar.">La història continua a través de Dolors, Artur, Pau i Mercè, i dels seus descendents. No com una llista de vencedors i desapareguts, sinó com una xarxa on cada vida documentada ocupa el seu lloc.</p>
+  </div>
+</section>
+
+<section class="space-y-10">
+  <div class="bg-surface-container p-10 relative border-l-4 border-primary/20">
+    <div class="absolute top-4 right-4 opacity-10"><span class="material-symbols-outlined text-6xl">gavel</span></div>
+    <h3 class="font-headline text-2xl font-bold mb-4 flex items-center gap-2">
+      <span class="w-8 h-[1px] bg-primary"></span>
+      <span data-ca="Context Espanya" data-es="Contexto España">Context Espanya</span>
+    </h3>
+    <div class="space-y-4 text-on-surface-variant leading-relaxed">
+      <p data-ca="Espanya vivia sota la regència de Maria Cristina i el sistema d'alternança de la Restauració." data-es="España vivía bajo la regencia de María Cristina y el sistema de alternancia de la Restauración.">Espanya vivia sota la regència de Maria Cristina i el sistema d'alternança de la Restauració.</p>
+    </div>
+  </div>
+
+  <div class="bg-surface-container p-10 relative border-l-4 border-primary/20">
+    <div class="absolute top-4 right-4 opacity-10"><span class="material-symbols-outlined text-6xl">flag</span></div>
+    <h3 class="font-headline text-2xl font-bold mb-4 flex items-center gap-2">
+      <span class="w-8 h-[1px] bg-primary"></span>
+      <span data-ca="Context Catalunya" data-es="Contexto Catalunya">Context Catalunya</span>
+    </h3>
+    <div class="space-y-4 text-on-surface-variant leading-relaxed">
+      <p data-ca="Catalunya veia créixer el catalanisme polític, l'associacionisme cultural i un moviment obrer renovat." data-es="Catalunya veía crecer el catalanismo político, el asociacionismo cultural y un movimiento obrero renovado.">Catalunya veia créixer el catalanisme polític, l'associacionisme cultural i un moviment obrer renovat.</p>
+    </div>
+  </div>
+
+  <div class="bg-surface-container p-10 relative border-l-4 border-primary/20">
+    <div class="absolute top-4 right-4 opacity-10"><span class="material-symbols-outlined text-6xl">location_city</span></div>
+    <h3 class="font-headline text-2xl font-bold mb-4 flex items-center gap-2">
+      <span class="w-8 h-[1px] bg-primary"></span>
+      <span data-ca="Context Barcelona" data-es="Contexto Barcelona">Context Barcelona</span>
+    </h3>
+    <div class="space-y-4 text-on-surface-variant leading-relaxed">
+      <p data-ca="Tres anys després de l'Exposició Universal, Barcelona es presentava com una metròpoli industrial moderna mentre mantenia desigualtats profundes." data-es="Tres años después de la Exposición Universal, Barcelona se presentaba como una metrópoli industrial moderna mientras mantenía profundas desigualdades.">Tres anys després de l'Exposició Universal, Barcelona es presentava com una metròpoli industrial moderna mentre mantenia desigualtats profundes.</p>
+      <p data-ca="El cementiri reuneix totes aquestes escales: decisions sanitàries i urbanes, llenguatges artístics, jerarquies socials i biografies particulars inscrites en pedra o conservades en registres." data-es="El cementerio reúne todas esas escalas: decisiones sanitarias y urbanas, lenguajes artísticos, jerarquías sociales y biografías particulares inscritas en piedra o conservadas en registros.">El cementiri reuneix totes aquestes escales: decisions sanitàries i urbanes, llenguatges artístics, jerarquies socials i biografies particulars inscrites en pedra o conservades en registres.</p>
+    </div>
+  </div>
+</section>
+
+<section class="max-w-3xl mx-auto bg-[#2b251e] border border-[#a68942]/30 p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative vellum-texture">
+  <div class="text-center mb-10">
+    <span class="material-symbols-outlined text-[#e4c375] text-4xl mb-4" style="font-variation-settings: 'FILL' 1;">help_center</span>
+    <h2 class="font-headline text-3xl font-bold italic mb-2 text-[#f2ede4]" data-ca="Consulta de l'Arxiver" data-es="Consulta del Archivero">Consulta de l'Arxiver</h2>
+    <div class="h-px w-24 bg-[#a68942]/50 mx-auto"></div>
+  </div>
+  <p class="font-headline text-xl text-center mb-10 text-[#f2ede4]" data-ca="Per què el Cementiri del Poblenou és clau en la història urbana de Barcelona?" data-es="¿Por qué el Cementiri del Poblenou es clave en la historia urbana de Barcelona?">Per què el Cementiri del Poblenou és clau en la història urbana de Barcelona?</p>
+  <div id="quiz-options" class="space-y-4 mb-8">
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="true">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Perquè va ser el primer gran cementiri de la ciutat situat fora de les muralles" data-es="Porque fue el primer gran cementerio de la ciudad situado fuera de las murallas">Perquè va ser el primer gran cementiri de la ciutat situat fora de les muralles</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
+    </button>
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="false">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Perquè es va construir per a l'Exposició Universal de 1888" data-es="Porque se construyó para la Exposición Universal de 1888">Perquè es va construir per a l'Exposició Universal de 1888</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
+    </button>
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="false">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Perquè va substituir el Pla Cerdà" data-es="Porque sustituyó al Pla Cerdà">Perquè va substituir el Pla Cerdà</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
+    </button>
+  </div>
+  <div id="quiz-feedback" class="mb-8 p-6 border border-[#a68942]/30">
+    <p id="feedback-result" class="font-headline text-lg font-bold mb-3 text-[#f2ede4]"></p>
+    <p id="feedback-text" class="font-body text-sm text-[#d0c5b4] leading-relaxed"></p>
+  </div>
+  <div class="flex justify-center">
+    <a id="quiz-continue" href="cronologia.html" class="bg-[#a68942] text-[#f2ede4] px-10 py-4 font-label uppercase tracking-widest font-black hover:bg-[#8c712d] transition-colors shadow-lg active:scale-95 opacity-50 pointer-events-none no-underline inline-block text-center" data-ca="Veure la vida completa" data-es="Ver la vida completa">Veure la vida completa</a>
+  </div>
+</section>
+
+</main>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#f2ede4] z-50 border-t border-[#d0c5b4]/20">
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="arxiu.html">
+    <span class="material-symbols-outlined">auto_stories</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Arxiu" data-es="Archivo">Arxiu</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="mapa.html">
+    <span class="material-symbols-outlined">explore</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Mapa" data-es="Mapa">Mapa</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="cronologia.html">
+    <span class="material-symbols-outlined">timeline</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Cronologia" data-es="Cronología">Cronologia</span>
+  </a>
+</nav>
+
+<!-- Lightbox -->
+<div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
+
+<script src="../js/shared.js"></script>
+<script>
+  // Audio - switch source on language change
+  const AUDIO_SRC = { ca: '../recursos/audio/cementiri-poblenou-cat.mp3', es: '../recursos/audio/cementiri-poblenou-esp.mp3' };
+  const audioPlayer = document.getElementById('audio-player');
+  const audioSource = document.getElementById('audio-source');
+  function updateAudioSrc() {
+    const l = localStorage.getItem('lang') || 'ca';
+    audioSource.src = AUDIO_SRC[l];
+    audioPlayer.load();
+  }
+  updateAudioSrc();
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', updateAudioSrc);
+  });
+
+  // Lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  document.querySelectorAll('.lightbox-img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src; lightboxImg.alt = img.alt;
+      lightbox.classList.add('show');
+    });
+  });
+  lightbox.addEventListener('click', () => lightbox.classList.remove('show'));
+
+  // Quiz
+  const lang = () => localStorage.getItem('lang') || 'ca';
+  const FEEDBACK = {
+    ca: { correct: 'Correcte!', incorrect: 'No exactament...', explanation: 'El recinte va obrir el 1819, fora de la ciutat emmurallada. La seva història es relaciona amb les noves idees sanitàries de l\'època i amb l\'organització urbana dels enterraments.' },
+    es: { correct: '\u00a1Correcto!', incorrect: 'No exactamente...', explanation: 'El recinto abrió en 1819, fuera de la ciudad amurallada. Su historia se relaciona con las nuevas ideas sanitarias de la época y con la organización urbana de los enterramientos.' }
+  };
+  let quizAnswered = false;
+  document.querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (quizAnswered) return;
+      quizAnswered = true;
+      const isCorrect = btn.dataset.correct === 'true';
+      const fb = FEEDBACK[lang()];
+      document.querySelectorAll('.quiz-option').forEach(b => {
+        b.classList.add('disabled');
+        if (b.dataset.correct === 'true') b.classList.add('correct');
+        else if (b === btn && !isCorrect) b.classList.add('incorrect');
+      });
+      document.getElementById('feedback-result').textContent = isCorrect ? fb.correct : fb.incorrect;
+      document.getElementById('feedback-text').textContent = fb.explanation;
+      document.getElementById('quiz-feedback').classList.add('show');
+      document.getElementById('quiz-continue').classList.remove('opacity-50', 'pointer-events-none');
+    });
+  });
+</script>
+
+</body></html>

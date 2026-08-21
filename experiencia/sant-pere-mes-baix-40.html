@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html class="light" lang="ca"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sant Pere Més Baix, 40 - Rere les passes de la família Godes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-fixed-variant": "#4a4644",
+            "surface-container-highest": "#e7e2d9",
+            "on-surface-variant": "#4d4639",
+            "on-primary": "#ffffff",
+            "inverse-primary": "#e4c375",
+            "surface-container": "#f2ede4",
+            "secondary-container": "#e5dedb",
+            "outline": "#7e7667",
+            "tertiary-fixed": "#fdddba",
+            "inverse-on-surface": "#f5f0e7",
+            "surface-bright": "#fef9f0",
+            "primary-fixed": "#ffdf97",
+            "tertiary-fixed-dim": "#e0c1a0",
+            "inverse-surface": "#32302a",
+            "on-primary-fixed-variant": "#5a4300",
+            "on-error": "#ffffff",
+            "surface-variant": "#e7e2d9",
+            "primary-fixed-dim": "#e4c375",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#ded9d1",
+            "surface-container-high": "#ece8df",
+            "primary-container": "#8c712d",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#584329",
+            "secondary-fixed-dim": "#cbc5c2",
+            "surface-container-low": "#f8f3ea",
+            "tertiary": "#6f583d",
+            "primary": "#715915",
+            "on-secondary-container": "#66625f",
+            "surface-tint": "#745b18",
+            "on-background": "#1d1c16",
+            "error-container": "#ffdad6",
+            "outline-variant": "#d0c5b4",
+            "tertiary-container": "#897053",
+            "background": "#fef9f0",
+            "on-tertiary-container": "#fffbff",
+            "on-primary-container": "#fffbff",
+            "on-secondary-fixed": "#1e1b19",
+            "on-tertiary-fixed": "#281804",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#251a00",
+            "secondary-fixed": "#e8e1de",
+            "on-secondary": "#ffffff",
+            "on-surface": "#1d1c16",
+            "surface": "#fef9f0",
+            "secondary": "#625e5b"
+          },
+          fontFamily: {
+            "headline": ["Noto Serif"],
+            "body": ["Manrope"],
+            "label": ["Manrope"]
+          },
+          borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+        },
+      },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+    .vellum-texture {
+      background-color: #2b251e;
+    }
+    .sepia-overlay { filter: sepia(0.4) contrast(1.1) brightness(0.95); }
+    /* els marcadors de posició no porten filtre */
+    img[src$="placeholder.svg"] { filter: none; }
+    #menu-overlay {
+      display: none; position: fixed; inset: 0;
+      background-color: rgba(29, 28, 22, 0.5); z-index: 55;
+    }
+    #menu-overlay.show { display: block; }
+    #lightbox {
+      display: none; position: fixed; inset: 0;
+      background-color: rgba(29, 28, 22, 0.85);
+      z-index: 200; cursor: pointer;
+      justify-content: center; align-items: center;
+    }
+    #lightbox.show { display: flex; }
+    #lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; box-shadow: 0 0 60px rgba(29,28,22,0.3); }
+    .quiz-option { transition: all 0.3s; }
+    .quiz-option.correct { background-color: #2d5016; border-color: #4ade80; }
+    .quiz-option.incorrect { background-color: #4a1c1c; border-color: #ef4444; opacity: 0.6; }
+    .quiz-option.disabled { pointer-events: none; }
+    #quiz-feedback { display: none; }
+    #quiz-feedback.show { display: block; }
+</style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed-dim selection:text-on-primary-fixed overflow-x-hidden">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-6 h-16 bg-[#fef9f0]/80 backdrop-blur-md z-50 border-b border-[#d0c5b4]/15 shadow-[0_0_40px_rgba(29,28,22,0.06)]">
+  <button id="menu-btn" class="text-[#715915] hover:text-[#e4c375] transition-colors duration-300">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <h1 class="font-['Noto_Serif'] font-bold tracking-tight text-[#1d1c16] text-lg" data-ca="Sant Pere Més Baix, 40" data-es="Sant Pere Més Baix, 40">Sant Pere Més Baix, 40</h1>
+  <div class="w-10"></div>
+</header>
+
+<!-- Side Menu -->
+<div id="menu-overlay"></div>
+<nav id="side-menu" class="fixed inset-y-0 left-0 z-[60] bg-[#fef9f0] h-full w-80 border-r border-[#d0c5b4]/10 shadow-2xl -translate-x-full transition-transform duration-400 overflow-y-auto">
+  <div class="px-6 pt-6 pb-4 flex items-center justify-between border-b border-outline-variant/20">
+    <span class="font-['Noto_Serif'] font-black text-primary text-lg">Les Cases dels Godes</span>
+    <button id="menu-close" class="text-on-surface-variant hover:text-primary transition-colors">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+  <div class="px-6 py-6 space-y-8">
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Idioma" data-es="Idioma">Idioma</p>
+      <div class="flex gap-2">
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="ca">Català</button>
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="es">Castellano</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Mida de la lletra" data-es="Tamaño de fuente">Mida de la lletra</p>
+      <div class="flex gap-2">
+        <button class="font-btn px-3 py-2 text-xs font-label font-semibold border border-outline-variant/30 transition-all" data-size="normal">A</button>
+        <button class="font-btn px-3 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-size="grande">A+</button>
+        <button class="font-btn px-3 py-2 text-base font-label font-semibold border border-outline-variant/30 transition-all" data-size="extragrande">A++</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Equip de recerca" data-es="Equipo de investigación">Equip de recerca</p>
+      <div class="space-y-1 font-body text-sm text-on-surface leading-relaxed">
+        <p>Emili Godes i Faura</p><p>Enric Godes Maté</p><p>Ignasi Palazuelos Salvadó</p><p>Oriol Mestre Campi</p>
+      </div>
+      <div class="space-y-1 font-body text-sm text-on-surface-variant leading-relaxed mt-3">
+        <p>Maria Rosa Godes Diago (+)</p><p>Jesús Mestre Godes (+)</p><p>Montserrat Godes Diago (+)</p><p>Enric Cabestany Carreras (+)</p>
+      </div>
+    </div>
+    <div class="border-t border-outline-variant/20 pt-6">
+      <p class="font-label text-xs text-on-surface-variant" data-ca="Experiència creada per Enric Godes" data-es="Experiencia creada por Enric Godes">Experiència creada per Enric Godes</p>
+    </div>
+  </div>
+</nav>
+
+<main class="pt-24 pb-32 px-4 md:px-12 max-w-4xl mx-auto space-y-20">
+<section>
+  <figure>
+    <img class="w-full aspect-[4/3] object-cover sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Carrer de Sant Pere Més Baix" src="../recursos/imagen/placeholder.svg"/>
+    <figcaption class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mt-3" data-ca="No es conserva la casa original" data-es="No se conserva la casa original">No es conserva la casa original</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2 class="font-headline text-5xl md:text-7xl font-black text-on-background leading-tight tracking-tighter" data-ca="Sant Pere Més Baix, 40 4t <span class=&quot;text-primary&quot;>(1885-1891)</span>" data-es="Sant Pere Més Baix, 40 4º <span class=&quot;text-primary&quot;>(1885-1891)</span>">Sant Pere Més Baix, 40 4t <span class="text-primary">(1885-1891)</span></h2>
+</section>
+
+<section class="bg-surface-container p-6 space-y-4">
+  <div class="flex items-center gap-4">
+    <span class="material-symbols-outlined text-2xl text-primary" style="font-variation-settings: 'FILL' 1;">headphones</span>
+    <div>
+      <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Audioguia" data-es="Audioguía">Audioguia</p>
+      <p class="font-body text-sm text-on-surface-variant" data-ca="Prem play per escoltar la història" data-es="Pulsa play para escuchar la historia">Prem play per escoltar la història</p>
+    </div>
+  </div>
+  <audio id="audio-player" controls preload="none" class="w-full" style="height: 40px;">
+    <source id="audio-source" src="../recursos/audio/sant-pere-mes-baix-40-cat.mp3" type="audio/mpeg">
+  </audio>
+  <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant/70" data-ca="Àudio pendent de gravació" data-es="Audio pendiente de grabación">Àudio pendent de gravació</p>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="El carrer" data-es="La calle">El carrer</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Els documents de l'època anomenen aquesta via «Baja de San Pedro». Avui és el carrer de Sant Pere Més Baix." data-es="Los documentos de la época llaman a esta vía «Baja de San Pedro». Hoy es el carrer de Sant Pere Més Baix.">Els documents de l'època anomenen aquesta via «Baja de San Pedro». Avui és el carrer de Sant Pere Més Baix.</p>
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="La família va ocupar el quart pis del número 40 durant els darrers anys de la vida de Pasqual." data-es="La familia ocupó el cuarto piso del número 40 durante los últimos años de la vida de Pasqual.">La família va ocupar el quart pis del número 40 durant els darrers anys de la vida de Pasqual.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="És el barri de Sant Pere, a tocar del parc de la Ciutadella, que en aquells anys estava a punt de canviar de cara per sempre." data-es="Es el barrio de Sant Pere, junto al parque de la Ciutadella, que en aquellos años estaba a punto de cambiar de cara para siempre.">És el barri de Sant Pere, a tocar del parc de la Ciutadella, que en aquells anys estava a punt de canviar de cara per sempre.</p>
+  </div>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="La mort de Josep" data-es="La muerte de Josep">La mort de Josep</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Josep Godes Caballeria va morir en aquesta casa de diftèria el 31 de maig de 1885." data-es="Josep Godes Caballeria murió en esta casa de difteria el 31 de mayo de 1885.">Josep Godes Caballeria va morir en aquesta casa de diftèria el 31 de maig de 1885.</p>
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Havia nascut el 9 de març de 1877 a Jaume Giralt 3. Tenia vuit anys." data-es="Había nacido el 9 de marzo de 1877 en Jaume Giralt 3. Tenía ocho años.">Havia nascut el 9 de març de 1877 a Jaume Giralt 3. Tenia vuit anys.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="El 1885, Pasqual tenia 61 anys i Rosa 50. Dolors, Artur, Pau i Mercè havien superat la infància; cinc germans més havien mort abans d'arribar-hi." data-es="En 1885, Pasqual tenía 61 años y Rosa 50. Dolors, Artur, Pau y Mercè habían superado la infancia; otros cinco hermanos habían muerto antes de lograrlo.">El 1885, Pasqual tenia 61 anys i Rosa 50. Dolors, Artur, Pau i Mercè havien superat la infància; cinc germans més havien mort abans d'arribar-hi.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Aquest balanç no converteix ningú en estadística: mostra com les pèrdues convivien amb carreres, casaments i xarxes familiars que continuaven endavant." data-es="Este balance no convierte a nadie en estadística: muestra cómo las pérdidas convivían con carreras, bodas y redes familiares que seguían adelante.">Aquest balanç no converteix ningú en estadística: mostra com les pèrdues convivien amb carreres, casaments i xarxes familiars que continuaven endavant.</p>
+  </div>
+</section>
+
+<section>
+  <figure>
+    <img class="w-full aspect-[4/3] object-cover sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Josep Godes Caballeria" src="../recursos/imagen/placeholder.svg"/>
+  </figure>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Josep Godes Caballeria" data-es="Josep Godes Caballeria">Josep Godes Caballeria</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Josep és l'últim fill documentat de Pasqual i Rosa. La seva biografia conservada cap en poques línies: va néixer a Jaume Giralt 3, va ser el petit de nou germans i va morir a Sant Pere Més Baix 40." data-es="Josep es el último hijo documentado de Pasqual y Rosa. Su biografía conservada cabe en pocas líneas: nació en Jaume Giralt 3, fue el menor de nueve hermanos y murió en Sant Pere Més Baix 40.">Josep és l'últim fill documentat de Pasqual i Rosa. La seva biografia conservada cap en poques línies: va néixer a Jaume Giralt 3, va ser el petit de nou germans i va morir a Sant Pere Més Baix 40.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Vuit anys de vida, dues adreces i una data. Mereix el mateix espai en aquesta ruta que les carreres llargues dels seus germans Artur i Pau." data-es="Ocho años de vida, dos direcciones y una fecha. Merece el mismo espacio en esta ruta que las largas carreras de sus hermanos Artur y Pau.">Vuit anys de vida, dues adreces i una data. Mereix el mateix espai en aquesta ruta que les carreres llargues dels seus germans Artur i Pau.</p>
+  </div>
+</section>
+
+<section>
+  <div class="bg-surface-container-high border-l-4 border-outline-variant p-6 space-y-2">
+    <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Com ho sabem" data-es="Cómo lo sabemos">Com ho sabem</p>
+    <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Una nota genealògica li assigna quatre anys en morir. És un error de transcripció: entre el 9 de març de 1877 i el 31 de maig de 1885 hi ha vuit anys. El registre parla de diftèria, i no s'ha de confondre amb l'epidèmia de còlera que va afectar Catalunya aquell mateix 1885." data-es="Una nota genealógica le asigna cuatro años al morir. Es un error de transcripción: entre el 9 de marzo de 1877 y el 31 de mayo de 1885 hay ocho años. El registro habla de difteria, y no debe confundirse con la epidemia de cólera que afectó a Catalunya ese mismo 1885.">Una nota genealògica li assigna quatre anys en morir. És un error de transcripció: entre el 9 de març de 1877 i el 31 de maig de 1885 hi ha vuit anys. El registre parla de diftèria, i no s'ha de confondre amb l'epidèmia de còlera que va afectar Catalunya aquell mateix 1885.</p>
+  </div>
+</section>
+
+<section class="space-y-10">
+  <div class="bg-surface-container p-10 relative border-l-4 border-primary/20">
+    <div class="absolute top-4 right-4 opacity-10"><span class="material-symbols-outlined text-6xl">gavel</span></div>
+    <h3 class="font-headline text-2xl font-bold mb-4 flex items-center gap-2">
+      <span class="w-8 h-[1px] bg-primary"></span>
+      <span data-ca="Context Espanya" data-es="Contexto España">Context Espanya</span>
+    </h3>
+    <div class="space-y-4 text-on-surface-variant leading-relaxed">
+      <p data-ca="Alfons XII va morir el novembre de 1885. Maria Cristina d'Habsburg va assumir la regència durant la minoria d'edat d'Alfons XIII, mantenint el sistema d'alternança de la Restauració." data-es="Alfonso XII murió en noviembre de 1885. María Cristina de Habsburgo asumió la regencia durante la minoría de edad de Alfonso XIII, manteniendo el sistema de alternancia de la Restauración.">Alfons XII va morir el novembre de 1885. Maria Cristina d'Habsburg va assumir la regència durant la minoria d'edat d'Alfons XIII, mantenint el sistema d'alternança de la Restauració.</p>
+      <p data-ca="El 1890 es va restablir el sufragi universal masculí. Les eleccions de 1891 van ser les primeres generals celebrades sota aquesta reforma." data-es="En 1890 se restableció el sufragio universal masculino. Las elecciones de 1891 fueron las primeras generales celebradas bajo esa reforma.">El 1890 es va restablir el sufragi universal masculí. Les eleccions de 1891 van ser les primeres generals celebrades sota aquesta reforma.</p>
+    </div>
+  </div>
+
+  <div class="bg-surface-container p-10 relative border-l-4 border-primary/20">
+    <div class="absolute top-4 right-4 opacity-10"><span class="material-symbols-outlined text-6xl">flag</span></div>
+    <h3 class="font-headline text-2xl font-bold mb-4 flex items-center gap-2">
+      <span class="w-8 h-[1px] bg-primary"></span>
+      <span data-ca="Context Catalunya" data-es="Contexto Catalunya">Context Catalunya</span>
+    </h3>
+    <div class="space-y-4 text-on-surface-variant leading-relaxed">
+      <p data-ca="El Memorial de Greuges de 1885 va presentar al rei reivindicacions econòmiques, jurídiques i culturals. Es va convertir en una fita del catalanisme polític." data-es="El Memorial de Greuges de 1885 presentó al rey reivindicaciones económicas, jurídicas y culturales. Se convirtió en un hito del catalanismo político.">El Memorial de Greuges de 1885 va presentar al rei reivindicacions econòmiques, jurídiques i culturals. Es va convertir en una fita del catalanisme polític.</p>
+      <p data-ca="Aquell mateix any una greu epidèmia de còlera va afectar Catalunya, amb un impacte molt desigual sobre les classes populars." data-es="Ese mismo año una grave epidemia de cólera afectó a Catalunya, con un impacto muy desigual sobre las clases populares.">Aquell mateix any una greu epidèmia de còlera va afectar Catalunya, amb un impacte molt desigual sobre les classes populars.</p>
+    </div>
+  </div>
+
+  <div class="bg-surface-container p-10 relative border-l-4 border-primary/20">
+    <div class="absolute top-4 right-4 opacity-10"><span class="material-symbols-outlined text-6xl">location_city</span></div>
+    <h3 class="font-headline text-2xl font-bold mb-4 flex items-center gap-2">
+      <span class="w-8 h-[1px] bg-primary"></span>
+      <span data-ca="Context Barcelona" data-es="Contexto Barcelona">Context Barcelona</span>
+    </h3>
+    <div class="space-y-4 text-on-surface-variant leading-relaxed">
+      <p data-ca="L'Exposició Universal de 1888 va transformar el parc de la Ciutadella i els seus voltants, va impulsar obres arreu i va projectar la imatge d'una capital industrial moderna." data-es="La Exposición Universal de 1888 transformó el parque de la Ciutadella y sus alrededores, impulsó obras por toda la ciudad y proyectó la imagen de una capital industrial moderna.">L'Exposició Universal de 1888 va transformar el parc de la Ciutadella i els seus voltants, va impulsar obres arreu i va projectar la imatge d'una capital industrial moderna.</p>
+      <p data-ca="Aquesta imatge convivia amb habitatges densos, pisos alts a la ciutat vella i conflictes laborals. El 1890 Barcelona va participar en la primera celebració internacional del Primer de Maig." data-es="Esa imagen convivía con viviendas densas, pisos altos en la ciudad vieja y conflictos laborales. En 1890 Barcelona participó en la primera celebración internacional del Primero de Mayo.">Aquesta imatge convivia amb habitatges densos, pisos alts a la ciutat vella i conflictes laborals. El 1890 Barcelona va participar en la primera celebració internacional del Primer de Maig.</p>
+    </div>
+  </div>
+</section>
+
+<section class="max-w-3xl mx-auto bg-[#2b251e] border border-[#a68942]/30 p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative vellum-texture">
+  <div class="text-center mb-10">
+    <span class="material-symbols-outlined text-[#e4c375] text-4xl mb-4" style="font-variation-settings: 'FILL' 1;">help_center</span>
+    <h2 class="font-headline text-3xl font-bold italic mb-2 text-[#f2ede4]" data-ca="Consulta de l'Arxiver" data-es="Consulta del Archivero">Consulta de l'Arxiver</h2>
+    <div class="h-px w-24 bg-[#a68942]/50 mx-auto"></div>
+  </div>
+  <p class="font-headline text-xl text-center mb-10 text-[#f2ede4]" data-ca="Quin gran esdeveniment va transformar la Ciutadella i va projectar internacionalment Barcelona el 1888?" data-es="¿Qué gran acontecimiento transformó la Ciutadella y proyectó internacionalmente Barcelona en 1888?">Quin gran esdeveniment va transformar la Ciutadella i va projectar internacionalment Barcelona el 1888?</p>
+  <div id="quiz-options" class="space-y-4 mb-8">
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="true">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="L'Exposició Universal" data-es="La Exposición Universal">L'Exposició Universal</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
+    </button>
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="false">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="La proclamació de la Primera República" data-es="La proclamación de la Primera República">La proclamació de la Primera República</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
+    </button>
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="false">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="L'inici de l'enderroc de les muralles" data-es="El inicio del derribo de las murallas">L'inici de l'enderroc de les muralles</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
+    </button>
+  </div>
+  <div id="quiz-feedback" class="mb-8 p-6 border border-[#a68942]/30">
+    <p id="feedback-result" class="font-headline text-lg font-bold mb-3 text-[#f2ede4]"></p>
+    <p id="feedback-text" class="font-body text-sm text-[#d0c5b4] leading-relaxed"></p>
+  </div>
+  <div class="flex justify-center">
+    <a id="quiz-continue" href="navegacion-7.html" class="bg-[#a68942] text-[#f2ede4] px-10 py-4 font-label uppercase tracking-widest font-black hover:bg-[#8c712d] transition-colors shadow-lg active:scale-95 opacity-50 pointer-events-none no-underline inline-block text-center" data-ca="Continuar" data-es="Continuar">Continuar</a>
+  </div>
+</section>
+
+</main>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#f2ede4] z-50 border-t border-[#d0c5b4]/20">
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="arxiu.html">
+    <span class="material-symbols-outlined">auto_stories</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Arxiu" data-es="Archivo">Arxiu</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="mapa.html">
+    <span class="material-symbols-outlined">explore</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Mapa" data-es="Mapa">Mapa</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="cronologia.html">
+    <span class="material-symbols-outlined">timeline</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Cronologia" data-es="Cronología">Cronologia</span>
+  </a>
+</nav>
+
+<!-- Lightbox -->
+<div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
+
+<script src="../js/shared.js"></script>
+<script>
+  // Audio - switch source on language change
+  const AUDIO_SRC = { ca: '../recursos/audio/sant-pere-mes-baix-40-cat.mp3', es: '../recursos/audio/sant-pere-mes-baix-40-esp.mp3' };
+  const audioPlayer = document.getElementById('audio-player');
+  const audioSource = document.getElementById('audio-source');
+  function updateAudioSrc() {
+    const l = localStorage.getItem('lang') || 'ca';
+    audioSource.src = AUDIO_SRC[l];
+    audioPlayer.load();
+  }
+  updateAudioSrc();
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', updateAudioSrc);
+  });
+
+  // Lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  document.querySelectorAll('.lightbox-img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src; lightboxImg.alt = img.alt;
+      lightbox.classList.add('show');
+    });
+  });
+  lightbox.addEventListener('click', () => lightbox.classList.remove('show'));
+
+  // Quiz
+  const lang = () => localStorage.getItem('lang') || 'ca';
+  const FEEDBACK = {
+    ca: { correct: 'Correcte!', incorrect: 'No exactament...', explanation: 'L\'Exposició Universal de 1888 va tenir el recinte principal al parc de la Ciutadella. La Primera República s\'havia proclamat el 1873 i l\'enderroc de les muralles havia començat el 1854, l\'any que la família encara vivia els seus primers temps a Barcelona.' },
+    es: { correct: '\u00a1Correcto!', incorrect: 'No exactamente...', explanation: 'La Exposición Universal de 1888 tuvo su recinto principal en el parque de la Ciutadella. La Primera República se había proclamado en 1873 y el derribo de las murallas había comenzado en 1854, cuando la familia vivía aún sus primeros tiempos en Barcelona.' }
+  };
+  let quizAnswered = false;
+  document.querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (quizAnswered) return;
+      quizAnswered = true;
+      const isCorrect = btn.dataset.correct === 'true';
+      const fb = FEEDBACK[lang()];
+      document.querySelectorAll('.quiz-option').forEach(b => {
+        b.classList.add('disabled');
+        if (b.dataset.correct === 'true') b.classList.add('correct');
+        else if (b === btn && !isCorrect) b.classList.add('incorrect');
+      });
+      document.getElementById('feedback-result').textContent = isCorrect ? fb.correct : fb.incorrect;
+      document.getElementById('feedback-text').textContent = fb.explanation;
+      document.getElementById('quiz-feedback').classList.add('show');
+      document.getElementById('quiz-continue').classList.remove('opacity-50', 'pointer-events-none');
+    });
+  });
+</script>
+
+</body></html>
