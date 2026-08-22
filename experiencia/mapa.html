@@ -98,7 +98,6 @@
       font-family: 'Noto Serif', serif; font-weight: 700; font-size: 14px;
       box-shadow: 0 2px 10px rgba(29,28,22,0.35);
     }
-    .stop-pin.grave { background-color: #2b251e; color: #e4c375; }
     .stop-card { transition: all 0.3s ease; }
     .stop-card:hover { box-shadow: 0 0 40px rgba(29,28,22,0.08); }
 </style>
@@ -165,16 +164,12 @@
       <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Registre Cartogràfic" data-es="Registro Cartográfico">Registre Cartogràfic</p>
     </div>
     <h2 class="font-headline text-4xl md:text-5xl font-black text-on-background leading-tight tracking-tighter mb-4" data-ca="Vuit adreces, <span class='text-primary'>trenta-nou anys</span>" data-es="Ocho direcciones, <span class='text-primary'>treinta y nueve años</span>">Vuit adreces, <span class="text-primary">trenta-nou anys</span></h2>
-    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Tots els domicilis coneguts de la família Godes Caballeria caben en poc més de mig quilòmetre de ciutat vella. Només l'última etapa, el cementiri, en surt." data-es="Todos los domicilios conocidos de la familia Godes Caballeria caben en poco más de medio kilómetro de ciudad vieja. Solo la última etapa, el cementerio, se sale.">Tots els domicilis coneguts de la família Godes Caballeria caben en poc més de mig quilòmetre de ciutat vella. Només l'última etapa, el cementiri, en surt.</p>
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Tots els domicilis coneguts de la família Godes Caballeria caben en poc més de mig quilòmetre de ciutat vella. Quaranta anys de vida en un grapat de carrers." data-es="Todos los domicilios conocidos de la familia Godes Caballeria caben en poco más de medio kilómetro de ciudad vieja. Cuarenta años de vida en un puñado de calles.">Tots els domicilis coneguts de la família Godes Caballeria caben en poc més de mig quilòmetre de ciutat vella. Quaranta anys de vida en un grapat de carrers.</p>
   </section>
 
   <!-- Map -->
   <section class="relative w-full h-[460px] md:h-[540px] mb-6 border-y border-[#d0c5b4]/30">
     <div id="map" class="absolute inset-0 z-0"></div>
-    <div class="absolute top-4 right-4 z-[400] flex flex-col gap-2">
-      <button id="btn-cases" class="bg-[#fef9f0] text-primary px-4 py-2 font-label text-[10px] uppercase tracking-widest font-bold border border-[#d0c5b4]/40 shadow-[0_0_30px_rgba(29,28,22,0.08)] hover:bg-surface-container-low transition-all" data-ca="Només les cases" data-es="Solo las casas">Només les cases</button>
-      <button id="btn-tot" class="bg-[#fef9f0] text-primary px-4 py-2 font-label text-[10px] uppercase tracking-widest font-bold border border-[#d0c5b4]/40 shadow-[0_0_30px_rgba(29,28,22,0.08)] hover:bg-surface-container-low transition-all" data-ca="Ruta sencera" data-es="Ruta entera">Ruta sencera</button>
-    </div>
   </section>
 
   <!-- Legend -->
@@ -183,10 +178,6 @@
       <div class="flex items-center gap-2">
         <span class="w-5 h-5 bg-primary flex-shrink-0"></span>
         <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Domicili documentat" data-es="Domicilio documentado">Domicili documentat</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <span class="w-5 h-5 bg-[#2b251e] flex-shrink-0"></span>
-        <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Sepultura" data-es="Sepultura">Sepultura</span>
       </div>
       <div class="flex items-center gap-2">
         <span class="w-8 h-[3px] bg-primary flex-shrink-0"></span>
@@ -263,18 +254,9 @@
     <a href="banys-vells-15.html" class="stop-card flex items-start gap-4 bg-surface-container-high p-4 border-l-4 border-primary">
       <span class="flex-shrink-0 w-9 h-9 flex items-center justify-center font-headline font-bold text-sm bg-primary text-on-primary">8</span>
       <span class="flex-1 min-w-0">
-        <span class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1891</span>
+        <span class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">1891 — 1901</span>
         <span class="block font-headline text-base font-bold text-on-background mt-0.5" data-ca="Banys Vells, 15" data-es="Banys Vells, 15">Banys Vells, 15</span>
-        <span class="block font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="L'últim domicili. Pasqual hi mor el 17 de desembre de 1891." data-es="El último domicilio. Pasqual muere allí el 17 de diciembre de 1891.">L'últim domicili. Pasqual hi mor el 17 de desembre de 1891.</span>
-      </span>
-      <span class="material-symbols-outlined text-primary flex-shrink-0">arrow_forward</span>
-    </a>
-    <a href="cementiri-poblenou.html" class="stop-card flex items-start gap-4 bg-surface-container-high p-4 border-l-4 border-[#a68942]">
-      <span class="flex-shrink-0 w-9 h-9 flex items-center justify-center font-headline font-bold text-sm bg-[#2b251e] text-[#e4c375]"><span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">local_florist</span></span>
-      <span class="flex-1 min-w-0">
-        <span class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">18.12.1891</span>
-        <span class="block font-headline text-base font-bold text-on-background mt-0.5" data-ca="Cementiri del Poblenou" data-es="Cementiri del Poblenou">Cementiri del Poblenou</span>
-        <span class="block font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="La sepultura de Pasqual. Illa 1a, departament 3r interior, número 128." data-es="La sepultura de Pasqual. Isla 1.ª, departamento 3.º interior, número 128.">La sepultura de Pasqual. Illa 1a, departament 3r interior, número 128.</span>
+        <span class="block font-body text-sm text-on-surface-variant leading-relaxed mt-1" data-ca="L'últim domicili. Pasqual hi mor el 1891 i Rosa el 1893, però la casa continua fins al 1915." data-es="El último domicilio. Pasqual muere allí en 1891 y Rosa en 1893, pero la casa continúa hasta 1915.">L'últim domicili. Pasqual hi mor el 1891 i Rosa el 1893, però la casa continua fins al 1915.</span>
       </span>
       <span class="material-symbols-outlined text-primary flex-shrink-0">arrow_forward</span>
     </a>
@@ -284,7 +266,7 @@
   <section class="px-6 md:px-12 max-w-4xl mx-auto mt-10">
     <div class="bg-surface-container-high border-l-4 border-outline-variant p-6 space-y-2">
       <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Sobre les coordenades" data-es="Sobre las coordenadas">Sobre les coordenades</p>
-      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Les coordenades dels domicilis corresponen al portal actual i s'usen com a punt de navegació. No demostren la continuïtat de la numeració històrica. La sepultura del Cementiri del Poblenou sí que està verificada sobre el terreny." data-es="Las coordenadas de los domicilios corresponden al portal actual y se usan como punto de navegación. No demuestran la continuidad de la numeración histórica. La sepultura del Cementiri del Poblenou sí está verificada sobre el terreno.">Les coordenades dels domicilis corresponen al portal actual i s'usen com a punt de navegació. No demostren la continuïtat de la numeració històrica. La sepultura del Cementiri del Poblenou sí que està verificada sobre el terreny.</p>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Les coordenades dels domicilis corresponen al portal actual i s'usen com a punt de navegació. No demostren la continuïtat de la numeració històrica." data-es="Las coordenadas de los domicilios corresponden al portal actual y se usan como punto de navegación. No demuestran la continuidad de la numeración histórica.">Les coordenades dels domicilis corresponen al portal actual i s'usen com a punt de navegació. No demostren la continuïtat de la numeració històrica.</p>
     </div>
   </section>
 
@@ -377,20 +359,10 @@
     "n": "8",
     "ca": "Banys Vells, 15",
     "es": "Banys Vells, 15",
-    "dates": "1891",
+    "dates": "1891 \u2014 1901",
     "lat": 41.384225,
     "lng": 2.1812058,
     "page": "banys-vells-15.html"
-  },
-  {
-    "n": "",
-    "ca": "Cementiri del Poblenou",
-    "es": "Cementiri del Poblenou",
-    "dates": "18.12.1891",
-    "lat": 41.395163,
-    "lng": 2.203171,
-    "page": "cementiri-poblenou.html",
-    "grave": true
   }
 ];
 
@@ -400,15 +372,12 @@
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
   L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-  const houses = STOPS.filter(s => !s.grave);
   const markers = [];
 
   STOPS.forEach(s => {
     const icon = L.divIcon({
       className: '',
-      html: s.grave
-        ? '<div class="stop-pin grave"><span class="material-symbols-outlined" style="font-size:17px;font-variation-settings:\'FILL\' 1;">local_florist</span></div>'
-        : '<div class="stop-pin">' + s.n + '</div>',
+      html: '<div class="stop-pin">' + s.n + '</div>',
       iconSize: [30, 30], iconAnchor: [15, 15],
     });
     const m = L.marker([s.lat, s.lng], { icon }).addTo(map);
@@ -425,15 +394,8 @@
     { color: '#715915', weight: 3, opacity: 0.55, dashArray: '7 7' }).addTo(map);
 
   const boundsAll = L.latLngBounds(STOPS.map(s => [s.lat, s.lng]));
-  const boundsHouses = L.latLngBounds(houses.map(s => [s.lat, s.lng]));
 
-  function fitHouses() { map.fitBounds(boundsHouses, { padding: [50, 50], maxZoom: 17 }); }
-  function fitAll() { map.fitBounds(boundsAll, { padding: [50, 50] }); }
-
-  document.getElementById('btn-cases').addEventListener('click', fitHouses);
-  document.getElementById('btn-tot').addEventListener('click', fitAll);
-
-  fitHouses();
+  map.fitBounds(boundsAll, { padding: [50, 50], maxZoom: 17 });
 
   // re-render popups when language changes
   document.querySelectorAll('.lang-btn').forEach(btn => {
