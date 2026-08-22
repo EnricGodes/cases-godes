@@ -286,7 +286,7 @@ tailwind.config = {
 
 <div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
 
-<script src="../js/shared.js"></script>
+<script src="../js/shared.js?v=2"></script>
 <script>
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
@@ -330,6 +330,7 @@ document.querySelectorAll('.quiz-option').forEach(btn => {
     if (quizAnswered) return;
     quizAnswered = true;
     const isCorrect = btn.dataset.correct === 'true';
+      recordQuiz('fonollar-30', isCorrect);
     const fb = FEEDBACK[lang()];
     document.querySelectorAll('.quiz-option').forEach(b => {
       b.classList.add('disabled');

@@ -332,7 +332,7 @@
 <!-- Lightbox -->
 <div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
 
-<script src="../js/shared.js"></script>
+<script src="../js/shared.js?v=2"></script>
 <script>
   // Audio - switch source on language change
   const AUDIO_SRC = { ca: '../recursos/audio/fonollar-20-cat.mp3', es: '../recursos/audio/fonollar-20-esp.mp3' };
@@ -379,6 +379,7 @@
       if (quizAnswered) return;
       quizAnswered = true;
       const isCorrect = btn.dataset.correct === 'true';
+      recordQuiz('fonollar-20', isCorrect);
       const fb = FEEDBACK[lang()];
       document.querySelectorAll('.quiz-option').forEach(b => {
         b.classList.add('disabled');

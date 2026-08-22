@@ -41,6 +41,46 @@ function applyFontSize(size) {
   });
 }
 
+/* ==================== QUIZ SCORE ==================== */
+/* Les 9 parades, en ordre de ruta. L'id ha de coincidir amb el que passa
+   cada pàgina a recordQuiz(). El resultat es desa a localStorage perquè
+   la darrera parada (Ripoll) en pugui fer el recompte. */
+const QUIZ_STOPS = [
+  { id: 'fonollar-20',         ca: 'Fonollar, 20',              es: 'Fonollar, 20' },
+  { id: 'claveguera-14',       ca: 'Claveguera, 14',            es: 'Claveguera, 14' },
+  { id: 'sant-agusti-vell-19', ca: 'Pl. Sant Agustí Vell, 19',  es: 'Pl. Sant Agustí Vell, 19' },
+  { id: 'fonollar-30',         ca: 'Fonollar, 30 i 3',          es: 'Fonollar, 30 y 3' },
+  { id: 'jaume-giralt-3',      ca: 'Jaume Giralt, 3',           es: 'Jaume Giralt, 3' },
+  { id: 'sant-pere-mes-baix-40', ca: 'Sant Pere Més Baix, 40',  es: 'Sant Pere Més Baix, 40' },
+  { id: 'banys-vells-15',      ca: 'Banys Vells, 15',           es: 'Banys Vells, 15' },
+  { id: 'sant-pere-mitja-12',  ca: 'Sant Pere Mitjà, 12',       es: 'Sant Pere Mitjà, 12' },
+  { id: 'ripoll-12',           ca: 'Ripoll, 12',                es: 'Ripoll, 12' },
+];
+
+function getQuizResults() {
+  try {
+    return JSON.parse(localStorage.getItem('quizResults') || '{}');
+  } catch (e) {
+    return {};
+  }
+}
+
+function recordQuiz(id, correct) {
+  const r = getQuizResults();
+  r[id] = !!correct;
+  try {
+    localStorage.setItem('quizResults', JSON.stringify(r));
+  } catch (e) {
+    /* mode privat o emmagatzematge ple: la ruta continua igualment */
+  }
+}
+
+function resetQuizResults() {
+  try {
+    localStorage.removeItem('quizResults');
+  } catch (e) {}
+}
+
 /* ==================== MENU ==================== */
 function openMenu() {
   document.getElementById('side-menu').classList.remove('-translate-x-full');

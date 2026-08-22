@@ -94,7 +94,7 @@ tailwind.config = {darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed-v
 
 <div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
 
-<script src="../js/shared.js"></script>
+<script src="../js/shared.js?v=2"></script>
 <script>
 const lightbox=document.getElementById('lightbox');const lightboxImg=document.getElementById('lightbox-img');
 document.querySelectorAll('.lightbox-img').forEach(img=>{img.addEventListener('click',()=>{lightboxImg.src=img.src;lightboxImg.alt=img.alt;lightbox.classList.add('show');});});
@@ -106,6 +106,6 @@ if(menuBtn&&menuClose&&sideMenu&&menuOverlay){menuBtn.addEventListener('click',o
 const lang=()=>localStorage.getItem('lang')||'ca';
 const FEEDBACK={ca:{correct:'Correcte!',incorrect:'No exactament...',explanation:'El Modernisme va començar a despuntar a Barcelona a finals del segle XIX, coincidint amb l’expansió de la ciutat, la prosperitat burgesa i la voluntat de crear un llenguatge artístic propi.'},es:{correct:'¡Correcto!',incorrect:'No exactamente...',explanation:'El Modernismo empezó a despuntar en Barcelona a finales del siglo XIX, coincidiendo con la expansión de la ciudad, la prosperidad burguesa y la voluntad de crear un lenguaje artístico propio.'}};
 let quizAnswered=false;
-document.querySelectorAll('.quiz-option').forEach(btn=>{btn.addEventListener('click',()=>{if(quizAnswered)return;quizAnswered=true;const isCorrect=btn.dataset.correct==='true';const fb=FEEDBACK[lang()];document.querySelectorAll('.quiz-option').forEach(b=>{b.classList.add('disabled');if(b.dataset.correct==='true')b.classList.add('correct');else if(b===btn&&!isCorrect)b.classList.add('incorrect');});document.getElementById('feedback-result').textContent=isCorrect?fb.correct:fb.incorrect;document.getElementById('feedback-text').textContent=fb.explanation;document.getElementById('quiz-feedback').classList.add('show');document.getElementById('quiz-continue').classList.remove('opacity-50','pointer-events-none');});});
+document.querySelectorAll('.quiz-option').forEach(btn=>{btn.addEventListener('click',()=>{if(quizAnswered)return;quizAnswered=true;const isCorrect=btn.dataset.correct==='true';recordQuiz('jaume-giralt-3',isCorrect);const fb=FEEDBACK[lang()];document.querySelectorAll('.quiz-option').forEach(b=>{b.classList.add('disabled');if(b.dataset.correct==='true')b.classList.add('correct');else if(b===btn&&!isCorrect)b.classList.add('incorrect');});document.getElementById('feedback-result').textContent=isCorrect?fb.correct:fb.incorrect;document.getElementById('feedback-text').textContent=fb.explanation;document.getElementById('quiz-feedback').classList.add('show');document.getElementById('quiz-continue').classList.remove('opacity-50','pointer-events-none');});});
 </script>
 </body></html>
