@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html class="light" lang="ca"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sant Pere Mitjà, 12 - Rere les passes de la família Godes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-fixed-variant": "#4a4644",
+            "surface-container-highest": "#e7e2d9",
+            "on-surface-variant": "#4d4639",
+            "on-primary": "#ffffff",
+            "inverse-primary": "#e4c375",
+            "surface-container": "#f2ede4",
+            "secondary-container": "#e5dedb",
+            "outline": "#7e7667",
+            "tertiary-fixed": "#fdddba",
+            "inverse-on-surface": "#f5f0e7",
+            "surface-bright": "#fef9f0",
+            "primary-fixed": "#ffdf97",
+            "tertiary-fixed-dim": "#e0c1a0",
+            "inverse-surface": "#32302a",
+            "on-primary-fixed-variant": "#5a4300",
+            "on-error": "#ffffff",
+            "surface-variant": "#e7e2d9",
+            "primary-fixed-dim": "#e4c375",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#ded9d1",
+            "surface-container-high": "#ece8df",
+            "primary-container": "#8c712d",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#584329",
+            "secondary-fixed-dim": "#cbc5c2",
+            "surface-container-low": "#f8f3ea",
+            "tertiary": "#6f583d",
+            "primary": "#715915",
+            "on-secondary-container": "#66625f",
+            "surface-tint": "#745b18",
+            "on-background": "#1d1c16",
+            "error-container": "#ffdad6",
+            "outline-variant": "#d0c5b4",
+            "tertiary-container": "#897053",
+            "background": "#fef9f0",
+            "on-tertiary-container": "#fffbff",
+            "on-primary-container": "#fffbff",
+            "on-secondary-fixed": "#1e1b19",
+            "on-tertiary-fixed": "#281804",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#251a00",
+            "secondary-fixed": "#e8e1de",
+            "on-secondary": "#ffffff",
+            "on-surface": "#1d1c16",
+            "surface": "#fef9f0",
+            "secondary": "#625e5b"
+          },
+          fontFamily: {
+            "headline": ["Noto Serif"],
+            "body": ["Manrope"],
+            "label": ["Manrope"]
+          },
+          borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+        },
+      },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+    .vellum-texture {
+      background-color: #2b251e;
+    }
+    .sepia-overlay { filter: sepia(0.4) contrast(1.1) brightness(0.95); }
+    /* els marcadors de posició no porten filtre */
+    img[src$="placeholder.svg"] { filter: none; }
+    #menu-overlay {
+      display: none; position: fixed; inset: 0;
+      background-color: rgba(29, 28, 22, 0.5); z-index: 55;
+    }
+    #menu-overlay.show { display: block; }
+    #lightbox {
+      display: none; position: fixed; inset: 0;
+      background-color: rgba(29, 28, 22, 0.85);
+      z-index: 200; cursor: pointer;
+      justify-content: center; align-items: center;
+    }
+    #lightbox.show { display: flex; }
+    #lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; box-shadow: 0 0 60px rgba(29,28,22,0.3); }
+    .quiz-option { transition: all 0.3s; }
+    .quiz-option.correct { background-color: #2d5016; border-color: #4ade80; }
+    .quiz-option.incorrect { background-color: #4a1c1c; border-color: #ef4444; opacity: 0.6; }
+    .quiz-option.disabled { pointer-events: none; }
+    #quiz-feedback { display: none; }
+    #quiz-feedback.show { display: block; }
+    .ledger-row { list-style: none; }
+    .ledger-row.ledger-last { border-left: 2px solid transparent; }
+    .ledger-dot {
+      position: absolute; left: -7px; top: 0.35rem;
+      width: 12px; height: 12px;
+      background-color: #715915;
+      box-shadow: 0 0 0 4px #fef9f0;
+    }
+    .ledger-dot.out {
+      background-color: #fef9f0;
+      border: 2px solid #7e7667;
+    }
+</style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed-dim selection:text-on-primary-fixed overflow-x-hidden">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-6 h-16 bg-[#fef9f0]/80 backdrop-blur-md z-50 border-b border-[#d0c5b4]/15 shadow-[0_0_40px_rgba(29,28,22,0.06)]">
+  <button id="menu-btn" class="text-[#715915] hover:text-[#e4c375] transition-colors duration-300">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <h1 class="font-['Noto_Serif'] font-bold tracking-tight text-[#1d1c16] text-lg">Sant Pere Mitjà, 12</h1>
+  <div class="w-10"></div>
+</header>
+
+<!-- Side Menu -->
+<div id="menu-overlay"></div>
+<nav id="side-menu" class="fixed inset-y-0 left-0 z-[60] bg-[#fef9f0] h-full w-80 border-r border-[#d0c5b4]/10 shadow-2xl -translate-x-full transition-transform duration-400 overflow-y-auto">
+  <div class="px-6 pt-6 pb-4 flex items-center justify-between border-b border-outline-variant/20">
+    <span class="font-['Noto_Serif'] font-black text-primary text-lg">Les Cases dels Godes</span>
+    <button id="menu-close" class="text-on-surface-variant hover:text-primary transition-colors">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+  <div class="px-6 py-6 space-y-8">
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Idioma" data-es="Idioma">Idioma</p>
+      <div class="flex gap-2">
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="ca">Català</button>
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="es">Castellano</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Mida de la lletra" data-es="Tamaño de fuente">Mida de la lletra</p>
+      <div class="flex gap-2">
+        <button class="font-btn px-3 py-2 text-xs font-label font-semibold border border-outline-variant/30 transition-all" data-size="normal">A</button>
+        <button class="font-btn px-3 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-size="grande">A+</button>
+        <button class="font-btn px-3 py-2 text-base font-label font-semibold border border-outline-variant/30 transition-all" data-size="extragrande">A++</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Equip de recerca" data-es="Equipo de investigación">Equip de recerca</p>
+      <div class="space-y-1 font-body text-sm text-on-surface leading-relaxed">
+        <p>Emili Godes i Faura</p><p>Enric Godes Maté</p><p>Ignasi Palazuelos Salvadó</p><p>Oriol Mestre Campi</p>
+      </div>
+      <div class="space-y-1 font-body text-sm text-on-surface-variant leading-relaxed mt-3">
+        <p>Maria Rosa Godes Diago (+)</p><p>Jesús Mestre Godes (+)</p><p>Montserrat Godes Diago (+)</p><p>Enric Cabestany Carreras (+)</p>
+      </div>
+    </div>
+    <div class="border-t border-outline-variant/20 pt-6">
+      <p class="font-label text-xs text-on-surface-variant" data-ca="Experiència creada per Enric Godes" data-es="Experiencia creada por Enric Godes">Experiència creada per Enric Godes</p>
+    </div>
+  </div>
+</nav>
+
+<main class="pt-24 pb-32 px-4 md:px-12 max-w-4xl mx-auto space-y-20">
+<section>
+  <figure>
+    <img class="w-full aspect-[4/3] object-cover sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Carrer de Sant Pere Mitjà" src="../recursos/imagen/sant-pere-mitja-12/sant-pere-mitja-12.jpg"/>
+    <figcaption class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mt-3" data-ca="El carrer de Sant Pere Mitjà avui" data-es="El carrer de Sant Pere Mitjà hoy">El carrer de Sant Pere Mitjà avui</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2 class="font-headline text-5xl md:text-7xl font-black text-on-background leading-tight tracking-tighter" data-ca="Sant Pere Mitjà, 12 6è <span class=&quot;text-primary&quot;>(1896-1899)</span>" data-es="Sant Pere Mitjà, 12 6º <span class=&quot;text-primary&quot;>(1896-1899)</span>">Sant Pere Mitjà, 12 6è <span class="text-primary">(1896-1899)</span></h2>
+</section>
+
+<section class="bg-surface-container p-6 space-y-4">
+  <div class="flex items-center gap-4">
+    <span class="material-symbols-outlined text-2xl text-primary" style="font-variation-settings: 'FILL' 1;">headphones</span>
+    <div>
+      <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Audioguia" data-es="Audioguía">Audioguia</p>
+      <p class="font-body text-sm text-on-surface-variant" data-ca="Prem play per escoltar la història" data-es="Pulsa play para escuchar la historia">Prem play per escoltar la història</p>
+    </div>
+  </div>
+  <audio id="audio-player" controls preload="none" class="w-full" style="height: 40px;">
+    <source id="audio-source" src="../recursos/audio/sant-pere-mitja-12-cat.mp3" type="audio/mpeg">
+  </audio>
+  <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant/70" data-ca="Àudio pendent de gravació" data-es="Audio pendiente de grabación">Àudio pendent de gravació</p>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Una nova casa per a Artur i Emília" data-es="Una nueva casa para Artur y Emilia">Una nova casa per a Artur i Emília</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="El 1896, Artur Godes Caballeria i Emília Hurtado Giró van deixar Banys Vells 15 i es van instal·lar al sisè pis del número 12 del carrer de Sant Pere Mitjà." data-es="En 1896, Artur Godes Caballeria y Emilia Hurtado Giró dejaron Banys Vells 15 y se instalaron en el sexto piso del número 12 de la calle Sant Pere Mitjà.">El 1896, Artur Godes Caballeria i Emília Hurtado Giró van deixar Banys Vells 15 i es van instal·lar al sisè pis del número 12 del carrer de Sant Pere Mitjà.</p>
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Amb ells hi van arribar el seu primer fill, Emili Godes Hurtado, nascut l'any anterior, i Mercè Godes Caballeria, la germana d'Artur." data-es="Con ellos llegaron su primer hijo, Emili Godes Hurtado, nacido el año anterior, y Mercè Godes Caballeria, la hermana de Artur.">Amb ells hi van arribar el seu primer fill, Emili Godes Hurtado, nascut l'any anterior, i Mercè Godes Caballeria, la germana d'Artur.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="El trasllat marca un canvi de generació: fins ara hem seguit la casa de Pasqual i Rosa; a partir d'aquí seguim la d'Artur." data-es="El traslado marca un cambio de generación: hasta ahora hemos seguido la casa de Pasqual y Rosa; a partir de aquí seguimos la de Artur.">El trasllat marca un canvi de generació: fins ara hem seguit la casa de Pasqual i Rosa; a partir d'aquí seguim la d'Artur.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="I hi ha una altra cosa: Artur torna al barri on va créixer. D'aquest portal a Sant Pere Més Baix 40, on la família havia viscut entre 1885 i 1891, hi ha setanta-set metres. El mercat de Santa Caterina és aquí mateix, a la cantonada." data-es="Y hay otra cosa: Artur vuelve al barrio donde creció. De este portal a Sant Pere Més Baix 40, donde la familia había vivido entre 1885 y 1891, hay setenta y siete metros. El mercado de Santa Caterina está aquí mismo, en la esquina.">I hi ha una altra cosa: Artur torna al barri on va créixer. D'aquest portal a Sant Pere Més Baix 40, on la família havia viscut entre 1885 i 1891, hi ha setanta-set metres. El mercat de Santa Caterina és aquí mateix, a la cantonada.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Els Godes havien creuat a la Ribera el 1891 i tornaven a Sant Pere cinc anys després. El mapa d'aquesta família es continua movent dins del mateix grapat de carrers." data-es="Los Godes habían cruzado a la Ribera en 1891 y volvían a Sant Pere cinco años después. El mapa de esta familia se sigue moviendo dentro del mismo puñado de calles.">Els Godes havien creuat a la Ribera el 1891 i tornaven a Sant Pere cinc anys després. El mapa d'aquesta família es continua movent dins del mateix grapat de carrers.</p>
+  </div>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Artur, músic del Liceu" data-es="Artur, músico del Liceu">Artur, músic del Liceu</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Artur tenia 28 anys quan va arribar a Sant Pere Mitjà. Era músic, compositor i tenor, i treballava com a comprimari de la companyia d'òpera italiana del Gran Teatre del Liceu." data-es="Artur tenía 28 años cuando llegó a Sant Pere Mitjà. Era músico, compositor y tenor, y trabajaba como comprimario de la compañía de ópera italiana del Gran Teatre del Liceu.">Artur tenia 28 anys quan va arribar a Sant Pere Mitjà. Era músic, compositor i tenor, i treballava com a comprimari de la companyia d'òpera italiana del Gran Teatre del Liceu.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Els comprimaris interpretaven els papers secundaris indispensables per completar el repartiment: missatgers, soldats, criats, artesans, personatges de cort. Surten a cada funció, sostenen l'obra i no apareixen mai al cartell." data-es="Los comprimarios interpretaban los papeles secundarios indispensables para completar el reparto: mensajeros, soldados, criados, artesanos, personajes de corte. Salen en cada función, sostienen la obra y no aparecen nunca en el cartel.">Els comprimaris interpretaven els papers secundaris indispensables per completar el repartiment: missatgers, soldats, criats, artesans, personatges de cort. Surten a cada funció, sostenen l'obra i no apareixen mai al cartell.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Entre 1893 i 1923 —trenta anys de temporades— Artur va assumir personatges com Augustin Moser, el comte de Ceprano, Marcellus, Marco, un missatger o Walther von der Vogelweide." data-es="Entre 1893 y 1923 —treinta años de temporadas— Artur asumió personajes como Augustin Moser, el conde de Ceprano, Marcellus, Marco, un mensajero o Walther von der Vogelweide.">Entre 1893 i 1923 —trenta anys de temporades— Artur va assumir personatges com Augustin Moser, el comte de Ceprano, Marcellus, Marco, un missatger o Walther von der Vogelweide.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="La seva trajectòria va combinar sempre l'escenari amb la música religiosa: va ser mestre de capella de Santa Maria del Mar i, més endavant, de la Bonanova." data-es="Su trayectoria combinó siempre el escenario con la música religiosa: fue maestro de capilla de Santa Maria del Mar y, más adelante, de la Bonanova.">La seva trajectòria va combinar sempre l'escenari amb la música religiosa: va ser mestre de capella de Santa Maria del Mar i, més endavant, de la Bonanova.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Un sisè pis al barri de Sant Pere i el Liceu a la Rambla: vint minuts a peu separaven la casa de l'escenari." data-es="Un sexto piso en el barrio de Sant Pere y el Liceu en la Rambla: veinte minutos a pie separaban la casa del escenario.">Un sisè pis al barri de Sant Pere i el Liceu a la Rambla: vint minuts a peu separaven la casa de l'escenari.</p>
+  </div>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="El naixement d'Ernest" data-es="El nacimiento de Ernest">El naixement d'Ernest</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="L'11 d'octubre de 1896 va néixer en aquesta casa el segon fill del matrimoni, Ernest Godes Hurtado." data-es="El 11 de octubre de 1896 nació en esta casa el segundo hijo del matrimonio, Ernest Godes Hurtado.">L'11 d'octubre de 1896 va néixer en aquesta casa el segon fill del matrimoni, Ernest Godes Hurtado.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Va ser batejat el 18 d'octubre a la parròquia de Sant Francesc de Paula. Els padrins van ser el seu oncle Pau Godes Caballeria i Ramona Monrós." data-es="Fue bautizado el 18 de octubre en la parroquia de Sant Francesc de Paula. Los padrinos fueron su tío Pau Godes Caballeria y Ramona Monrós.">Va ser batejat el 18 d'octubre a la parròquia de Sant Francesc de Paula. Els padrins van ser el seu oncle Pau Godes Caballeria i Ramona Monrós.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Ja adult, Ernest se n'aniria a Tarragona, on va treballar de gerent dels estibadors del port per a la naviliera José Tayá, i més endavant a Còrdova, on va ser propietari d'una serradora." data-es="Ya adulto, Ernest se iría a Tarragona, donde trabajó como gerente de los estibadores del puerto para la naviera José Tayá, y más adelante a Córdoba, donde fue propietario de una serrería.">Ja adult, Ernest se n'aniria a Tarragona, on va treballar de gerent dels estibadors del port per a la naviliera José Tayá, i més endavant a Còrdova, on va ser propietari d'una serradora.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="D'ell arrenca la branca dels <strong>Godes Molina</strong>: el nen que va néixer en aquest sisè pis va iniciar, amb els seus descendents, una de les línies de la família." data-es="De él arranca la rama de los <strong>Godes Molina</strong>: el niño que nació en este sexto piso inició, con sus descendientes, una de las líneas de la familia.">D'ell arrenca la branca dels <strong>Godes Molina</strong>: el nen que va néixer en aquest sisè pis va iniciar, amb els seus descendents, una de les línies de la família.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Dos germans nascuts a dues cases separades per mig quilòmetre acabarien un a Còrdova i l'altre fent-se un nom com a fotògraf a Barcelona." data-es="Dos hermanos nacidos en dos casas separadas por medio kilómetro acabarían uno en Córdoba y el otro haciéndose un nombre como fotógrafo en Barcelona.">Dos germans nascuts a dues cases separades per mig quilòmetre acabarien un a Còrdova i l'altre fent-se un nom com a fotògraf a Barcelona.</p>
+  </div>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Qui va viure a Sant Pere Mitjà 12?" data-es="¿Quién vivió en Sant Pere Mitjà 12?">Qui va viure a Sant Pere Mitjà 12?</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Durant aquesta etapa hi van conviure cinc persones: Artur Godes Caballeria, músic i tenor del Liceu; Emília Hurtado Giró, la seva esposa; Emili Godes Hurtado, nascut el 1895; Ernest Godes Hurtado, nascut en aquesta casa el 1896; i Mercè Godes Caballeria, germana d'Artur." data-es="Durante esta etapa convivieron cinco personas: Artur Godes Caballeria, músico y tenor del Liceu; Emilia Hurtado Giró, su esposa; Emili Godes Hurtado, nacido en 1895; Ernest Godes Hurtado, nacido en esta casa en 1896; y Mercè Godes Caballeria, hermana de Artur.">Durant aquesta etapa hi van conviure cinc persones: Artur Godes Caballeria, músic i tenor del Liceu; Emília Hurtado Giró, la seva esposa; Emili Godes Hurtado, nascut el 1895; Ernest Godes Hurtado, nascut en aquesta casa el 1896; i Mercè Godes Caballeria, germana d'Artur.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Mercè, soltera, va seguir Artur i Emília de casa en casa. Va ser, amb la seva cunyada, el suport constant dels Godes Hurtado durant dècades." data-es="Mercè, soltera, siguió a Artur y Emilia de casa en casa. Fue, junto a su cuñada, el apoyo constante de los Godes Hurtado durante décadas.">Mercè, soltera, va seguir Artur i Emília de casa en casa. Va ser, amb la seva cunyada, el suport constant dels Godes Hurtado durant dècades.</p>
+  </div>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Altes i baixes de l'habitatge" data-es="Altas y bajas de la vivienda">Altes i baixes de l'habitatge</p>
+  </div>
+  <ol class="space-y-0">
+    <li class="ledger-row border-l-2 border-primary/30 pl-6 pb-8 relative">
+      <span class="ledger-dot"></span>
+      <p class="font-label text-[10px] uppercase tracking-widest text-primary font-bold mb-1" data-ca="1896" data-es="1896">1896</p>
+      <h4 class="font-headline text-lg font-bold text-on-background mb-1" data-ca="Arribada d'Artur, Emília, Emili i Mercè" data-es="Llegada de Artur, Emilia, Emili y Mercè">Arribada d'Artur, Emília, Emili i Mercè</h4>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Van pujar des de Banys Vells 15 al sisè pis d'aquesta casa. Artur tenia 28 anys; Emília, 24; el petit Emili, un any." data-es="Subieron desde Banys Vells 15 al sexto piso de esta casa. Artur tenía 28 años; Emilia, 24; el pequeño Emili, un año.">Van pujar des de Banys Vells 15 al sisè pis d'aquesta casa. Artur tenia 28 anys; Emília, 24; el petit Emili, un any.</p>
+    </li>
+    <li class="ledger-row border-l-2 border-primary/30 pl-6 pb-8 relative">
+      <span class="ledger-dot"></span>
+      <p class="font-label text-[10px] uppercase tracking-widest text-primary font-bold mb-1" data-ca="11 d'octubre de 1896" data-es="11 de octubre de 1896">11 d'octubre de 1896</p>
+      <h4 class="font-headline text-lg font-bold text-on-background mb-1" data-ca="Naixement d'Ernest Godes Hurtado" data-es="Nacimiento de Ernest Godes Hurtado">Naixement d'Ernest Godes Hurtado</h4>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="El segon fill del matrimoni va néixer aquí. El van batejar una setmana després a Sant Francesc de Paula." data-es="El segundo hijo del matrimonio nació aquí. Lo bautizaron una semana después en Sant Francesc de Paula.">El segon fill del matrimoni va néixer aquí. El van batejar una setmana després a Sant Francesc de Paula.</p>
+    </li>
+    <li class="ledger-row ledger-last pl-6 relative">
+      <span class="ledger-dot out"></span>
+      <p class="font-label text-[10px] uppercase tracking-widest text-primary font-bold mb-1" data-ca="1899" data-es="1899">1899</p>
+      <h4 class="font-headline text-lg font-bold text-on-background mb-1" data-ca="Marxa de tota la família" data-es="Salida de toda la familia">Marxa de tota la família</h4>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Artur, Emília, Emili, Ernest i Mercè es traslladen a Ripoll 12, 2n 2a." data-es="Artur, Emilia, Emili, Ernest y Mercè se trasladan a Ripoll 12, 2.º 2.ª.">Artur, Emília, Emili, Ernest i Mercè es traslladen a Ripoll 12, 2n 2a.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="space-y-10">
+  <div class="bg-surface-container p-10 relative border-l-4 border-primary/20">
+    <div class="absolute top-4 right-4 opacity-10"><span class="material-symbols-outlined text-6xl">gavel</span></div>
+    <h3 class="font-headline text-2xl font-bold mb-4 flex items-center gap-2">
+      <span class="w-8 h-[1px] bg-primary"></span>
+      <span data-ca="Context Espanya" data-es="Contexto España">Context Espanya</span>
+    </h3>
+    <div class="space-y-4 text-on-surface-variant leading-relaxed">
+      <p data-ca="La guerra de 1898 contra els Estats Units va acabar amb la pèrdua de Cuba, Puerto Rico i les Filipines." data-es="La guerra de 1898 contra Estados Unidos terminó con la pérdida de Cuba, Puerto Rico y Filipinas.">La guerra de 1898 contra els Estats Units va acabar amb la pèrdua de Cuba, Puerto Rico i les Filipines.</p>
+      <p data-ca="L'anomenat desastre del 98 va obrir una crisi política i intel·lectual sobre la feblesa de l'Estat, el sistema de la Restauració i el futur del país. La reforma fiscal posterior buscava afrontar el dèficit del conflicte." data-es="El llamado desastre del 98 abrió una crisis política e intelectual sobre la debilidad del Estado, el sistema de la Restauración y el futuro del país. La reforma fiscal posterior buscaba afrontar el déficit del conflicto.">L'anomenat desastre del 98 va obrir una crisi política i intel·lectual sobre la feblesa de l'Estat, el sistema de la Restauració i el futur del país. La reforma fiscal posterior buscava afrontar el dèficit del conflicte.</p>
+    </div>
+  </div>
+
+  <div class="bg-surface-container p-10 relative border-l-4 border-primary/20">
+    <div class="absolute top-4 right-4 opacity-10"><span class="material-symbols-outlined text-6xl">flag</span></div>
+    <h3 class="font-headline text-2xl font-bold mb-4 flex items-center gap-2">
+      <span class="w-8 h-[1px] bg-primary"></span>
+      <span data-ca="Context Catalunya" data-es="Contexto Catalunya">Context Catalunya</span>
+    </h3>
+    <div class="space-y-4 text-on-surface-variant leading-relaxed">
+      <p data-ca="L'impacte econòmic i polític del 98 va reforçar les demandes de reforma, i una part del catalanisme va guanyar capacitat d'organització." data-es="El impacto económico y político del 98 reforzó las demandas de reforma, y una parte del catalanismo ganó capacidad de organización.">L'impacte econòmic i polític del 98 va reforçar les demandes de reforma, i una part del catalanisme va guanyar capacitat d'organització.</p>
+      <p data-ca="El 1899, comerciants i industrials van protagonitzar el Tancament de Caixes, una protesta contra els nous impostos estatals que va convertir la resistència fiscal en un conflicte polític." data-es="En 1899, comerciantes e industriales protagonizaron el Tancament de Caixes, una protesta contra los nuevos impuestos estatales que convirtió la resistencia fiscal en un conflicto político.">El 1899, comerciants i industrials van protagonitzar el Tancament de Caixes, una protesta contra els nous impostos estatals que va convertir la resistència fiscal en un conflicte polític.</p>
+    </div>
+  </div>
+
+  <div class="bg-surface-container p-10 relative border-l-4 border-primary/20">
+    <div class="absolute top-4 right-4 opacity-10"><span class="material-symbols-outlined text-6xl">location_city</span></div>
+    <h3 class="font-headline text-2xl font-bold mb-4 flex items-center gap-2">
+      <span class="w-8 h-[1px] bg-primary"></span>
+      <span data-ca="Context Barcelona" data-es="Contexto Barcelona">Context Barcelona</span>
+    </h3>
+    <div class="space-y-4 text-on-surface-variant leading-relaxed">
+      <p data-ca="La família va arribar a Sant Pere Mitjà el mateix any de l'atemptat contra la processó de Corpus al carrer dels Canvis Nous, el 7 de juny de 1896, a mig quilòmetre d'aquí. L'explosió i la repressió posterior van desembocar en els processos de Montjuïc." data-es="La familia llegó a Sant Pere Mitjà el mismo año del atentado contra la procesión del Corpus en la calle Canvis Nous, el 7 de junio de 1896, a medio kilómetro de aquí. La explosión y la represión posterior desembocaron en los procesos de Montjuïc.">La família va arribar a Sant Pere Mitjà el mateix any de l'atemptat contra la processó de Corpus al carrer dels Canvis Nous, el 7 de juny de 1896, a mig quilòmetre d'aquí. L'explosió i la repressió posterior van desembocar en els processos de Montjuïc.</p>
+      <p data-ca="El 1897, Barcelona va incorporar administrativament Gràcia, Sants, Sant Martí de Provençals, Sant Andreu de Palomar, Sant Gervasi de Cassoles i les Corts. La ciutat es multiplicava sobre el mapa mentre al nucli antic continuaven la densitat, els tallers i els pisos alts." data-es="En 1897, Barcelona incorporó administrativamente Gràcia, Sants, Sant Martí de Provençals, Sant Andreu de Palomar, Sant Gervasi de Cassoles y les Corts. La ciudad se multiplicaba sobre el mapa mientras en el casco antiguo continuaban la densidad, los talleres y los pisos altos.">El 1897, Barcelona va incorporar administrativament Gràcia, Sants, Sant Martí de Provençals, Sant Andreu de Palomar, Sant Gervasi de Cassoles i les Corts. La ciutat es multiplicava sobre el mapa mentre al nucli antic continuaven la densitat, els tallers i els pisos alts.</p>
+    </div>
+  </div>
+</section>
+
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Una generació que comença a separar-se" data-es="Una generación que empieza a separarse">Una generació que comença a separar-se</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Sant Pere Mitjà marca un canvi en el relat. Pasqual i Rosa ja havien mort i els seus fills començaven a seguir camins diferents." data-es="Sant Pere Mitjà marca un cambio en el relato. Pasqual y Rosa ya habían muerto y sus hijos empezaban a seguir caminos distintos.">Sant Pere Mitjà marca un canvi en el relat. Pasqual i Rosa ja havien mort i els seus fills començaven a seguir camins diferents.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Artur construïa una carrera musical i una família pròpia; Pau havia deixat Banys Vells per iniciar la seva; i Dolors continuava vinculada a aquella casa fins al 1915." data-es="Artur construía una carrera musical y una familia propia; Pau había dejado Banys Vells para iniciar la suya; y Dolors seguía vinculada a aquella casa hasta 1915.">Artur construïa una carrera musical i una família pròpia; Pau havia deixat Banys Vells per iniciar la seva; i Dolors continuava vinculada a aquella casa fins al 1915.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="La història deixa de seguir una única llar i es ramifica per Barcelona." data-es="La historia deja de seguir un único hogar y se ramifica por Barcelona.">La història deixa de seguir una única llar i es ramifica per Barcelona.</p>
+  </div>
+</section>
+
+<section>
+  <div class="bg-surface-container-high border-l-4 border-primary/30 p-6 space-y-2">
+    <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Mira al teu voltant" data-es="Mira a tu alrededor">Mira al teu voltant</p>
+    <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Busqueu les finestres dels pisos superiors. Artur i Emília vivien en un sisè pis amb dos infants petits, sense ascensor: penseu en l'aigua, el carbó, el menjar i la roba pujant aquelles escales cada dia." data-es="Buscad las ventanas de los pisos superiores. Artur y Emilia vivían en un sexto piso con dos niños pequeños, sin ascensor: pensad en el agua, el carbón, la comida y la ropa subiendo aquellas escaleras cada día.">Busqueu les finestres dels pisos superiors. Artur i Emília vivien en un sisè pis amb dos infants petits, sense ascensor: penseu en l'aigua, el carbó, el menjar i la roba pujant aquelles escales cada dia.</p>
+  </div>
+</section>
+
+<section class="max-w-3xl mx-auto bg-[#2b251e] border border-[#a68942]/30 p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative vellum-texture">
+  <div class="text-center mb-10">
+    <span class="material-symbols-outlined text-[#e4c375] text-4xl mb-4" style="font-variation-settings: 'FILL' 1;">help_center</span>
+    <h2 class="font-headline text-3xl font-bold italic mb-2 text-[#f2ede4]" data-ca="Consulta de l'Arxiver" data-es="Consulta del Archivero">Consulta de l'Arxiver</h2>
+    <div class="h-px w-24 bg-[#a68942]/50 mx-auto"></div>
+  </div>
+  <p class="font-headline text-xl text-center mb-10 text-[#f2ede4]" data-ca="Quin fill d'Artur i Emília va néixer a Sant Pere Mitjà 12?" data-es="¿Qué hijo de Artur y Emilia nació en Sant Pere Mitjà 12?">Quin fill d'Artur i Emília va néixer a Sant Pere Mitjà 12?</p>
+  <div id="quiz-options" class="space-y-4 mb-8">
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="true">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Ernest Godes Hurtado" data-es="Ernest Godes Hurtado">Ernest Godes Hurtado</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
+    </button>
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="false">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Emili Godes Hurtado" data-es="Emili Godes Hurtado">Emili Godes Hurtado</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
+    </button>
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="false">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Rosa Godes Hurtado" data-es="Rosa Godes Hurtado">Rosa Godes Hurtado</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
+    </button>
+  </div>
+  <div id="quiz-feedback" class="mb-8 p-6 border border-[#a68942]/30">
+    <p id="feedback-result" class="font-headline text-lg font-bold mb-3 text-[#f2ede4]"></p>
+    <p id="feedback-text" class="font-body text-sm text-[#d0c5b4] leading-relaxed"></p>
+  </div>
+  <div class="flex justify-center">
+    <a id="quiz-continue" href="cronologia.html" class="bg-[#a68942] text-[#f2ede4] px-10 py-4 font-label uppercase tracking-widest font-black hover:bg-[#8c712d] transition-colors shadow-lg active:scale-95 opacity-50 pointer-events-none no-underline inline-block text-center" data-ca="Veure la vida completa" data-es="Ver la vida completa">Veure la vida completa</a>
+  </div>
+</section>
+
+</main>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#f2ede4] z-50 border-t border-[#d0c5b4]/20">
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="arxiu.html">
+    <span class="material-symbols-outlined">auto_stories</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Arxiu" data-es="Archivo">Arxiu</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="mapa.html">
+    <span class="material-symbols-outlined">explore</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Mapa" data-es="Mapa">Mapa</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="cronologia.html">
+    <span class="material-symbols-outlined">timeline</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Cronologia" data-es="Cronología">Cronologia</span>
+  </a>
+</nav>
+
+<!-- Lightbox -->
+<div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
+
+<script src="../js/shared.js"></script>
+<script>
+  // Audio - switch source on language change
+  const AUDIO_SRC = { ca: '../recursos/audio/sant-pere-mitja-12-cat.mp3', es: '../recursos/audio/sant-pere-mitja-12-esp.mp3' };
+  const audioPlayer = document.getElementById('audio-player');
+  const audioSource = document.getElementById('audio-source');
+  function updateAudioSrc() {
+    const l = localStorage.getItem('lang') || 'ca';
+    audioSource.src = AUDIO_SRC[l];
+    audioPlayer.load();
+  }
+  updateAudioSrc();
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', updateAudioSrc);
+  });
+
+  // Lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  document.querySelectorAll('.lightbox-img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.dataset.full || img.src; lightboxImg.alt = img.alt;
+      lightbox.classList.add('show');
+    });
+  });
+  lightbox.addEventListener('click', () => lightbox.classList.remove('show'));
+
+  // Quiz
+  const lang = () => localStorage.getItem('lang') || 'ca';
+  const FEEDBACK = {
+    ca: { correct: 'Correcte!', incorrect: 'No exactament...', explanation: 'Emili havia nascut a Banys Vells 15 el 1895, abans del trasllat. Ernest va néixer en aquesta casa l\'11 d\'octubre de 1896. I Rosa va néixer el 1899, ja al carrer de Ripoll. Tres fills, tres adreces: la família es movia gairebé tan de pressa com creixia.' },
+    es: { correct: '\u00a1Correcto!', incorrect: 'No exactamente...', explanation: 'Emili había nacido en Banys Vells 15 en 1895, antes del traslado. Ernest nació en esta casa el 11 de octubre de 1896. Y Rosa nació en 1899, ya en la calle Ripoll. Tres hijos, tres direcciones: la familia se movía casi tan deprisa como crecía.' }
+  };
+  let quizAnswered = false;
+  document.querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (quizAnswered) return;
+      quizAnswered = true;
+      const isCorrect = btn.dataset.correct === 'true';
+      const fb = FEEDBACK[lang()];
+      document.querySelectorAll('.quiz-option').forEach(b => {
+        b.classList.add('disabled');
+        if (b.dataset.correct === 'true') b.classList.add('correct');
+        else if (b === btn && !isCorrect) b.classList.add('incorrect');
+      });
+      document.getElementById('feedback-result').textContent = isCorrect ? fb.correct : fb.incorrect;
+      document.getElementById('feedback-text').textContent = fb.explanation;
+      document.getElementById('quiz-feedback').classList.add('show');
+      document.getElementById('quiz-continue').classList.remove('opacity-50', 'pointer-events-none');
+    });
+  });
+</script>
+
+</body></html>
