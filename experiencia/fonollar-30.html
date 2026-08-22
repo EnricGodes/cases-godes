@@ -242,21 +242,21 @@ tailwind.config = {
       <h2 class="font-headline text-3xl font-bold italic mb-2 text-[#f2ede4]" data-ca="Consulta de l'Arxiver" data-es="Consulta del Archivero">Consulta de l'Arxiver</h2>
       <div class="h-px w-24 bg-[#a68942]/50 mx-auto"></div>
     </div>
-    <p class="font-headline text-xl text-center mb-10 text-[#f2ede4]" data-ca="Qui va iniciar la saga dels Godes a Sant Gervasi?" data-es="¿Quién inició la saga de los Godes en Sant Gervasi?">Qui va iniciar la saga dels Godes a Sant Gervasi?</p>
+    <p class="font-headline text-xl text-center mb-10 text-[#f2ede4]" data-ca="Com es va tancar el Sexenni Democràtic, el període que la família va viure en aquesta casa?" data-es="¿Cómo se cerró el Sexenio Democrático, el periodo que la familia vivió en esta casa?">Com es va tancar el Sexenni Democràtic, el període que la família va viure en aquesta casa?</p>
     <div id="quiz-options" class="space-y-4 mb-8">
-      <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="false">
-        <span class="font-body font-semibold text-[#f2ede4]" data-ca="Pau Godes Caballeria" data-es="Pau Godes Caballeria">Pau Godes Caballeria</span>
-        <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
-      </button>
-      <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="true">
-        <span class="font-body font-semibold text-[#f2ede4]" data-ca="Artur Godes Caballeria" data-es="Artur Godes Caballeria">Artur Godes Caballeria</span>
-        <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
-      </button>
-      <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="false">
-        <span class="font-body font-semibold text-[#f2ede4]" data-ca="Dolors Godes Caballeria" data-es="Dolors Godes Caballeria">Dolors Godes Caballeria</span>
-        <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
-      </button>
-    </div>
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center gap-4 active:scale-[0.98]" data-correct="true">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Amb un pronunciament militar que va restaurar la monarquia borbònica" data-es="Con un pronunciamiento militar que restauró la monarquía borbónica">Amb un pronunciament militar que va restaurar la monarquia borbònica</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity flex-shrink-0">arrow_forward</span>
+    </button>
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center gap-4 active:scale-[0.98]" data-correct="false">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Amb unes eleccions que van consolidar la Primera República" data-es="Con unas elecciones que consolidaron la Primera República">Amb unes eleccions que van consolidar la Primera República</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity flex-shrink-0">arrow_forward</span>
+    </button>
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center gap-4 active:scale-[0.98]" data-correct="false">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Amb l'abdicació voluntària d'Isabel II a favor del seu fill" data-es="Con la abdicación voluntaria de Isabel II a favor de su hijo">Amb l'abdicació voluntària d'Isabel II a favor del seu fill</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity flex-shrink-0">arrow_forward</span>
+    </button>
+  </div>
     <div id="quiz-feedback" class="mb-8 p-6 border border-[#a68942]/30">
       <p id="feedback-result" class="font-headline text-lg font-bold mb-3 text-[#f2ede4]"></p>
       <p id="feedback-text" class="font-body text-sm text-[#d0c5b4] leading-relaxed"></p>
@@ -316,12 +316,12 @@ const FEEDBACK = {
   ca: {
     correct: 'Correcte!',
     incorrect: 'No exactament...',
-    explanation: 'La saga dels Godes a Sant Gervasi la inicia Artur Godes Caballeria, que el 1908 va anar a viure a Sant Gervasi de Cassoles, 69.'
+    explanation: 'El Sexenni va començar el 1868 amb la Revolució Gloriosa i l\'exili d\'Isabel II, va passar per Amadeu I de Savoia i per la Primera República del 1873, i es va acabar el desembre de 1874 amb el pronunciament del general Martínez Campos, que va posar Alfons XII al tron. Sis anys per tornar gairebé al punt de partida. Mentrestant, a Barcelona creixia el moviment obrer: s\'hi van celebrar els primers congressos obrers i les idees internacionalistes i anarquistes guanyaven terreny al republicanisme federal.'
   },
   es: {
     correct: '¡Correcto!',
     incorrect: 'No exactamente...',
-    explanation: 'La saga de los Godes en Sant Gervasi la inicia Artur Godes Caballeria, que en 1908 fue a vivir a Sant Gervasi de Cassoles, 69.'
+    explanation: 'El Sexenio empezó en 1868 con la Revolución Gloriosa y el exilio de Isabel II, pasó por Amadeo I de Saboya y por la Primera República de 1873, y terminó en diciembre de 1874 con el pronunciamiento del general Martínez Campos, que puso a Alfonso XII en el trono. Seis años para volver casi al punto de partida. Mientras tanto, en Barcelona crecía el movimiento obrero: se celebraron los primeros congresos obreros y las ideas internacionalistas y anarquistas ganaban terreno al republicanismo federal.'
   }
 };
 let quizAnswered = false;

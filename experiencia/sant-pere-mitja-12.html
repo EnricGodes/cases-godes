@@ -333,19 +333,19 @@
     <h2 class="font-headline text-3xl font-bold italic mb-2 text-[#f2ede4]" data-ca="Consulta de l'Arxiver" data-es="Consulta del Archivero">Consulta de l'Arxiver</h2>
     <div class="h-px w-24 bg-[#a68942]/50 mx-auto"></div>
   </div>
-  <p class="font-headline text-xl text-center mb-10 text-[#f2ede4]" data-ca="Quin fill d'Artur i Emília va néixer a Sant Pere Mitjà 12?" data-es="¿Qué hijo de Artur y Emilia nació en Sant Pere Mitjà 12?">Quin fill d'Artur i Emília va néixer a Sant Pere Mitjà 12?</p>
+  <p class="font-headline text-xl text-center mb-10 text-[#f2ede4]" data-ca="El 1897, mentre la família vivia aquí, Barcelona va fer una cosa que la va canviar de mida. Quina?" data-es="En 1897, mientras la familia vivía aquí, Barcelona hizo algo que la cambió de tamaño. ¿Qué?">El 1897, mentre la família vivia aquí, Barcelona va fer una cosa que la va canviar de mida. Quina?</p>
   <div id="quiz-options" class="space-y-4 mb-8">
-    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="true">
-      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Ernest Godes Hurtado" data-es="Ernest Godes Hurtado">Ernest Godes Hurtado</span>
-      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center gap-4 active:scale-[0.98]" data-correct="true">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Es va annexionar sis municipis del Pla, com Gràcia, Sants o Sant Gervasi" data-es="Se anexionó seis municipios del Llano, como Gràcia, Sants o Sant Gervasi">Es va annexionar sis municipis del Pla, com Gràcia, Sants o Sant Gervasi</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity flex-shrink-0">arrow_forward</span>
     </button>
-    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="false">
-      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Emili Godes Hurtado" data-es="Emili Godes Hurtado">Emili Godes Hurtado</span>
-      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center gap-4 active:scale-[0.98]" data-correct="false">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Va guanyar terreny al mar amb l'ampliació del port" data-es="Ganó terreno al mar con la ampliación del puerto">Va guanyar terreny al mar amb l'ampliació del port</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity flex-shrink-0">arrow_forward</span>
     </button>
-    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center active:scale-[0.98]" data-correct="false">
-      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Rosa Godes Hurtado" data-es="Rosa Godes Hurtado">Rosa Godes Hurtado</span>
-      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity">arrow_forward</span>
+    <button class="quiz-option w-full text-left p-5 border border-[#a68942]/20 hover:bg-[#3d342a] transition-all group flex justify-between items-center gap-4 active:scale-[0.98]" data-correct="false">
+      <span class="font-body font-semibold text-[#f2ede4]" data-ca="Va enderrocar les últimes muralles que li quedaven" data-es="Derribó las últimas murallas que le quedaban">Va enderrocar les últimes muralles que li quedaven</span>
+      <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-[#e4c375] transition-opacity flex-shrink-0">arrow_forward</span>
     </button>
   </div>
   <div id="quiz-feedback" class="mb-8 p-6 border border-[#a68942]/30">
@@ -408,8 +408,8 @@
   // Quiz
   const lang = () => localStorage.getItem('lang') || 'ca';
   const FEEDBACK = {
-    ca: { correct: 'Correcte!', incorrect: 'No exactament...', explanation: 'Emili havia nascut a Banys Vells 15 el 1895, abans del trasllat. Ernest va néixer en aquesta casa l\'11 d\'octubre de 1896. I Rosa va néixer el 1899, ja al carrer de Ripoll. Tres fills, tres adreces: la família es movia gairebé tan de pressa com creixia.' },
-    es: { correct: '\u00a1Correcto!', incorrect: 'No exactamente...', explanation: 'Emili había nacido en Banys Vells 15 en 1895, antes del traslado. Ernest nació en esta casa el 11 de octubre de 1896. Y Rosa nació en 1899, ya en la calle Ripoll. Tres hijos, tres direcciones: la familia se movía casi tan deprisa como crecía.' }
+    ca: { correct: 'Correcte!', incorrect: 'No exactament...', explanation: 'El 1897 Barcelona va incorporar Gràcia, Sants, les Corts, Sant Andreu de Palomar, Sant Martí de Provençals i Sant Gervasi de Cassoles: sis pobles que fins aleshores eren municipis independents. La ciutat es multiplicava sobre el mapa mentre al nucli antic tot continuava igual de dens. Sarrià va aguantar sola fins al 1921. I fixeu-vos en la ironia: onze anys després, aquesta mateixa família se n\'aniria a viure a un d\'aquells pobles annexionats, Sant Gervasi.' },
+    es: { correct: '\u00a1Correcto!', incorrect: 'No exactamente...', explanation: 'En 1897 Barcelona incorporó Gràcia, Sants, les Corts, Sant Andreu de Palomar, Sant Martí de Provençals y Sant Gervasi de Cassoles: seis pueblos que hasta entonces eran municipios independientes. La ciudad se multiplicaba sobre el mapa mientras en el casco antiguo todo seguía igual de denso. Sarrià aguantó sola hasta 1921. Y fijaos en la ironía: once años después, esta misma familia se iría a vivir a uno de aquellos pueblos anexionados, Sant Gervasi.' }
   };
   let quizAnswered = false;
   document.querySelectorAll('.quiz-option').forEach(btn => {
