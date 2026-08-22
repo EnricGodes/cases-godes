@@ -11,24 +11,50 @@ A location-based historical expedition through 19th-century Barcelona, tracing t
 ```
 /
 ├── index.html                         — Landing page (entry point)
-├── experiencia/                       — Historical expedition stops (from Stitch)
-│   ├── navegacion-1.html              — Walking directions to Fonollar 20
-│   ├── carrer-fonollar-20.html        — Carrer del Fonollar 20 stop
-│   ├── navegacion-2.html              — Walking directions to Mestres Casals i Martorell 14
-│   ├── claveguera-14.html             — Claveguera 14 stop (1860-1864)
-│   ├── navegacion-3.html              — Walking directions to Plaça de Sant Agustí Vell 19
-│   ├── cronologia.html                — Visual timeline of family houses and events
-│   └── restaurant.html                — GPS navigation to Restaurant La Fonda (final destination)
-├── navegacion/                        — GPS navigation app
+├── experiencia/                       — The expedition: 9 stops, each preceded by a navigation page
+│   ├── navegacion-1..9.html           — GPS walking directions to the next stop (Leaflet + OSRM)
+│   ├── carrer-fonollar-20.html        — Stop 1 · Fonollar 20 (1857-1860)
+│   ├── claveguera-14.html             — Stop 2 · Claveguera 14 (1860-1864)
+│   ├── sant-agusti-vell-19.html       — Stop 3 · Pl. Sant Agustí Vell 19 (1864-1868)
+│   ├── fonollar-30.html               — Stop 4 · Fonollar 30 i 3 (1868-1874)
+│   ├── jaume-giralt-3.html            — Stop 5 · Jaume Giralt 3 (1874-1885)
+│   ├── sant-pere-mes-baix-40.html     — Stop 6 · Sant Pere Més Baix 40 (1885-1891)
+│   ├── banys-vells-15.html            — Stop 7 · Banys Vells 15 (1891-1901), incl. the Poblenou graves
+│   ├── sant-pere-mitja-12.html        — Stop 8 · Sant Pere Mitjà 12 (1896-1899)
+│   ├── ripoll-12.html                 — Stop 9 · Ripoll 12 (1891-1908), last Ciutat Vella address
+│   ├── cronologia.html                — Visual timeline of houses and events
+│   ├── mapa.html                      — All ten addresses on one Leaflet map
+│   └── arxiu.html                     — Documentary layer: people, sources, levels of certainty
+├── navegacion/                        — Standalone GPS navigation app
 │   ├── destino.html                   — Destination input with geocoding
 │   └── ruta.html                      — Step-by-step turn-by-turn navigation
-└── docs/                             — Documentation
+├── js/shared.js                       — Language (ca/es), font size, side menu — used by every page
+├── recursos/
+│   ├── imagen/<stop-slug>/            — Web-sized images, one folder per stop
+│   └── audio/<stop-slug>-{cat,esp}.mp3 — Audioguides (only Fonollar 20 and Claveguera 14 recorded)
+└── docs/
     ├── design-system.md               — L'Eixample Chronology design system
     └── README.md
 ```
 
 ### User flow
-`index.html` → `experiencia/navegacion-1.html` → `experiencia/carrer-fonollar-20.html` → `experiencia/navegacion-2.html` → `experiencia/claveguera-14.html` → `experiencia/navegacion-3.html` → ... → `experiencia/restaurant.html`
+`index.html` → `navegacion-1` → `carrer-fonollar-20` → `navegacion-2` → `claveguera-14` → … → `navegacion-9` → `ripoll-12` → `cronologia.html`
+
+Each stop page ends with a quiz whose "Continuar" button unlocks only after answering; that
+button is the link to the next navigation page. The bottom bar (Arxiu · Mapa · Cronologia) is
+identical on every page.
+
+### Adding a stop
+1. Drop the source material in `docs/` (a stage `.md`, photos). Delete it once processed.
+2. Copy the most recent stop page as the template — it carries the current CSS (ledger, lightbox
+   with `data-full`, quiz) — and swap `<title>`, the header `<h1>`, the audio slug and the content.
+3. Clone the last `navegacion-N.html`, change `DESTINATION` (lat/lng/display_name), the headline,
+   the arrival address and the continue link. Bump every `Etapa N/M` counter across `experiencia/`.
+4. Point the previous stop's `#quiz-continue` at the new navigation page.
+5. Add the stop to `cronologia.html`, to the `STOPS` array and card list in `mapa.html`, and to the
+   pending-audio note in `arxiu.html`.
+6. Every user-visible string needs both `data-ca` and `data-es` (see `js/shared.js`); the counts
+   must match or the language toggle leaves text behind.
 
 ## Local Development
 
