@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html class="light" lang="ca"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El veredicte de l'arxiver - Rere les passes de la família Godes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-fixed-variant": "#4a4644",
+            "surface-container-highest": "#e7e2d9",
+            "on-surface-variant": "#4d4639",
+            "on-primary": "#ffffff",
+            "inverse-primary": "#e4c375",
+            "surface-container": "#f2ede4",
+            "secondary-container": "#e5dedb",
+            "outline": "#7e7667",
+            "tertiary-fixed": "#fdddba",
+            "inverse-on-surface": "#f5f0e7",
+            "surface-bright": "#fef9f0",
+            "primary-fixed": "#ffdf97",
+            "tertiary-fixed-dim": "#e0c1a0",
+            "inverse-surface": "#32302a",
+            "on-primary-fixed-variant": "#5a4300",
+            "on-error": "#ffffff",
+            "surface-variant": "#e7e2d9",
+            "primary-fixed-dim": "#e4c375",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#ded9d1",
+            "surface-container-high": "#ece8df",
+            "primary-container": "#8c712d",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#584329",
+            "secondary-fixed-dim": "#cbc5c2",
+            "surface-container-low": "#f8f3ea",
+            "tertiary": "#6f583d",
+            "primary": "#715915",
+            "on-secondary-container": "#66625f",
+            "surface-tint": "#745b18",
+            "on-background": "#1d1c16",
+            "error-container": "#ffdad6",
+            "outline-variant": "#d0c5b4",
+            "tertiary-container": "#897053",
+            "background": "#fef9f0",
+            "on-tertiary-container": "#fffbff",
+            "on-primary-container": "#fffbff",
+            "on-secondary-fixed": "#1e1b19",
+            "on-tertiary-fixed": "#281804",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#251a00",
+            "secondary-fixed": "#e8e1de",
+            "on-secondary": "#ffffff",
+            "on-surface": "#1d1c16",
+            "surface": "#fef9f0",
+            "secondary": "#625e5b"
+          },
+          fontFamily: {
+            "headline": ["Noto Serif"],
+            "body": ["Manrope"],
+            "label": ["Manrope"]
+          },
+          borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+        },
+      },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+    #menu-overlay {
+      display: none; position: fixed; inset: 0;
+      background-color: rgba(29, 28, 22, 0.5); z-index: 55;
+    }
+    #menu-overlay.show { display: block; }
+</style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed-dim selection:text-on-primary-fixed overflow-x-hidden">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-6 h-16 bg-[#fef9f0]/80 backdrop-blur-md z-50 border-b border-[#d0c5b4]/15 shadow-[0_0_40px_rgba(29,28,22,0.06)]">
+  <button id="menu-btn" class="text-[#715915] hover:text-[#e4c375] transition-colors duration-300">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <h1 class="font-['Noto_Serif'] font-bold tracking-tight text-[#1d1c16] text-lg" data-ca="Veredicte" data-es="Veredicto">Veredicte</h1>
+  <a href="ripoll-12.html" class="text-[#715915] hover:text-[#e4c375] transition-colors duration-300" aria-label="Tornar a Ripoll 12">
+    <span class="material-symbols-outlined">arrow_back</span>
+  </a>
+</header>
+
+<!-- Side Menu -->
+<div id="menu-overlay"></div>
+<nav id="side-menu" class="fixed inset-y-0 left-0 z-[60] bg-[#fef9f0] h-full w-80 border-r border-[#d0c5b4]/10 shadow-2xl -translate-x-full transition-transform duration-400 overflow-y-auto">
+  <div class="px-6 pt-6 pb-4 flex items-center justify-between border-b border-outline-variant/20">
+    <span class="font-['Noto_Serif'] font-black text-primary text-lg">Les Cases dels Godes</span>
+    <button id="menu-close" class="text-on-surface-variant hover:text-primary transition-colors">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+  <div class="px-6 py-6 space-y-8">
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Idioma" data-es="Idioma">Idioma</p>
+      <div class="flex gap-2">
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="ca">Català</button>
+        <button class="lang-btn px-4 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-lang="es">Castellano</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Mida de la lletra" data-es="Tamaño de fuente">Mida de la lletra</p>
+      <div class="flex gap-2">
+        <button class="font-btn px-3 py-2 text-xs font-label font-semibold border border-outline-variant/30 transition-all" data-size="normal">A</button>
+        <button class="font-btn px-3 py-2 text-sm font-label font-semibold border border-outline-variant/30 transition-all" data-size="grande">A+</button>
+        <button class="font-btn px-3 py-2 text-base font-label font-semibold border border-outline-variant/30 transition-all" data-size="extragrande">A++</button>
+      </div>
+    </div>
+    <div>
+      <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3" data-ca="Equip de recerca" data-es="Equipo de investigación">Equip de recerca</p>
+      <div class="space-y-1 font-body text-sm text-on-surface leading-relaxed">
+        <p>Emili Godes i Faura</p><p>Enric Godes Maté</p><p>Ignasi Palazuelos Salvadó</p><p>Oriol Mestre Campi</p>
+      </div>
+      <div class="space-y-1 font-body text-sm text-on-surface-variant leading-relaxed mt-3">
+        <p>Maria Rosa Godes Diago (+)</p><p>Jesús Mestre Godes (+)</p><p>Montserrat Godes Diago (+)</p><p>Enric Cabestany Carreras (+)</p>
+      </div>
+    </div>
+    <div class="border-t border-outline-variant/20 pt-6">
+      <p class="font-label text-xs text-on-surface-variant" data-ca="Experiència creada per Enric Godes" data-es="Experiencia creada por Enric Godes">Experiència creada per Enric Godes</p>
+    </div>
+  </div>
+</nav>
+
+<main class="pt-24 pb-32 px-4 md:px-12 max-w-4xl mx-auto">
+
+<!-- ============ VEREDICTE DE L'ARXIVER ============ -->
+<section id="resultat" class="space-y-10">
+
+  <!-- Puntuació -->
+  <div class="bg-[#2b251e] border border-[#a68942]/30 p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-center space-y-6">
+    <p class="font-label text-[10px] uppercase tracking-[0.2em] text-[#e4c375] font-bold" data-ca="El veredicte de l'arxiver" data-es="El veredicto del archivero">El veredicte de l'arxiver</p>
+
+    <div class="flex items-baseline justify-center gap-2">
+      <span id="score-num" class="font-headline text-7xl md:text-8xl font-black text-[#e4c375] leading-none">0</span>
+      <span id="score-den" class="font-headline text-3xl font-bold text-[#a68942]">/9</span>
+    </div>
+
+    <div class="space-y-3">
+      <h2 id="score-title" class="font-headline text-3xl md:text-4xl font-black italic text-[#f2ede4] leading-tight"></h2>
+      <p id="score-sub" class="font-body text-base text-[#d0c5b4] leading-relaxed max-w-xl mx-auto"></p>
+    </div>
+
+    <p id="score-note" class="font-label text-[10px] uppercase tracking-widest text-[#a68942] pt-2"></p>
+  </div>
+
+  <!-- Desglossament -->
+  <div class="space-y-4">
+    <div class="flex items-center gap-4">
+      <span class="h-px w-12 bg-outline-variant"></span>
+      <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Pregunta per pregunta" data-es="Pregunta por pregunta">Pregunta per pregunta</p>
+    </div>
+    <ol id="score-list" class="divide-y divide-outline-variant/25 border-y border-outline-variant/25"></ol>
+    <div class="flex justify-end pt-2">
+      <button id="btn-reset" class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold underline hover:text-primary transition-colors" data-ca="Esborrar respostes i tornar-ho a provar" data-es="Borrar respuestas y volver a intentarlo">Esborrar respostes i tornar-ho a provar</button>
+    </div>
+  </div>
+
+  <!-- Resum de l'experiència -->
+  <div class="space-y-8">
+    <div class="flex items-center gap-4">
+      <span class="h-px w-12 bg-outline-variant"></span>
+      <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="El que acabeu de caminar" data-es="Lo que acabáis de caminar">El que acabeu de caminar</p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-outline-variant/25 border border-outline-variant/25">
+      <div class="bg-surface p-5 text-center">
+        <p class="font-headline text-4xl font-black text-primary leading-none">56</p>
+        <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mt-2" data-ca="anys" data-es="años">anys</p>
+      </div>
+      <div class="bg-surface p-5 text-center">
+        <p class="font-headline text-4xl font-black text-primary leading-none">10</p>
+        <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mt-2" data-ca="adreces" data-es="direcciones">adreces</p>
+      </div>
+      <div class="bg-surface p-5 text-center">
+        <p class="font-headline text-4xl font-black text-primary leading-none">2,6</p>
+        <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mt-2" data-ca="km a peu" data-es="km a pie">km a peu</p>
+      </div>
+      <div class="bg-surface p-5 text-center">
+        <p class="font-headline text-4xl font-black text-primary leading-none">3</p>
+        <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mt-2" data-ca="generacions" data-es="generaciones">generacions</p>
+      </div>
+    </div>
+
+    <div class="space-y-6">
+      <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Heu començat el 6 de gener de 1852, amb un teixidor de Castelló de 27 anys que arriba a una Barcelona encara emmurallada. Heu acabat el 15 de febrer de 1908, amb el seu fill músic marxant cap a Sant Gervasi amb cinc criatures, vint-i-quatre dies abans que els enderrocs de la Via Laietana s'enduguessin el barri per davant." data-es="Habéis empezado el 6 de enero de 1852, con un tejedor de Castellón de 27 años que llega a una Barcelona todavía amurallada. Habéis terminado el 15 de febrero de 1908, con su hijo músico marchándose hacia Sant Gervasi con cinco criaturas, veinticuatro días antes de que los derribos de la Via Laietana se llevaran el barrio por delante.">Heu començat el 6 de gener de 1852, amb un teixidor de Castelló de 27 anys que arriba a una Barcelona encara emmurallada. Heu acabat el 15 de febrer de 1908, amb el seu fill músic marxant cap a Sant Gervasi amb cinc criatures, vint-i-quatre dies abans que els enderrocs de la Via Laietana s'enduguessin el barri per davant.</p>
+      <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Entremig: un casament a Sant Cugat del Rec, nou fills dels quals quatre van arribar a grans, dos Nadals seguits amb enterrament, un nen mort de diftèria als vuit anys, un tenor del Liceu que feia de missatger i de criat perquè a casa hi havia vuit boques, i una tia soltera que va anar seguint la família de pis en pis." data-es="En medio: una boda en Sant Cugat del Rec, nueve hijos de los que cuatro llegaron a mayores, dos Navidades seguidas con entierro, un niño muerto de difteria a los ocho años, un tenor del Liceu que hacía de mensajero y de criado porque en casa había ocho bocas, y una tía soltera que fue siguiendo a la familia de piso en piso.">Entremig: un casament a Sant Cugat del Rec, nou fills dels quals quatre van arribar a grans, dos Nadals seguits amb enterrament, un nen mort de diftèria als vuit anys, un tenor del Liceu que feia de missatger i de criat perquè a casa hi havia vuit boques, i una tia soltera que va anar seguint la família de pis en pis.</p>
+      <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Tot això va passar dins d'un rectangle de tres-cents vuitanta metres per cinc-cents vint. Podeu veure'l sencer des d'aquí." data-es="Todo esto ocurrió dentro de un rectángulo de trescientos ochenta metros por quinientos veinte. Podéis verlo entero desde aquí.">Tot això va passar dins d'un rectangle de tres-cents vuitanta metres per cinc-cents vint. Podeu veure'l sencer des d'aquí.</p>
+    </div>
+  </div>
+
+  <!-- Agraïment i tancament -->
+  <div class="bg-[#2b251e] border-l-4 border-[#a68942] p-8 md:p-12 space-y-7 relative overflow-hidden">
+    <div class="absolute -bottom-4 right-4 opacity-[0.07]"><span class="material-symbols-outlined text-[9rem] text-[#e4c375]">history_edu</span></div>
+
+    <div class="relative space-y-5">
+      <p class="font-label text-[10px] uppercase tracking-[0.2em] text-[#e4c375] font-bold" data-ca="Gràcies" data-es="Gracias">Gràcies</p>
+      <p class="font-body text-lg text-[#f2ede4] leading-relaxed" data-ca="Gràcies per haver dedicat un matí a caminar per uns carrers que no us havien de dir res. Aquestes nou parades no són monuments: són portals corrents on va viure gent corrent, i només tenen sentit si algú s'hi atura." data-es="Gracias por haber dedicado una mañana a caminar por unas calles que no tenían por qué deciros nada. Estas nueve paradas no son monumentos: son portales corrientes donde vivió gente corriente, y solo tienen sentido si alguien se detiene en ellos.">Gràcies per haver dedicat un matí a caminar per uns carrers que no us havien de dir res. Aquestes nou parades no són monuments: són portals corrents on va viure gent corrent, i només tenen sentit si algú s'hi atura.</p>
+
+      <div class="border-t border-[#a68942]/30 pt-6 space-y-5">
+        <p class="font-body text-base text-[#d0c5b4] leading-relaxed" data-ca="De la majoria d'aquestes persones no en queda cap retrat. Del petit Josep només en queden dues dates i una paraula escrita de pressa en una columna: «diftèria». Del segon fill de la Dolors, ni tan sols el nom: només com va morir. La sepultura de la Rosa va caducar el 1988 i les seves restes van anar a l'ossera general." data-es="De la mayoría de estas personas no queda ningún retrato. Del pequeño Josep solo quedan dos fechas y una palabra escrita deprisa en una columna: «difteria». Del segundo hijo de Dolors, ni siquiera el nombre: solo cómo murió. La sepultura de Rosa caducó en 1988 y sus restos fueron al osario general.">De la majoria d'aquestes persones no en queda cap retrat. Del petit Josep només en queden dues dates i una paraula escrita de pressa en una columna: «diftèria». Del segon fill de la Dolors, ni tan sols el nom: només com va morir. La sepultura de la Rosa va caducar el 1988 i les seves restes van anar a l'ossera general.</p>
+        <p class="font-body text-base text-[#d0c5b4] leading-relaxed" data-ca="El llegat d'una família obrera no és un cognom en una placa ni una tomba que es visita. És això: un grapat de papers que algú va decidir no llençar, i algú altre, un segle després, va decidir llegir." data-es="El legado de una familia obrera no es un apellido en una placa ni una tumba que se visita. Es esto: un puñado de papeles que alguien decidió no tirar, y alguien más, un siglo después, decidió leer.">El llegat d'una família obrera no és un cognom en una placa ni una tomba que es visita. És això: un grapat de papers que algú va decidir no llençar, i algú altre, un segle després, va decidir llegir.</p>
+      </div>
+
+      <div class="border-t border-[#a68942]/30 pt-6">
+        <p class="font-headline text-xl md:text-2xl font-bold italic text-[#e4c375] leading-snug" data-ca="Ara ja sou vosaltres els qui ho sabeu. I mentre algú ho sàpiga, aquesta gent no ha desaparegut del tot." data-es="Ahora ya sois vosotros quienes lo sabéis. Y mientras alguien lo sepa, esta gente no ha desaparecido del todo.">Ara ja sou vosaltres els qui ho sabeu. I mentre algú ho sàpiga, aquesta gent no ha desaparegut del tot.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sortides -->
+  <div class="flex flex-col sm:flex-row gap-4">
+    <a href="cronologia.html" class="flex-1 bg-primary text-on-primary px-8 py-4 font-label font-bold uppercase tracking-widest text-sm text-center no-underline hover:bg-primary-fixed-dim transition-all active:scale-95" data-ca="Veure la vida completa" data-es="Ver la vida completa">Veure la vida completa</a>
+    <a href="mapa.html" class="flex-1 border border-primary text-primary px-8 py-4 font-label font-bold uppercase tracking-widest text-sm text-center no-underline hover:bg-surface-container transition-all active:scale-95" data-ca="Veure el mapa" data-es="Ver el mapa">Veure el mapa</a>
+    <a href="arxiu.html" class="flex-1 border border-primary text-primary px-8 py-4 font-label font-bold uppercase tracking-widest text-sm text-center no-underline hover:bg-surface-container transition-all active:scale-95" data-ca="Com ho sabem" data-es="Cómo lo sabemos">Com ho sabem</a>
+  </div>
+
+</section>
+
+</main>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#f2ede4] z-50 border-t border-[#d0c5b4]/20">
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="arxiu.html">
+    <span class="material-symbols-outlined">auto_stories</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Arxiu" data-es="Archivo">Arxiu</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="mapa.html">
+    <span class="material-symbols-outlined">explore</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Mapa" data-es="Mapa">Mapa</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-[#4d4639] opacity-60 hover:opacity-100 transition-all duration-300" href="cronologia.html">
+    <span class="material-symbols-outlined">timeline</span>
+    <span class="font-['Manrope'] text-[10px] uppercase tracking-widest font-semibold mt-1" data-ca="Cronologia" data-es="Cronología">Cronologia</span>
+  </a>
+</nav>
+
+<script src="../js/shared.js?v=2"></script>
+<script>
+  const lang = () => localStorage.getItem('lang') || 'ca';
+  /* ==================== VEREDICTE DE L'ARXIVER ==================== */
+  const RANGS = [
+    { min: 9, ca: { t: "Arxiver Major dels Godes",  s: "Nou de nou. L'arxiver s'ha tret el barret, ha tancat el lligall i ha dit que ja pot jubilar-se tranquil." },
+                es: { t: "Archivero Mayor de los Godes", s: "Nueve de nueve. El archivero se ha quitado el sombrero, ha cerrado el legajo y ha dicho que ya puede jubilarse tranquilo." } },
+    { min: 7, ca: { t: "Cronista de la Ribera",     s: "Gairebé impecable. Us deixaria consultar els papers sense vigilar-vos per sobre l'espatlla." },
+                es: { t: "Cronista de la Ribera",   s: "Casi impecable. Os dejaría consultar los papeles sin vigilaros por encima del hombro." } },
+    { min: 5, ca: { t: "Veí de tota la vida",        s: "Aprovat folgat. Sabeu de què va la cosa, encara que alguna data se us hagi escapat pel carreró." },
+                es: { t: "Vecino de toda la vida",  s: "Aprobado holgado. Sabéis de qué va la cosa, aunque alguna fecha se os haya escapado por el callejón." } },
+    { min: 3, ca: { t: "Nouvingut de bona fe",       s: "Heu escoltat més del que heu retingut. Però heu vingut caminant fins aquí, que és la meitat de la feina." },
+                es: { t: "Recién llegado de buena fe", s: "Habéis escuchado más de lo que habéis retenido. Pero habéis venido caminando hasta aquí, que es la mitad del trabajo." } },
+    { min: 0, ca: { t: "Turista despistat",          s: "L'arxiver sospita que miràveu els balcons mentre ell parlava. No passa res: els balcons també hi eren el 1852." },
+                es: { t: "Turista despistado",      s: "El archivero sospecha que mirabais los balcones mientras él hablaba. No pasa nada: los balcones también estaban en 1852." } },
+  ];
+
+  function renderVeredicte() {
+    const r = getQuizResults();
+    const l = lang();
+    const contestades = QUIZ_STOPS.filter(s => s.id in r);
+    const encerts = contestades.filter(s => r[s.id] === true).length;
+
+    document.getElementById('score-num').textContent = encerts;
+    document.getElementById('score-den').textContent = '/' + QUIZ_STOPS.length;
+
+    const rang = RANGS.find(x => encerts >= x.min)[l];
+    document.getElementById('score-title').textContent = rang.t;
+    document.getElementById('score-sub').textContent = rang.s;
+
+    // si han saltat parades, dir-ho sense penalitzar
+    const pendents = QUIZ_STOPS.length - contestades.length;
+    const nota = document.getElementById('score-note');
+    if (pendents > 0) {
+      nota.textContent = l === 'ca'
+        ? (pendents === 1 ? 'Queda 1 pregunta sense respondre' : 'Queden ' + pendents + ' preguntes sense respondre')
+        : (pendents === 1 ? 'Queda 1 pregunta sin responder' : 'Quedan ' + pendents + ' preguntas sin responder');
+    } else {
+      nota.textContent = '';
+    }
+
+    // desglossament
+    const llista = document.getElementById('score-list');
+    llista.innerHTML = '';
+    QUIZ_STOPS.forEach((s, i) => {
+      const estat = s.id in r ? (r[s.id] ? 'ok' : 'ko') : 'na';
+      const icona = estat === 'ok' ? 'check_circle' : (estat === 'ko' ? 'cancel' : 'remove');
+      const color = estat === 'ok' ? '#2d5016' : (estat === 'ko' ? '#ba1a1a' : '#7e7667');
+      const etiqueta = estat === 'na'
+        ? (l === 'ca' ? 'Sense respondre' : 'Sin responder')
+        : (estat === 'ok' ? (l === 'ca' ? 'Encertada' : 'Acertada') : (l === 'ca' ? 'Fallada' : 'Fallada'));
+      const li = document.createElement('li');
+      li.className = 'flex items-center gap-4 py-3';
+      li.innerHTML =
+        '<span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold w-6 flex-shrink-0">' + (i + 1) + '</span>' +
+        '<span class="material-symbols-outlined flex-shrink-0" style="font-size:20px;color:' + color + ';' + (estat !== 'na' ? "font-variation-settings:'FILL' 1;" : '') + '">' + icona + '</span>' +
+        '<span class="font-body text-sm text-on-surface flex-1 min-w-0">' + s[l] + '</span>' +
+        '<span class="font-label text-[10px] uppercase tracking-widest font-bold flex-shrink-0" style="color:' + color + '">' + etiqueta + '</span>';
+      llista.appendChild(li);
+    });
+  }
+
+  /* estat buit: han arribat aquí sense contestar res */
+  function estatBuit() {
+    const l = lang();
+    document.getElementById('score-title').textContent =
+      l === 'ca' ? "L'arxiver us esperava" : 'El archivero os esperaba';
+    document.getElementById('score-sub').textContent = l === 'ca'
+      ? "No consta cap resposta al registre. Feu la ruta, contesteu-li les preguntes i torneu: us tindrà preparat el veredicte."
+      : 'No consta ninguna respuesta en el registro. Haced la ruta, contestadle las preguntas y volved: os tendrá preparado el veredicto.';
+    document.getElementById('score-note').textContent = '';
+  }
+
+  function pinta() {
+    const r = getQuizResults();
+    renderVeredicte();
+    if (Object.keys(r).length === 0) estatBuit();
+  }
+
+  pinta();
+
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    resetQuizResults();
+    location.reload();
+  });
+
+  document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', pinta));
+
+</script>
+</body>
+</html>
