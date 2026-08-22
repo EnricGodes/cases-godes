@@ -99,6 +99,18 @@
     .quiz-option.disabled { pointer-events: none; }
     #quiz-feedback { display: none; }
     #quiz-feedback.show { display: block; }
+    .ledger-row { list-style: none; }
+    .ledger-row.ledger-last { border-left: 2px solid transparent; }
+    .ledger-dot {
+      position: absolute; left: -7px; top: 0.35rem;
+      width: 12px; height: 12px;
+      background-color: #715915;
+      box-shadow: 0 0 0 4px #fef9f0;
+    }
+    .ledger-dot.out {
+      background-color: #fef9f0;
+      border: 2px solid #7e7667;
+    }
 </style>
 </head>
 <body class="bg-surface text-on-surface font-body selection:bg-primary-fixed-dim selection:text-on-primary-fixed overflow-x-hidden">
@@ -155,8 +167,8 @@
 <main class="pt-24 pb-32 px-4 md:px-12 max-w-4xl mx-auto space-y-20">
 <section>
   <figure>
-    <img class="w-full aspect-[4/3] object-cover sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Carrer dels Banys Vells" src="../recursos/imagen/placeholder.svg"/>
-    <figcaption class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mt-3" data-ca="Últim domicili conegut de Pasqual Godes" data-es="Último domicilio conocido de Pasqual Godes">Últim domicili conegut de Pasqual Godes</figcaption>
+    <img class="w-full aspect-[4/3] object-cover sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Carrer dels Banys Vells" src="../recursos/imagen/banys-vells-15/banys-vells-15.jpg"/>
+    <figcaption class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mt-3" data-ca="El carrer dels Banys Vells avui · Últim domicili conegut de Pasqual Godes" data-es="El carrer dels Banys Vells hoy · Último domicilio conocido de Pasqual Godes">El carrer dels Banys Vells avui · Últim domicili conegut de Pasqual Godes</figcaption>
   </figure>
 </section>
 
@@ -186,49 +198,142 @@
   <div class="space-y-6">
     <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Aquest és l'últim domicili conegut de Pasqual: el quart pis del carrer dels Banys Vells, 15." data-es="Este es el último domicilio conocido de Pasqual: el cuarto piso del carrer dels Banys Vells, 15.">Aquest és l'últim domicili conegut de Pasqual: el quart pis del carrer dels Banys Vells, 15.</p>
     <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="La família s'hi va traslladar el 1891, abans del 17 de desembre. Els documents no permeten precisar-ne ni el dia ni el mes." data-es="La familia se trasladó aquí en 1891, antes del 17 de diciembre. Los documentos no permiten precisar ni el día ni el mes.">La família s'hi va traslladar el 1891, abans del 17 de desembre. Els documents no permeten precisar-ne ni el dia ni el mes.</p>
-    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Un carrer medieval i estret del barri de la Ribera, a pocs metres de Santa Maria del Mar, on tres anys després es casaria Artur." data-es="Una calle medieval y estrecha del barrio de la Ribera, a pocos metros de Santa Maria del Mar, donde tres años después se casaría Artur.">Un carrer medieval i estret del barri de la Ribera, a pocs metres de Santa Maria del Mar, on tres anys després es casaria Artur.</p>
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="I per primera vegada en quaranta anys, van canviar de barri." data-es="Y por primera vez en cuarenta años, cambiaron de barrio.">I per primera vegada en quaranta anys, van canviar de barri.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Sobre el mapa són quatre-cents metres escassos: totes les cases anteriors queden a menys de cinc minuts a peu. Però entremig hi ha el carrer de la Princesa, obert el 1853, i creuar-lo volia dir sortir del barri de Sant Pere i entrar a la Ribera. Una altra parròquia, un altre mercat, uns altres veïns." data-es="Sobre el mapa son cuatrocientos metros escasos: todas las casas anteriores quedan a menos de cinco minutos a pie. Pero en medio está el carrer de la Princesa, abierto en 1853, y cruzarlo significaba salir del barrio de Sant Pere y entrar en la Ribera. Otra parroquia, otro mercado, otros vecinos.">Sobre el mapa són quatre-cents metres escassos: totes les cases anteriors queden a menys de cinc minuts a peu. Però entremig hi ha el carrer de la Princesa, obert el 1853, i creuar-lo volia dir sortir del barri de Sant Pere i entrar a la Ribera. Una altra parròquia, un altre mercat, uns altres veïns.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Havien passat quaranta anys al voltant de Santa Caterina, entre telers i obradors del tèxtil. Ara vivien a vuitanta metres de Santa Maria del Mar, i era en aquella basílica —no a Sant Pere— on d'ara endavant es casarien i batejarien." data-es="Habían pasado cuarenta años alrededor de Santa Caterina, entre telares y talleres del textil. Ahora vivían a ochenta metros de Santa Maria del Mar, y era en aquella basílica —no en Sant Pere— donde en adelante se casarían y bautizarían.">Havien passat quaranta anys al voltant de Santa Caterina, entre telers i obradors del tèxtil. Ara vivien a vuitanta metres de Santa Maria del Mar, i era en aquella basílica —no a Sant Pere— on d'ara endavant es casarien i batejarien.</p>
+  </div>
+</section>
+
+<!-- ============ EL CARRER DELS BANYS VELLS ============ -->
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="El carrer" data-es="La calle">El carrer</p>
+  </div>
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Els Banys Vells és un carreró fosc i estret, d'aquells on dues persones amb prou feines es creuen. Mireu amunt: la façana del davant és a quatre passes, i la llum del sol només hi entra a migdia." data-es="Els Banys Vells es un callejón oscuro y estrecho, de esos donde dos personas apenas se cruzan. Mirad hacia arriba: la fachada de enfrente está a cuatro pasos, y la luz del sol solo entra a mediodía.">Els Banys Vells és un carreró fosc i estret, d'aquells on dues persones amb prou feines es creuen. Mireu amunt: la façana del davant és a quatre passes, i la llum del sol només hi entra a migdia.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="El nom ve d'uns banys públics que ja funcionaven aquí al segle XIII. El 1207 es documenta la venda de la meitat d'aquells banys; al segle XVI ja havien desaparegut i només en va quedar el nom. Abans se'n deia carrer del Sitjar, per una teuleria que hi havia, i el carrer tal com el trepitgeu es va acabar de traçar cap al 1350." data-es="El nombre viene de unos baños públicos que ya funcionaban aquí en el siglo XIII. En 1207 se documenta la venta de la mitad de aquellos baños; en el siglo XVI ya habían desaparecido y solo quedó el nombre. Antes se llamaba carrer del Sitjar, por una tejería que había allí, y la calle tal como la pisáis se acabó de trazar hacia 1350.">El nom ve d'uns banys públics que ja funcionaven aquí al segle XIII. El 1207 es documenta la venda de la meitat d'aquells banys; al segle XVI ja havien desaparegut i només en va quedar el nom. Abans se'n deia carrer del Sitjar, per una teuleria que hi havia, i el carrer tal com el trepitgeu es va acabar de traçar cap al 1350.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Llegiu els noms dels carrers del voltant i tindreu el cens del barri: Sombrerers, Assaonadors, Esparteria, Argenteria, Espaseria, Mirallers, Flassaders. La Ribera havia estat el barri dels gremis i dels mercaders —els que van pagar Santa Maria del Mar entre 1329 i 1383— i cada carrer duia el nom de l'ofici que hi treballava." data-es="Leed los nombres de las calles de alrededor y tendréis el censo del barrio: Sombrerers, Assaonadors, Esparteria, Argenteria, Espaseria, Mirallers, Flassaders. La Ribera había sido el barrio de los gremios y de los mercaderes —los que pagaron Santa Maria del Mar entre 1329 y 1383— y cada calle llevaba el nombre del oficio que trabajaba en ella.">Llegiu els noms dels carrers del voltant i tindreu el cens del barri: Sombrerers, Assaonadors, Esparteria, Argenteria, Espaseria, Mirallers, Flassaders. La Ribera havia estat el barri dels gremis i dels mercaders —els que van pagar Santa Maria del Mar entre 1329 i 1383— i cada carrer duia el nom de l'ofici que hi treballava.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="El 1891, però, d'aquella prosperitat només en quedaven els noms i les pedres. Els palaus del carrer de Montcada, a cent metres, feia dècades que estaven llogats a pisos i magatzems. Les fàbriques marxaven cap al Poblenou i les famílies benestants cap a l'Eixample, i darrere hi quedava un veïnat de menestrals, jornalers, botiguers i gent d'ofici repartida en pisos petits d'edificis antics." data-es="En 1891, sin embargo, de aquella prosperidad solo quedaban los nombres y las piedras. Los palacios del carrer de Montcada, a cien metros, llevaban décadas alquilados por pisos y almacenes. Las fábricas se iban hacia el Poblenou y las familias acomodadas hacia el Eixample, y detrás quedaba un vecindario de menestrales, jornaleros, tenderos y gente de oficio repartida en pisos pequeños de edificios antiguos.">El 1891, però, d'aquella prosperitat només en quedaven els noms i les pedres. Els palaus del carrer de Montcada, a cent metres, feia dècades que estaven llogats a pisos i magatzems. Les fàbriques marxaven cap al Poblenou i les famílies benestants cap a l'Eixample, i darrere hi quedava un veïnat de menestrals, jornalers, botiguers i gent d'ofici repartida en pisos petits d'edificis antics.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Els Godes hi encaixaven exactament. Un quart pis, com sempre; però aquesta vegada, amb un fill que cantava al Liceu i es casaria a la basílica del final del carrer." data-es="Los Godes encajaban exactamente. Un cuarto piso, como siempre; pero esta vez, con un hijo que cantaba en el Liceu y que se casaría en la basílica del final de la calle.">Els Godes hi encaixaven exactament. Un quart pis, com sempre; però aquesta vegada, amb un fill que cantava al Liceu i es casaria a la basílica del final del carrer.</p>
   </div>
 </section>
 
 <section class="space-y-10">
   <div class="flex items-center gap-4">
     <span class="h-px w-12 bg-outline-variant"></span>
-    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="La mort de Pasqual" data-es="La muerte de Pasqual">La mort de Pasqual</p>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="La mort de Pasqual i Rosa" data-es="La muerte de Pasqual y Rosa">La mort de Pasqual i Rosa</p>
   </div>
   <div class="space-y-6">
     <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Pasqual Godes Gomis va morir en aquesta casa el 17 de desembre de 1891, a les tres de la matinada. Tenia 67 anys." data-es="Pasqual Godes Gomis murió en esta casa el 17 de diciembre de 1891, a las tres de la madrugada. Tenía 67 años.">Pasqual Godes Gomis va morir en aquesta casa el 17 de desembre de 1891, a les tres de la matinada. Tenia 67 anys.</p>
     <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="El registre atribueix la mort a una pneumònia. Va ser enterrat l'endemà al Cementiri del Poblenou." data-es="El registro atribuye la muerte a una neumonía. Fue enterrado al día siguiente en el Cementiri del Poblenou.">El registre atribueix la mort a una pneumònia. Va ser enterrat l'endemà al Cementiri del Poblenou.</p>
-    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Aquesta precisió —l'hora exacta, l'adreça, la causa registrada— contrasta amb els silencis del començament de la ruta. Sabem quan va arribar a Barcelona, el 6 de gener de 1852, però no on es va allotjar. Sabem amb tot detall on va acabar la seva vida gairebé quaranta anys després." data-es="Esa precisión —la hora exacta, la dirección, la causa registrada— contrasta con los silencios del comienzo de la ruta. Sabemos cuándo llegó a Barcelona, el 6 de enero de 1852, pero no dónde se alojó. Sabemos con todo detalle dónde terminó su vida casi cuarenta años después.">Aquesta precisió —l'hora exacta, l'adreça, la causa registrada— contrasta amb els silencis del començament de la ruta. Sabem quan va arribar a Barcelona, el 6 de gener de 1852, però no on es va allotjar. Sabem amb tot detall on va acabar la seva vida gairebé quaranta anys després.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Rosa Caballeria Madiroles va continuar vivint a Banys Vells 15 després de quedar-se vídua. Va morir en aquesta mateixa casa el 24 de desembre de 1893, als 59 anys, d'una apoplexia segons el registre. Va ser enterrada al Poblenou el dia de Nadal." data-es="Rosa Caballeria Madiroles siguió viviendo en Banys Vells 15 tras quedarse viuda. Murió en esta misma casa el 24 de diciembre de 1893, a los 59 años, de una apoplejía según el registro. Fue enterrada en el Poblenou el día de Navidad.">Rosa Caballeria Madiroles va continuar vivint a Banys Vells 15 després de quedar-se vídua. Va morir en aquesta mateixa casa el 24 de desembre de 1893, als 59 anys, d'una apoplexia segons el registre. Va ser enterrada al Poblenou el dia de Nadal.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Dos Nadals seguits, els dos amb un enterrament. Aquesta casa va veure marxar la generació que havia arribat de Castelló quaranta anys abans." data-es="Dos Navidades seguidas, las dos con un entierro. Esta casa vio marchar a la generación que había llegado de Castellón cuarenta años antes.">Dos Nadals seguits, els dos amb un enterrament. Aquesta casa va veure marxar la generació que havia arribat de Castelló quaranta anys abans.</p>
   </div>
 </section>
 
-<section>
+<!-- ============ ARTUR GODES I EMÍLIA HURTADO ============ -->
+<section class="space-y-10">
+  <div class="flex items-center gap-4">
+    <span class="h-px w-12 bg-outline-variant"></span>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Artur Godes i Emília Hurtado" data-es="Artur Godes y Emilia Hurtado">Artur Godes i Emília Hurtado</p>
+  </div>
+
   <figure>
-    <img class="w-full aspect-[4/3] object-cover sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Rosa Caballeria Madiroles" src="../recursos/imagen/placeholder.svg"/>
+    <img class="w-full object-cover sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Artur Godes Caballeria i Emília Hurtado Giró" src="../recursos/imagen/banys-vells-15/artur-emilia.jpg"/>
+    <figcaption class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mt-3" data-ca="Emília Hurtado Giró i Artur Godes Caballeria" data-es="Emilia Hurtado Giró y Artur Godes Caballeria">Emília Hurtado Giró i Artur Godes Caballeria</figcaption>
   </figure>
+
+  <div class="space-y-6">
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Al <strong>quart pis, segona porta</strong> del número 15, Artur Godes Caballeria hi va viure entre 1891 i 1896 una etapa decisiva de la seva vida." data-es="En el <strong>cuarto piso, segunda puerta</strong> del número 15, Artur Godes Caballeria vivió entre 1891 y 1896 una etapa decisiva de su vida.">Al <strong>quart pis, segona porta</strong> del número 15, Artur Godes Caballeria hi va viure entre 1891 i 1896 una etapa decisiva de la seva vida.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Músic de professió, va ser tenor i mestre de capella de Santa Maria del Mar. Des de 1893 va treballar com a <strong>comprimari de la companyia d'òpera italiana del Gran Teatre del Liceu</strong>, interpretant nombrosos papers secundaris: el comprimari és el cantant que sosté l'obra sense sortir mai al cartell, el que fa de missatger, de criat, de capità." data-es="Músico de profesión, fue tenor y maestro de capilla de Santa Maria del Mar. Desde 1893 trabajó como <strong>comprimario de la compañía de ópera italiana del Gran Teatre del Liceu</strong>, interpretando numerosos papeles secundarios: el comprimario es el cantante que sostiene la obra sin salir nunca en el cartel, el que hace de mensajero, de criado, de capitán.">Músic de professió, va ser tenor i mestre de capella de Santa Maria del Mar. Des de 1893 va treballar com a <strong>comprimari de la companyia d'òpera italiana del Gran Teatre del Liceu</strong>, interpretant nombrosos papers secundaris: el comprimari és el cantant que sosté l'obra sense sortir mai al cartell, el que fa de missatger, de criat, de capità.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="El <strong>23 de juny de 1894</strong> es va casar a la basílica de Santa Maria del Mar amb <strong>Emília Hurtado Giró</strong>. Ell tenia 26 anys i ella 22." data-es="El <strong>23 de junio de 1894</strong> se casó en la basílica de Santa Maria del Mar con <strong>Emilia Hurtado Giró</strong>. Él tenía 26 años y ella 22.">El <strong>23 de juny de 1894</strong> es va casar a la basílica de Santa Maria del Mar amb <strong>Emília Hurtado Giró</strong>. Ell tenia 26 anys i ella 22.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Emília havia nascut a Barcelona el 29 d'abril de 1872, al carrer del Cuc, 5. Venia d'una família barcelonina per part de pare i tarragonina per part de mare: el seu pare, Emili Hurtado Rusca, havia estat sabater i després conserge de l'Escola Oficial de Nàutica; la seva mare, Rosa Giró Estil·les, era natural de Constantí." data-es="Emilia había nacido en Barcelona el 29 de abril de 1872, en la calle del Cuc, 5. Venía de una familia barcelonesa por parte de padre y tarraconense por parte de madre: su padre, Emili Hurtado Rusca, había sido zapatero y después conserje de la Escola Oficial de Nàutica; su madre, Rosa Giró Estil·les, era natural de Constantí.">Emília havia nascut a Barcelona el 29 d'abril de 1872, al carrer del Cuc, 5. Venia d'una família barcelonina per part de pare i tarragonina per part de mare: el seu pare, Emili Hurtado Rusca, havia estat sabater i després conserge de l'Escola Oficial de Nàutica; la seva mare, Rosa Giró Estil·les, era natural de Constantí.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="El <strong>14 d'abril de 1895</strong> va néixer en aquesta mateixa casa el seu primer fill, <strong>Emili Godes Hurtado</strong>, que es convertiria en un fotògraf destacat. Anys després, Emili es va casar amb Antònia Diago Almuzara i, amb els seus fills, va donar origen a la branca familiar dels <strong>Godes Diago</strong>." data-es="El <strong>14 de abril de 1895</strong> nació en esta misma casa su primer hijo, <strong>Emili Godes Hurtado</strong>, que se convertiría en un fotógrafo destacado. Años después, Emili se casó con Antònia Diago Almuzara y, con sus hijos, dio origen a la rama familiar de los <strong>Godes Diago</strong>.">El <strong>14 d'abril de 1895</strong> va néixer en aquesta mateixa casa el seu primer fill, <strong>Emili Godes Hurtado</strong>, que es convertiria en un fotògraf destacat. Anys després, Emili es va casar amb Antònia Diago Almuzara i, amb els seus fills, va donar origen a la branca familiar dels <strong>Godes Diago</strong>.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Així, Banys Vells 15 no va ser només l'últim domicili de Pasqual: va ser també el lloc on va començar a formar-se una nova generació de la família." data-es="Así, Banys Vells 15 no fue solamente el último domicilio de Pasqual: fue también el lugar donde comenzó a formarse una nueva generación de la familia.">Així, Banys Vells 15 no va ser només l'últim domicili de Pasqual: va ser també el lloc on va començar a formar-se una nova generació de la família.</p>
+  </div>
 </section>
 
 <section class="space-y-10">
   <div class="flex items-center gap-4">
     <span class="h-px w-12 bg-outline-variant"></span>
-    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Rosa, dos anys més" data-es="Rosa, dos años más">Rosa, dos anys més</p>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Qui va viure a Banys Vells 15?" data-es="¿Quién vivió en Banys Vells 15?">Qui va viure a Banys Vells 15?</p>
   </div>
   <div class="space-y-6">
-    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Rosa Caballeria Madiroles va continuar vivint a Banys Vells 15 després de quedar-se vídua." data-es="Rosa Caballeria Madiroles siguió viviendo en Banys Vells 15 tras quedarse viuda.">Rosa Caballeria Madiroles va continuar vivint a Banys Vells 15 després de quedar-se vídua.</p>
-    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Va morir en aquesta mateixa casa el 24 de desembre de 1893, als 59 anys, d'una apoplexia segons el registre. Va ser enterrada al Poblenou el dia de Nadal." data-es="Murió en esta misma casa el 24 de diciembre de 1893, a los 59 años, de una apoplejía según el registro. Fue enterrada en el Poblenou el día de Navidad.">Va morir en aquesta mateixa casa el 24 de desembre de 1893, als 59 anys, d'una apoplexia segons el registre. Va ser enterrada al Poblenou el dia de Nadal.</p>
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="El 1891, Banys Vells 15 es va convertir en la llar d'una família nombrosa. Hi van arribar a conviure fins a set persones: Pasqual Godes Gomis i Rosa Caballeria Madiroles; els seus fills Dolors, Artur, Pau i Mercè; i Emília Hurtado Giró, futura esposa d'Artur." data-es="En 1891, Banys Vells 15 se convirtió en el hogar de una familia numerosa. Llegaron a convivir allí hasta siete personas: Pasqual Godes Gomis y Rosa Caballeria Madiroles; sus hijos Dolors, Artur, Pau y Mercè; y Emilia Hurtado Giró, futura esposa de Artur.">El 1891, Banys Vells 15 es va convertir en la llar d'una família nombrosa. Hi van arribar a conviure fins a set persones: Pasqual Godes Gomis i Rosa Caballeria Madiroles; els seus fills Dolors, Artur, Pau i Mercè; i Emília Hurtado Giró, futura esposa d'Artur.</p>
+    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="La composició de la llar va anar canviant durant els anys següents: Pasqual va morir el 1891, Rosa el 1893, Artur i Emília es van casar el 1894 i el 1895 va néixer el seu primer fill, Emili Godes Hurtado. Dolors també hi va formar la seva pròpia família, amb Francesc Ferrer Caparà. El fill de tots dos, Francesc Ferrer Godes, va néixer i va morir en aquesta casa el 1901." data-es="La composición del hogar fue cambiando durante los años siguientes: Pasqual murió en 1891, Rosa en 1893, Artur y Emilia se casaron en 1894 y en 1895 nació su primer hijo, Emili Godes Hurtado. Dolors también formó su propia familia en esta vivienda, junto a Francesc Ferrer Caparà. El hijo de ambos, Francesc Ferrer Godes, nació y murió en la casa en 1901.">La composició de la llar va anar canviant durant els anys següents: Pasqual va morir el 1891, Rosa el 1893, Artur i Emília es van casar el 1894 i el 1895 va néixer el seu primer fill, Emili Godes Hurtado. Dolors també hi va formar la seva pròpia família, amb Francesc Ferrer Caparà. El fill de tots dos, Francesc Ferrer Godes, va néixer i va morir en aquesta casa el 1901.</p>
   </div>
 </section>
 
+<!-- ============ ALTES I BAIXES DE L'HABITATGE ============ -->
 <section class="space-y-10">
   <div class="flex items-center gap-4">
     <span class="h-px w-12 bg-outline-variant"></span>
-    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="El llegat familiar" data-es="El legado familiar">El llegat familiar</p>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="Altes i baixes de l'habitatge" data-es="Altas y bajas de la vivienda">Altes i baixes de l'habitatge</p>
   </div>
-  <div class="space-y-6">
-    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Quatre fills van arribar a l'edat adulta: Dolors, Artur, Pau i Mercè." data-es="Cuatro hijos llegaron a la edad adulta: Dolors, Artur, Pau y Mercè.">Quatre fills van arribar a l'edat adulta: Dolors, Artur, Pau i Mercè.</p>
-    <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Les seves trajectòries van obrir mons molt diferents: família i xarxes de parentiu, música escènica i religiosa, ferrocarril, poesia i cures." data-es="Sus trayectorias abrieron mundos muy distintos: familia y redes de parentesco, música escénica y religiosa, ferrocarril, poesía y cuidados.">Les seves trajectòries van obrir mons molt diferents: família i xarxes de parentiu, música escènica i religiosa, ferrocarril, poesia i cures.</p>
-    <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="No formen una moral de progrés lineal. Mostren les múltiples maneres en què una família obrera i artesana es va prolongar dins d'una ciutat que canviava sota els seus peus." data-es="No forman una moraleja de progreso lineal. Muestran las múltiples maneras en que una familia obrera y artesana se prolongó dentro de una ciudad que cambiaba bajo sus pies.">No formen una moral de progrés lineal. Mostren les múltiples maneres en què una família obrera i artesana es va prolongar dins d'una ciutat que canviava sota els seus peus.</p>
-  </div>
+
+  <ol class="space-y-0">
+    <li class="ledger-row border-l-2 border-primary/30 pl-6 pb-8 relative">
+      <span class="ledger-dot"></span>
+      <p class="font-label text-[10px] uppercase tracking-widest text-primary font-bold mb-1">1891</p>
+      <h4 class="font-headline text-lg font-bold text-on-background mb-1" data-ca="Arribada" data-es="Llegada">Arribada</h4>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Hi arriben Pasqual (67) i Rosa (57), acompanyats pels seus fills Dolors (31), Artur (23), Pau (18) i Mercè (17)." data-es="Llegan Pasqual (67) y Rosa (57), acompañados por sus hijos Dolors (31), Artur (23), Pau (18) y Mercè (17).">Hi arriben Pasqual (67) i Rosa (57), acompanyats pels seus fills Dolors (31), Artur (23), Pau (18) i Mercè (17).</p>
+    </li>
+    <li class="ledger-row border-l-2 border-primary/30 pl-6 pb-8 relative">
+      <span class="ledger-dot out"></span>
+      <p class="font-label text-[10px] uppercase tracking-widest text-primary font-bold mb-1" data-ca="17 de desembre de 1891" data-es="17 de diciembre de 1891">17 de desembre de 1891</p>
+      <h4 class="font-headline text-lg font-bold text-on-background mb-1" data-ca="Mort de Pasqual" data-es="Muerte de Pasqual">Mort de Pasqual</h4>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Va morir a l'habitatge als 67 anys, a causa d'una pneumònia." data-es="Falleció en la vivienda a los 67 años, a causa de una pulmonía.">Va morir a l'habitatge als 67 anys, a causa d'una pneumònia.</p>
+    </li>
+    <li class="ledger-row border-l-2 border-primary/30 pl-6 pb-8 relative">
+      <span class="ledger-dot out"></span>
+      <p class="font-label text-[10px] uppercase tracking-widest text-primary font-bold mb-1" data-ca="24 de desembre de 1893" data-es="24 de diciembre de 1893">24 de desembre de 1893</p>
+      <h4 class="font-headline text-lg font-bold text-on-background mb-1" data-ca="Mort de Rosa" data-es="Muerte de Rosa">Mort de Rosa</h4>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Va morir també a Banys Vells 15, als 59 anys." data-es="Falleció también en Banys Vells 15, a los 59 años.">Va morir també a Banys Vells 15, als 59 anys.</p>
+    </li>
+    <li class="ledger-row border-l-2 border-primary/30 pl-6 pb-8 relative">
+      <span class="ledger-dot"></span>
+      <p class="font-label text-[10px] uppercase tracking-widest text-primary font-bold mb-1" data-ca="23 de juny de 1894" data-es="23 de junio de 1894">23 de juny de 1894</p>
+      <h4 class="font-headline text-lg font-bold text-on-background mb-1" data-ca="Casament d'Artur i Emília" data-es="Matrimonio de Artur y Emilia">Casament d'Artur i Emília</h4>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Es van casar a la basílica de Santa Maria del Mar. Artur tenia 26 anys i Emília, 22." data-es="Se casaron en la basílica de Santa Maria del Mar. Artur tenía 26 años y Emilia, 22.">Es van casar a la basílica de Santa Maria del Mar. Artur tenia 26 anys i Emília, 22.</p>
+    </li>
+    <li class="ledger-row border-l-2 border-primary/30 pl-6 pb-8 relative">
+      <span class="ledger-dot"></span>
+      <p class="font-label text-[10px] uppercase tracking-widest text-primary font-bold mb-1" data-ca="14 d'abril de 1895" data-es="14 de abril de 1895">14 d'abril de 1895</p>
+      <h4 class="font-headline text-lg font-bold text-on-background mb-1" data-ca="Naixement d'Emili Godes Hurtado" data-es="Nacimiento de Emili Godes Hurtado">Naixement d'Emili Godes Hurtado</h4>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="El primer fill d'Artur i Emília va néixer al mateix habitatge. Més endavant es convertiria en fotògraf i es casaria amb Antònia Diago Almuzara, donant origen a la branca Godes Diago." data-es="El primer hijo de Artur y Emilia nació en la propia vivienda. Más adelante se convertiría en fotógrafo y se casaría con Antònia Diago Almuzara, dando origen a la rama Godes Diago.">El primer fill d'Artur i Emília va néixer al mateix habitatge. Més endavant es convertiria en fotògraf i es casaria amb Antònia Diago Almuzara, donant origen a la branca Godes Diago.</p>
+    </li>
+    <li class="ledger-row border-l-2 border-primary/30 pl-6 pb-8 relative">
+      <span class="ledger-dot out"></span>
+      <p class="font-label text-[10px] uppercase tracking-widest text-primary font-bold mb-1" data-ca="Cap al 1895" data-es="Hacia 1895">Cap al 1895</p>
+      <h4 class="font-headline text-lg font-bold text-on-background mb-1" data-ca="Marxa de Pau" data-es="Salida de Pau">Marxa de Pau</h4>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Va deixar Banys Vells per iniciar una vida independent." data-es="Abandonó Banys Vells para iniciar una vida independiente.">Va deixar Banys Vells per iniciar una vida independent.</p>
+    </li>
+    <li class="ledger-row border-l-2 border-primary/30 pl-6 pb-8 relative">
+      <span class="ledger-dot out"></span>
+      <p class="font-label text-[10px] uppercase tracking-widest text-primary font-bold mb-1">1896</p>
+      <h4 class="font-headline text-lg font-bold text-on-background mb-1" data-ca="Marxa d'Artur, Emília, Mercè i el petit Emili" data-es="Salida de Artur, Emilia, Mercè y el pequeño Emili">Marxa d'Artur, Emília, Mercè i el petit Emili</h4>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Es van traslladar a Sant Pere Mitjà 12." data-es="Se trasladaron a Sant Pere Mitjà 12.">Es van traslladar a Sant Pere Mitjà 12.</p>
+    </li>
+    <li class="ledger-row border-l-2 border-primary/30 pl-6 pb-8 relative">
+      <span class="ledger-dot"></span>
+      <p class="font-label text-[10px] uppercase tracking-widest text-primary font-bold mb-1" data-ca="Abans de 1901" data-es="Antes de 1901">Abans de 1901</p>
+      <h4 class="font-headline text-lg font-bold text-on-background mb-1" data-ca="Dolors es queda a Banys Vells" data-es="Dolors permanece en Banys Vells">Dolors es queda a Banys Vells</h4>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="En algun moment anterior a 1901 es va casar amb Francesc Ferrer Caparà, natural de Martorell, que es va incorporar a l'habitatge." data-es="En algún momento anterior a 1901 se casó con Francesc Ferrer Caparà, natural de Martorell, quien se incorporó a la vivienda.">En algun moment anterior a 1901 es va casar amb Francesc Ferrer Caparà, natural de Martorell, que es va incorporar a l'habitatge.</p>
+    </li>
+    <li class="ledger-row border-l-2 border-primary/30 pl-6 pb-8 relative">
+      <span class="ledger-dot"></span>
+      <p class="font-label text-[10px] uppercase tracking-widest text-primary font-bold mb-1" data-ca="13 d'octubre de 1901" data-es="13 de octubre de 1901">13 d'octubre de 1901</p>
+      <h4 class="font-headline text-lg font-bold text-on-background mb-1" data-ca="Naixement de Francesc Ferrer Godes" data-es="Nacimiento de Francesc Ferrer Godes">Naixement de Francesc Ferrer Godes</h4>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="El fill de Dolors i Francesc va néixer a Banys Vells 15." data-es="El hijo de Dolors y Francesc nació en Banys Vells 15.">El fill de Dolors i Francesc va néixer a Banys Vells 15.</p>
+    </li>
+    <li class="ledger-row ledger-last pl-6 relative">
+      <span class="ledger-dot out"></span>
+      <p class="font-label text-[10px] uppercase tracking-widest text-primary font-bold mb-1" data-ca="29 de novembre de 1901" data-es="29 de noviembre de 1901">29 de novembre de 1901</p>
+      <h4 class="font-headline text-lg font-bold text-on-background mb-1" data-ca="Mort de Francesc Ferrer Godes" data-es="Muerte de Francesc Ferrer Godes">Mort de Francesc Ferrer Godes</h4>
+      <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Va morir a la mateixa casa amb tot just un mes i mig de vida." data-es="Murió en la misma casa con apenas un mes y medio de vida.">Va morir a la mateixa casa amb tot just un mes i mig de vida.</p>
+    </li>
+  </ol>
 </section>
 
 <section>
