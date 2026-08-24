@@ -14,7 +14,7 @@ Els `.mp3` de `recursos/audio/` estan generats amb la síntesi de veu del sistem
 (macOS `say` + `ffmpeg`), no amb ElevenLabs:
 
 - **Català:** veu `Montse` (l'única veu catalana instal·lada)
-- **Castellà:** veu `Reed (Español (España))`
+- **Castellà:** veu `Mónica`
 
 > **Compte amb el nom de la veu.** `say` només accepta el nom **sencer** tal com
 > el llista `say -v '?'`. Hi ha una veu «Reed» en tretze idiomes: si li passes
@@ -31,8 +31,9 @@ seguit.
 Editant un `.txt` i tornant a executar el mateix procés:
 
 ```
-say -v Montse -r 170 -o /tmp/x.aiff "<text amb [[slnc 550]] entre paràgrafs>"
-ffmpeg -y -i /tmp/x.aiff -codec:a libmp3lame -q:a 4 recursos/audio/<parada>-cat.mp3
+say -v Montse  -r 170 -o /tmp/x.aiff "<text amb [[slnc 550]] entre paràgrafs>"   # català
+say -v "Mónica" -r 170 -o /tmp/x.aiff "<text amb [[slnc 550]] entre paràgrafs>"   # castellà
+ffmpeg -y -i /tmp/x.aiff -codec:a libmp3lame -q:a 4 recursos/audio/<parada>-<cat|esp>.mp3
 ```
 
 ### Canviar de veu
