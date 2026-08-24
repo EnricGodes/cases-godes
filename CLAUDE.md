@@ -19,26 +19,28 @@ A location-based historical expedition through 19th-century Barcelona, tracing t
 │   ├── fonollar-30.html               — Stop 4 · Fonollar 30 i 3 (1868-1874)
 │   ├── jaume-giralt-3.html            — Stop 5 · Jaume Giralt 3 (1874-1885)
 │   ├── sant-pere-mes-baix-40.html     — Stop 6 · Sant Pere Més Baix 40 (1885-1891)
-│   ├── banys-vells-15.html            — Stop 7 · Banys Vells 15 (1891-1901), incl. the Poblenou graves
+│   ├── banys-vells-15.html            — Stop 7 · Banys Vells 15 (1891-1915), incl. the Poblenou graves
 │   ├── sant-pere-mitja-12.html        — Stop 8 · Sant Pere Mitjà 12 (1896-1899)
 │   ├── ripoll-12.html                 — Stop 9 · Ripoll 12 (1891-1908), last Ciutat Vella address
 │   ├── cronologia.html                — Visual timeline of houses and events
 │   ├── mapa.html                      — All ten addresses on one Leaflet map
-│   └── arxiu.html                     — Documentary layer: people, sources, levels of certainty
+│   ├── arxiu.html                     — Documentary layer: the eleven people and the sources
+│   └── veredicte.html                 — Closing: quiz score, summary of the walk, family photographs
 ├── navegacion/                        — Standalone GPS navigation app
 │   ├── destino.html                   — Destination input with geocoding
 │   └── ruta.html                      — Step-by-step turn-by-turn navigation
 ├── js/shared.js                       — Language (ca/es), font size, side menu — used by every page
 ├── recursos/
 │   ├── imagen/<stop-slug>/            — Web-sized images, one folder per stop
-│   └── audio/<stop-slug>-{cat,esp}.mp3 — Audioguides (only Fonollar 20 and Claveguera 14 recorded)
+│   └── audio/<stop-slug>-{cat,esp}.mp3 — Audioguides, all nine stops in both languages
 └── docs/
+    ├── audioguies/                    — Narration scripts (one per stop and language) + voice samples
     ├── design-system.md               — L'Eixample Chronology design system
     └── README.md
 ```
 
 ### User flow
-`index.html` → `navegacion-1` → `carrer-fonollar-20` → `navegacion-2` → `claveguera-14` → … → `navegacion-9` → `ripoll-12` → `cronologia.html`
+`index.html` → `navegacion-1` → `carrer-fonollar-20` → `navegacion-2` → `claveguera-14` → … → `navegacion-9` → `ripoll-12` → `veredicte.html`
 
 Each stop page ends with a quiz whose "Continuar" button unlocks only after answering; that
 button is the link to the next navigation page. The bottom bar (Arxiu · Mapa · Cronologia) is
