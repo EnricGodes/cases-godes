@@ -79,6 +79,15 @@
       background-color: rgba(29, 28, 22, 0.5); z-index: 55;
     }
     #menu-overlay.show { display: block; }
+    .sepia-overlay { filter: sepia(0.4) contrast(1.1) brightness(0.95); }
+    #lightbox {
+      display: none; position: fixed; inset: 0;
+      background-color: rgba(29, 28, 22, 0.85);
+      z-index: 200; cursor: pointer;
+      justify-content: center; align-items: center;
+    }
+    #lightbox.show { display: flex; }
+    #lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; box-shadow: 0 0 60px rgba(29,28,22,0.3); }
 </style>
 </head>
 <body class="bg-surface text-on-surface font-body selection:bg-primary-fixed-dim selection:text-on-primary-fixed overflow-x-hidden">
@@ -197,8 +206,50 @@
     <div class="space-y-6">
       <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Heu començat el 6 de gener de 1852, amb un teixidor de Castelló de 27 anys que arriba a una Barcelona encara emmurallada. Heu acabat el 15 de febrer de 1908, amb el seu fill músic marxant cap a Sant Gervasi amb cinc criatures, vint-i-quatre dies abans que els enderrocs de la Via Laietana s'enduguessin el barri per davant." data-es="Habéis empezado el 6 de enero de 1852, con un tejedor de Castellón de 27 años que llega a una Barcelona todavía amurallada. Habéis terminado el 15 de febrero de 1908, con su hijo músico marchándose hacia Sant Gervasi con cinco criaturas, veinticuatro días antes de que los derribos de la Via Laietana se llevaran el barrio por delante.">Heu començat el 6 de gener de 1852, amb un teixidor de Castelló de 27 anys que arriba a una Barcelona encara emmurallada. Heu acabat el 15 de febrer de 1908, amb el seu fill músic marxant cap a Sant Gervasi amb cinc criatures, vint-i-quatre dies abans que els enderrocs de la Via Laietana s'enduguessin el barri per davant.</p>
       <p class="font-body text-base text-on-surface-variant leading-relaxed" data-ca="Entremig: un casament a Sant Cugat del Rec, nou fills dels quals quatre van arribar a grans, dos Nadals seguits amb enterrament, un nen mort de diftèria als vuit anys, un tenor del Liceu que feia de missatger i de criat perquè a casa hi havia vuit boques, i una tia soltera que va anar seguint la família de pis en pis." data-es="En medio: una boda en Sant Cugat del Rec, nueve hijos de los que cuatro llegaron a mayores, dos Navidades seguidas con entierro, un niño muerto de difteria a los ocho años, un tenor del Liceu que hacía de mensajero y de criado porque en casa había ocho bocas, y una tía soltera que fue siguiendo a la familia de piso en piso.">Entremig: un casament a Sant Cugat del Rec, nou fills dels quals quatre van arribar a grans, dos Nadals seguits amb enterrament, un nen mort de diftèria als vuit anys, un tenor del Liceu que feia de missatger i de criat perquè a casa hi havia vuit boques, i una tia soltera que va anar seguint la família de pis en pis.</p>
-      <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Tot això va passar dins d'un rectangle de tres-cents vuitanta metres per cinc-cents vint. Podeu veure'l sencer des d'aquí." data-es="Todo esto ocurrió dentro de un rectángulo de trescientos ochenta metros por quinientos veinte. Podéis verlo entero desde aquí.">Tot això va passar dins d'un rectangle de tres-cents vuitanta metres per cinc-cents vint. Podeu veure'l sencer des d'aquí.</p>
+      <p class="font-body text-base text-on-surface-variant leading-relaxed italic" data-ca="Tot això va passar dins d'un rectangle de tres-cents vuitanta metres per cinc-cents vint. <a href='mapa.html' class='underline decoration-primary/40 decoration-2 underline-offset-4 hover:text-primary transition-colors'>Podeu veure'l sencer al mapa</a>." data-es="Todo esto ocurrió dentro de un rectángulo de trescientos ochenta metros por quinientos veinte. <a href='mapa.html' class='underline decoration-primary/40 decoration-2 underline-offset-4 hover:text-primary transition-colors'>Podéis verlo entero en el mapa</a>.">Tot això va passar dins d'un rectangle de tres-cents vuitanta metres per cinc-cents vint. <a href='mapa.html' class='underline decoration-primary/40 decoration-2 underline-offset-4 hover:text-primary transition-colors'>Podeu veure'l sencer al mapa</a>.</p>
     </div>
+  </div>
+
+
+  <!-- La família -->
+  <div class="space-y-10">
+    <div class="flex items-center gap-4">
+      <span class="h-px w-12 bg-outline-variant"></span>
+      <p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold" data-ca="La família" data-es="La familia">La família</p>
+    </div>
+
+    <p class="font-body text-lg text-on-surface leading-relaxed" data-ca="Aquesta és la gent de qui heu estat seguint les passes. Els dos primers de la llista van néixer i créixer als pisos que acabeu de veure; els últims ja són els seus néts." data-es="Esta es la gente cuyos pasos habéis estado siguiendo. Los dos primeros de la lista nacieron y crecieron en los pisos que acabáis de ver; los últimos ya son sus nietos.">Aquesta és la gent de qui heu estat seguint les passes. Els dos primers de la llista van néixer i créixer als pisos que acabeu de veure; els últims ja són els seus néts.</p>
+
+    <figure class="max-w-lg mx-auto">
+      <div class="bg-surface-container border border-outline-variant/20 p-4 flex justify-center">
+        <img class="w-full object-contain sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Artur Godes Caballeria i Emília Hurtado Giró" src="../recursos/imagen/veredicte/artur-emilia-retrat.jpg"/>
+      </div>
+      <figcaption class="mt-3 text-center space-y-2">
+        <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Artur Godes Caballeria i Emília Hurtado Giró" data-es="Artur Godes Caballeria y Emilia Hurtado Giró">Artur Godes Caballeria i Emília Hurtado Giró</p>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Es van casar a Santa Maria del Mar el 23 de juny de 1894, a vuitanta metres de Banys Vells." data-es="Se casaron en Santa Maria del Mar el 23 de junio de 1894, a ochenta metros de Banys Vells.">Es van casar a Santa Maria del Mar el 23 de juny de 1894, a vuitanta metres de Banys Vells.</p>
+      </figcaption>
+    </figure>
+
+    <figure class="max-w-2xl mx-auto">
+      <div class="bg-surface-container border border-outline-variant/20 p-4 flex justify-center">
+        <img class="w-full object-contain sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Nadal a casa dels Godes Hurtado" src="../recursos/imagen/veredicte/nadal-godes-hurtado.jpg"/>
+      </div>
+      <figcaption class="mt-3 text-center space-y-2">
+        <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Nadal a casa dels Godes Hurtado" data-es="Navidad en casa de los Godes Hurtado">Nadal a casa dels Godes Hurtado</p>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Artur Godes Caballeria · Mercè Godes Caballeria · Emília Hurtado Giró · Rosa Godes Hurtado · Mercedes Godes Hurtado · Josep Maria «Bep» Godes Hurtado · Ramon Godes Hurtado · Artur Godes Hurtado · Antònia Diago Almuzara · Montserrat Godes Diago" data-es="Artur Godes Caballeria · Mercè Godes Caballeria · Emília Hurtado Giró · Rosa Godes Hurtado · Mercedes Godes Hurtado · Josep Maria «Bep» Godes Hurtado · Ramon Godes Hurtado · Artur Godes Hurtado · Antònia Diago Almuzara · Montserrat Godes Diago">Artur Godes Caballeria · Mercè Godes Caballeria · Emília Hurtado Giró · Rosa Godes Hurtado · Mercedes Godes Hurtado · Josep Maria «Bep» Godes Hurtado · Ramon Godes Hurtado · Artur Godes Hurtado · Antònia Diago Almuzara · Montserrat Godes Diago</p>
+        <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant/70 pt-1" data-ca="Fons de l'Institut d'Estudis Fotogràfics de Catalunya" data-es="Fondo del Institut d'Estudis Fotogràfics de Catalunya">Fons de l'Institut d'Estudis Fotogràfics de Catalunya</p>
+      </figcaption>
+    </figure>
+
+    <figure class="max-w-2xl mx-auto">
+      <div class="bg-surface-container border border-outline-variant/20 p-4 flex justify-center">
+        <img class="w-full object-contain sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Els Godes amb Pau Godes Caballeria" src="../recursos/imagen/veredicte/els-godes-i-pau.jpg"/>
+      </div>
+      <figcaption class="mt-3 text-center space-y-2">
+        <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold" data-ca="Els Godes amb Pau Godes Caballeria" data-es="Los Godes con Pau Godes Caballeria">Els Godes amb Pau Godes Caballeria</p>
+        <p class="font-body text-sm text-on-surface-variant leading-relaxed" data-ca="Artur Godes Caballeria · Mercè Godes Caballeria · Pau Godes Caballeria · Emília Hurtado Giró · Emili Godes Hurtado · Rosa Godes Hurtado · Mercedes Godes Hurtado · Josep Maria «Bep» Godes Hurtado · Ramon Godes Hurtado · Artur Godes Hurtado · Antònia Diago Almuzara · Montserrat Godes Diago" data-es="Artur Godes Caballeria · Mercè Godes Caballeria · Pau Godes Caballeria · Emília Hurtado Giró · Emili Godes Hurtado · Rosa Godes Hurtado · Mercedes Godes Hurtado · Josep Maria «Bep» Godes Hurtado · Ramon Godes Hurtado · Artur Godes Hurtado · Antònia Diago Almuzara · Montserrat Godes Diago">Artur Godes Caballeria · Mercè Godes Caballeria · Pau Godes Caballeria · Emília Hurtado Giró · Emili Godes Hurtado · Rosa Godes Hurtado · Mercedes Godes Hurtado · Josep Maria «Bep» Godes Hurtado · Ramon Godes Hurtado · Artur Godes Hurtado · Antònia Diago Almuzara · Montserrat Godes Diago</p>
+      </figcaption>
+    </figure>
   </div>
 
   <!-- Agraïment i tancament -->
@@ -247,9 +298,24 @@
   </a>
 </nav>
 
+<!-- Lightbox -->
+<div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
+
 <script src="../js/shared.js?v=2"></script>
 <script>
   const lang = () => localStorage.getItem('lang') || 'ca';
+
+  /* ==================== LIGHTBOX ==================== */
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  document.querySelectorAll('.lightbox-img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.dataset.full || img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('show');
+    });
+  });
+  lightbox.addEventListener('click', () => lightbox.classList.remove('show'));
   /* ==================== VEREDICTE DE L'ARXIVER ==================== */
   const RANGS = [
     { min: 9, ca: { t: "Arxiver Major dels Godes",  s: "Nou de nou. L'arxiver s'ha tret el barret, ha tancat el lligall i ha dit que ja pot jubilar-se tranquil." },
