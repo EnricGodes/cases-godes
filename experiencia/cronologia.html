@@ -79,6 +79,15 @@
       background-color: rgba(29, 28, 22, 0.5); z-index: 55;
     }
     #menu-overlay.show { display: block; }
+    .sepia-overlay { filter: sepia(0.4) contrast(1.1) brightness(0.95); }
+    #lightbox {
+      display: none; position: fixed; inset: 0;
+      background-color: rgba(29, 28, 22, 0.85);
+      z-index: 200; cursor: pointer;
+      justify-content: center; align-items: center;
+    }
+    #lightbox.show { display: flex; }
+    #lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; box-shadow: 0 0 60px rgba(29,28,22,0.3); }
     .timeline-line {
       position: absolute;
       left: 1.25rem;
@@ -220,7 +229,7 @@
         <p class="font-body text-base text-on-surface leading-relaxed" data-ca="Pascual Godes viatja de Castelló de la Plana a Barcelona." data-es="Pascual Godes viaja de Castellón de la Plana a Barcelona.">Pascual Godes viatja de Castelló de la Plana a Barcelona.</p>
         <div class="flex flex-wrap gap-2 mt-3">
           <span class="inline-flex items-center gap-1 bg-primary/10 px-2 py-1 font-label text-[10px] uppercase tracking-widest text-primary font-bold">
-            <span class="material-symbols-outlined" style="font-size: 12px;">flight_land</span>
+            <span class="material-symbols-outlined" style="font-size: 12px;">luggage</span>
             <span data-ca="Arribada a Barcelona" data-es="Llegada a Barcelona">Arribada a Barcelona</span>
           </span>
         </div>
@@ -233,6 +242,10 @@
         <span class="material-symbols-outlined">location_city</span>
       </div>
       <div class="timeline-card bg-surface-container p-5">
+        <figure class="mb-4 -mx-1">
+          <img class="max-h-[20rem] w-auto mx-auto object-contain sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Les muralles de mar de Barcelona" src="../recursos/imagen/cronologia/muralles-1854.jpg"/>
+          <figcaption class="font-label text-[9px] uppercase tracking-widest text-on-surface-variant mt-2 leading-relaxed" data-ca="La muralla de mar, fotografiada abans del seu propi enderroc el 1878 · Domini públic" data-es="La muralla de mar, fotografiada antes de su propio derribo en 1878 · Dominio público">La muralla de mar, fotografiada abans del seu propi enderroc el 1878 · Domini públic</figcaption>
+        </figure>
         <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-1" data-ca="Context Històric" data-es="Contexto Histórico">Context Històric</p>
         <p class="font-headline text-2xl font-bold text-primary mb-2">1854</p>
         <p class="font-body text-base text-on-surface leading-relaxed" data-ca="Enderrocament de les muralles de Barcelona. La ciutat s'obre al Pla de Barcelona." data-es="Derribo de las murallas de Barcelona. La ciudad se abre al Llano de Barcelona.">Enderrocament de les muralles de Barcelona. La ciutat s'obre al Pla de Barcelona.</p>
@@ -273,6 +286,10 @@
         <span class="material-symbols-outlined">map</span>
       </div>
       <div class="timeline-card bg-surface-container p-5">
+        <figure class="mb-4 -mx-1">
+          <img class="max-h-[20rem] w-auto mx-auto object-contain sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Pla Cerdà, 1859" src="../recursos/imagen/cronologia/pla-cerda-1859.jpg"/>
+          <figcaption class="font-label text-[9px] uppercase tracking-widest text-on-surface-variant mt-2 leading-relaxed" data-ca="El plànol d'Ildefons Cerdà, 1859: la ciutat emmurallada, al mig, i la quadrícula que se li menjarà el pla · Domini públic" data-es="El plano de Ildefons Cerdà, 1859: la ciudad amurallada, en medio, y la cuadrícula que se comerá el llano · Dominio público">El plànol d'Ildefons Cerdà, 1859: la ciutat emmurallada, al mig, i la quadrícula que se li menjarà el pla · Domini públic</figcaption>
+        </figure>
         <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-1" data-ca="Context Històric" data-es="Contexto Histórico">Context Històric</p>
         <p class="font-headline text-2xl font-bold text-primary mb-2">1859</p>
         <p class="font-body text-base text-on-surface leading-relaxed" data-ca="Aprovació del Pla Cerdà. Neix l'Eixample de Barcelona." data-es="Aprobación del Plan Cerdà. Nace el Ensanche de Barcelona.">Aprovació del Pla Cerdà. Neix l'Eixample de Barcelona.</p>
@@ -475,6 +492,10 @@
         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">celebration</span>
       </div>
       <div class="timeline-card bg-[#2b251e] p-5 border-l-4 border-[#a68942]">
+        <figure class="mb-4 -mx-1">
+          <img class="max-h-[20rem] w-auto mx-auto object-contain sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Exposició Universal de 1888" src="../recursos/imagen/cronologia/exposicio-1888.jpg"/>
+          <figcaption class="font-label text-[9px] uppercase tracking-widest text-[#a68942] mt-2 leading-relaxed" data-ca="Entrada al parc pel Saló de Sant Joan · Gravat de Jaume Pahissa, 1888 · Domini públic" data-es="Entrada al parque por el Salón de San Juan · Grabado de Jaume Pahissa, 1888 · Dominio público">Entrada al parc pel Saló de Sant Joan · Gravat de Jaume Pahissa, 1888 · Domini públic</figcaption>
+        </figure>
         <p class="font-label text-[10px] uppercase tracking-widest text-[#e4c375] font-bold mb-1" data-ca="Fita de la ciutat" data-es="Hito de la ciudad">Fita de la ciutat</p>
         <p class="font-headline text-2xl font-bold text-[#e4c375] mb-2">1888</p>
         <p class="font-body text-base text-[#d0c5b4] leading-relaxed" data-ca="L'Exposició Universal transforma el parc de la Ciutadella i projecta Barcelona com a capital industrial moderna. Els edificis que s'hi aixequen —el Castell dels Tres Dragons, l'Arc de Triomf— són el tret de sortida del Modernisme." data-es="La Exposición Universal transforma el parque de la Ciutadella y proyecta Barcelona como capital industrial moderna. Los edificios que allí se levantan —el Castell dels Tres Dragons, el Arc de Triomf— son el pistoletazo de salida del Modernisme.">L'Exposició Universal transforma el parc de la Ciutadella i projecta Barcelona com a capital industrial moderna. Els edificis que s'hi aixequen —el Castell dels Tres Dragons, l'Arc de Triomf— són el tret de sortida del Modernisme.</p>
@@ -490,7 +511,7 @@
         <div class="flex items-start justify-between gap-3">
           <div class="flex-1">
             <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-1" data-ca="Vuitena Casa" data-es="Octava Casa">Vuitena Casa</p>
-            <p class="font-headline text-2xl font-bold text-primary mb-1">1891 — 1901</p>
+            <p class="font-headline text-2xl font-bold text-primary mb-1">1891 — 1915</p>
             <h3 class="font-headline text-lg font-bold text-on-background mb-2" data-ca="Banys Vells, 15 4t 2a" data-es="Banys Vells, 15 4º 2ª">Banys Vells, 15 4t 2a</h3>
             <p class="font-body text-xs text-on-surface-variant italic mb-2" data-ca="El primer canvi de barri: de Sant Pere a la Ribera" data-es="El primer cambio de barrio: de Sant Pere a la Ribera">El primer canvi de barri: de Sant Pere a la Ribera</p>
             <p class="font-body text-sm text-on-surface-variant leading-relaxed mb-3" data-ca="L'últim domicili de Pasqual, que hi mor el 17 de desembre de 1891 de pneumònia; Rosa el segueix el 24 de desembre de 1893. Però la casa continua: Artur s'hi casa amb Emília Hurtado el 1894 i el 1895 hi neix Emili Godes Hurtado." data-es="El último domicilio de Pasqual, que muere aquí el 17 de diciembre de 1891 de neumonía; Rosa le sigue el 24 de diciembre de 1893. Pero la casa continúa: Artur se casa allí con Emilia Hurtado en 1894 y en 1895 nace Emili Godes Hurtado.">L'últim domicili de Pasqual, que hi mor el 17 de desembre de 1891 de pneumònia; Rosa el segueix el 24 de desembre de 1893. Però la casa continua: Artur s'hi casa amb Emília Hurtado el 1894 i el 1895 hi neix Emili Godes Hurtado.</p>
@@ -634,6 +655,10 @@
         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">construction</span>
       </div>
       <div class="timeline-card bg-[#2b251e] p-5 border-l-4 border-[#a68942]">
+        <figure class="mb-4 -mx-1">
+          <img class="max-h-[20rem] w-auto mx-auto object-contain sepia-overlay cursor-pointer hover:opacity-90 transition-opacity duration-300 lightbox-img" alt="Inauguració de les obres de la Via Laietana" src="../recursos/imagen/cronologia/via-laietana-1908.jpg"/>
+          <figcaption class="font-label text-[9px] uppercase tracking-widest text-[#a68942] mt-2 leading-relaxed" data-ca="La inauguració de les obres, 10 de març de 1908 · «Ilustració Catalana» · Domini públic" data-es="La inauguración de las obras, 10 de marzo de 1908 · «Ilustració Catalana» · Dominio público">La inauguració de les obres, 10 de març de 1908 · «Ilustració Catalana» · Domini públic</figcaption>
+        </figure>
         <p class="font-label text-[10px] uppercase tracking-widest text-[#e4c375] font-bold mb-1" data-ca="Fita de la ciutat" data-es="Hito de la ciudad">Fita de la ciutat</p>
         <p class="font-headline text-2xl font-bold text-[#e4c375] mb-2">1908</p>
         <p class="font-body text-base text-[#d0c5b4] leading-relaxed" data-ca="El 10 de març comencen els enderrocs de la Via Laietana. Una avinguda de nou-cents metres travessa la ciutat vella: centenars d'edificis a terra, desenes de carrers esborrats i unes deu mil persones desallotjades. Els Godes havien marxat de Ripoll vint-i-quatre dies abans." data-es="El 10 de marzo empiezan los derribos de la Via Laietana. Una avenida de novecientos metros atraviesa la ciudad vieja: centenares de edificios abajo, decenas de calles borradas y unas diez mil personas desalojadas. Los Godes se habían ido de Ripoll veinticuatro días antes.">El 10 de març comencen els enderrocs de la Via Laietana. Una avinguda de nou-cents metres travessa la ciutat vella: centenars d'edificis a terra, desenes de carrers esborrats i unes deu mil persones desallotjades. Els Godes havien marxat de Ripoll vint-i-quatre dies abans.</p>
@@ -673,6 +698,20 @@
   </a>
 </nav>
 
+<!-- Lightbox -->
+<div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
+
 <script src="../js/shared.js?v=2"></script>
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  document.querySelectorAll('.lightbox-img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src; lightboxImg.alt = img.alt;
+      lightbox.classList.add('show');
+    });
+  });
+  lightbox.addEventListener('click', () => lightbox.classList.remove('show'));
+</script>
 </body>
 </html>
