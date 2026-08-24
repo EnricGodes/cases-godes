@@ -1,1 +1,9 @@
+1.- Crear cases.godes.org
+2.- Integrar en el menu
+3.- voces off
+4.- revisión móvil
+5.- test recorrido real
+6.- crear emiligodes.godes.org
+
+
 ESP: Carmelo, https://elevenlabs.io/app/voice-library?voiceId=5egO01tkUjEzu7xSSE8M
